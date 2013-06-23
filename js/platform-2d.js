@@ -412,10 +412,6 @@ function save(){
 function setmode(newmode, newgame){
     clearInterval(interval);
 
-    world_dynamic = [];
-    world_static = [];
-    world_text = [];
-
     mode = newmode;
 
     /* new game mode */
