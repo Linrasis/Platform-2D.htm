@@ -184,7 +184,7 @@ function draw(){
              && world_static[i][0] + x_offset < width
              && world_static[i][1] + world_static[i][3] + y_offset > 0
              && world_static[i][1] + y_offset < height){
-                buffer.fillStyle = 'rgb(' + world_static[i][4] + ',' + world_static[i][5] + ',' + world_static[i][6] + ')';
+                buffer.fillStyle = 'rgb(' + world_static[i][4] + ', ' + world_static[i][5] + ', ' + world_static[i][6] + ')';
                 buffer.fillRect(
                     world_static[i][0] + x_offset,
                     world_static[i][1] + y_offset,
@@ -329,7 +329,7 @@ function random_number(i){
 
 function play_audio(i){
     if(settings[0] > 0){/* audio volume */
-        get(i).currentTime=0;
+        get(i).currentTime = 0;
         get(i).play();
     }
 }
@@ -339,8 +339,8 @@ function resize(){
         width = get('buffer').width = get('canvas').width = window.innerWidth;
         height = get('buffer').height = get('canvas').height = window.innerHeight;
 
-        x = width/2;
-        y = height/2;
+        x = width / 2;
+        y = height / 2;
     }
 }
 
@@ -420,20 +420,20 @@ function setmode(newmode, newgame){
             save();
         }
 
-        frames=0;
+        frames = 0;
 
-        key_left=0;
-        key_right=0;
-        key_jump=0;
+        key_left = 0;
+        key_right = 0;
+        key_jump = 0;
 
-        player_x=0;
-        player_y=0;
-        player_y_vel=0;
+        player_x = 0;
+        player_y = 0;
+        player_y_vel = 0;
 
-        state=0;
+        state = 0;
 
         if(newgame){
-            get('page').innerHTML='<canvas id=canvas></canvas>';
+            get('page').innerHTML = '<canvas id=canvas></canvas>';
         }
 
         load_level(mode - 4);
