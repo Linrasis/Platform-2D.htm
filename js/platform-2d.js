@@ -86,7 +86,8 @@ function draw(){
 
                                     platform = i;
                                 }
-                            }else if(temp_player_y < temp_object_right_y + 20 && temp_player_y >= temp_object_right_y + 10){
+                            }else if(temp_player_y < temp_object_right_y + 20
+                                  && temp_player_y >= temp_object_right_y + 10){
                                 player_y_vel = temp_object_right_y - player_y + 20;
                                 temp_player_y = player_y + player_y_vel;
                             }
@@ -94,7 +95,8 @@ function draw(){
 
                         /* handle collisions with platforms while moving left/right */
                         if(platform != i){
-                            if(key_left && !key_right
+                            if(key_left
+                             && !key_right
                              && player_y + 20 > world_dynamic[i][1]
                              && player_y - 20 < temp_object_right_y
                              && player_x != world_dynamic[i][0] - 20
@@ -102,7 +104,8 @@ function draw(){
                                 player_dx = temp_object_right_x - player_x + 20;
                                 temp_player_x = player_x + player_dx;
                             }
-                            if(key_right && !key_left
+                            if(key_right
+                             && !key_left
                              && player_y + 20 > world_dynamic[i][1]
                              && player_y - 20 < temp_object_right_y
                              && player_x != temp_object_right_x + 20
@@ -184,7 +187,9 @@ function draw(){
              && world_static[i][0] + x_offset < width
              && world_static[i][1] + world_static[i][3] + y_offset > 0
              && world_static[i][1] + y_offset < height){
-                buffer.fillStyle = 'rgb(' + world_static[i][4] + ', ' + world_static[i][5] + ', ' + world_static[i][6] + ')';
+                buffer.fillStyle = 'rgb(' + world_static[i][4] + ', '
+                                          + world_static[i][5] + ', '
+                                          + world_static[i][6] + ')';
                 buffer.fillRect(
                     world_static[i][0] + x_offset,
                     world_static[i][1] + y_offset,
@@ -356,6 +361,7 @@ function save(){
             'si',
             'sp'
         ][i];
+
         if(isNaN(get(j).value) || get(j).value === [1, 1, -10, .5, 9, 25, 4][i]){
             ls.removeItem('platform-' + i);
             settings[i] = [
@@ -368,6 +374,7 @@ function save(){
                 4
             ][i];
             get(j).value = settings[i];
+
         }else{
             settings[i] = parseFloat(get(j).value);
             ls.setItem(
@@ -382,6 +389,7 @@ function save(){
         settings[[1, 7][i]] = get(['tz', 'cl'][i]).checked;
         if(settings[[1, 7][i]]){
             ls.removeItem('platform-' + [1, 7][i]);
+
         }else{
             ls.setItem(
                 'platform-' + [1, 7][i],
@@ -399,6 +407,7 @@ function save(){
                 'AD',
                 'H'
             ][i];
+
         }else{
             settings[i + 8] = get(['kj', 'km', 'kr'][i]).value;
             ls.setItem(
