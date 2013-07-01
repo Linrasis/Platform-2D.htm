@@ -247,7 +247,7 @@ function draw(){
     }while(i--);
 
     /* draw player */
-    buffer.fillStyle = '#fff';
+    buffer.fillStyle = '#090';
     buffer.fillRect(
         x - 20,
         y - 20,
@@ -255,6 +255,7 @@ function draw(){
         40
     );
 
+    buffer.fillStyle = '#fff';
     buffer.font = '23pt sans-serif';
     buffer.textAlign = 'center';
     buffer.textBaseline = 'top';
