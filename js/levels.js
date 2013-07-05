@@ -12,7 +12,7 @@ function level_logic(id){
             /* move all world objects back 400px, except for lava wall and floor/ceiling */
             i = world_dynamic.length - 1;
             do{
-                if(i > 2){
+                if(i > 1){
                     world_dynamic[i][0] -= 400;
                 }
             }while(i--);
@@ -49,7 +49,7 @@ function level_logic(id){
                     0
                 ]);
                 world_dynamic.push([
-                    player_x + x + 50 + random_number(200),
+                    player_x + x + 50 + random_number(175),
                     25,
                     25,
                     25,
@@ -102,7 +102,7 @@ function level_logic(id){
                     0,
                     0,
                     0,
-                    -15
+                    -14
                 ]);
                 world_dynamic.push([
                     player_x + x + 100,
@@ -220,18 +220,20 @@ function level_logic(id){
         /* set lava wall goal to player position to keep it moving */
         world_dynamic[0][6] = player_x;
 
-        /* reset floor/celing x positions to match player position */
-        world_dynamic[1][0] = player_x - x;
-        world_dynamic[2][0] = player_x - x;
+        /* reset floor x position to match player position */
+        world_dynamic[1][0] = player_x - 50;
 
-        /* make sure floor/ceiling length equals width of screen */
-        world_dynamic[1][2] = width;
-        world_dynamic[2][2] = width;
+        /* move corridor background */
+        world_static[0][0] = world_dynamic[0][0] + world_dynamic[0][2];
+        if(world_static[0][0] < player_x - x){
+            world_static[0][0] = player_x - x;
+        }
+        world_static[0][2] = width;
 
         /* delete objects that are eaten by the lava wall */
         i = world_dynamic.length - 1;
         do{
-            if(i>2 && world_dynamic[i][0] < world_dynamic[0][0]){
+            if(i>1 && world_dynamic[i][0] < world_dynamic[0][0]){
                 world_dynamic.splice(i, 1);
             }
         }while(i--);
@@ -489,14 +491,18 @@ function load_level(id){
 
     /* randomized lava corridor */
     }else if(id == -1){
-        world_static = [];
-        world_text = [];
+        get('canvas').style.backgroundColor = '#3c3c3c';
 
         world_dynamic = [
-            [-250,-200,50,250,3,-250,200,3,0,0,0],
-            [0,50,0,25,1,0,0,0,0,0,0],
-            [0,-225,0,25,1,0,0,0,0,0,0]
+            [-250, -200,  50, 250, 3, -250, 200, 3, 0, 0, 0],
+            [ -50,   50, 100,  25, 1,    0,   0, 0, 0, 0, 0]
         ];
+
+        world_static = [
+            [-x,-200,0,250,0,0,0]
+        ];
+
+        world_text = [];
 
         interval_logic = setInterval('level_logic(-1)', 100);
 
