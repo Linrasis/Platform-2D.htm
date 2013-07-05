@@ -122,11 +122,13 @@ function draw(){
                     /* collided with green goal */
                     }else if(world_dynamic[i][4] === 2){
                         clearInterval(interval);
+                        clearInterval(interval_logic);
                         state = 2;
 
                     /* collided with red rectangles */
                     }else if(world_dynamic[i][4] === 3){
                         clearInterval(interval);
+                        clearInterval(interval_logic);
                         state = 3;
 
                     /* collided with a key */
@@ -347,6 +349,11 @@ function resize(){
 
         x = width / 2;
         y = height / 2;
+
+        /* if game is over, draw if resized */
+        if(state > 0){
+            draw();
+        }
     }
 }
 
@@ -421,6 +428,7 @@ function save(){
 
 function setmode(newmode, newgame){
     clearInterval(interval);
+    clearInterval(interval_logic);
 
     mode = newmode;
 
@@ -446,7 +454,7 @@ function setmode(newmode, newgame){
             get('page').innerHTML = '<canvas id=canvas></canvas>';
         }
 
-        load_level(mode - 4);
+        load_level(mode - 5);
 
         if(newgame){
             buffer = get('buffer').getContext('2d');
@@ -465,7 +473,7 @@ function setmode(newmode, newgame){
         world_static = [];
         world_text = [];
 
-        get('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><b>Platform-2D</b></div><hr><div class=c><a onclick=setmode(3,1)>Generate Random Level</a></div><hr><div class=c><a onclick=setmode(4,1)>A Pit of Your Design</a><br><a onclick=setmode(5,1)>Booster Towers</a><br><a onclick=setmode(6,1)>Keys of a Father</a><br><a onclick=setmode(7,1)>Tutorial Island</a><br><a onclick=setmode(8,1)>Village of the Wolves</a></div><hr><div class=c><label><input'
+        get('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><b>Platform-2D</b></div><hr><div class=c><a onclick=setmode(3,1)>Generate Random Level</a><br><a onclick=setmode(4,1)>Randomized Lava Corridor</a></div><hr><div class=c><a onclick=setmode(5,1)>A Pit of Your Design</a><br><a onclick=setmode(6,1)>Booster Towers</a><br><a onclick=setmode(7,1)>Keys of a Father</a><br><a onclick=setmode(8,1)>Tutorial Island</a><br><a onclick=setmode(9,1)>Village of the Wolves</a></div><hr><div class=c><label><input'
             + (settings[1] ? ' checked' : '') + ' id=tz type=checkbox>Time</label></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=kj maxlength=1 size=3 type=text value='
             + settings[8] + '>Jump<br><input disabled size=3 style=border:0 type=text value=ESC>Main Menu<br><input id=km maxlength=2 size=3 type=text value='
             + settings[9] + '>Move ←→<br><input id=kr maxlength=1 size=3 type=text value='
@@ -494,6 +502,7 @@ var height = 0;
 var hop_permission = 1;
 var i = 3;
 var interval = 0;
+var interval_logic = 0;
 var j = 0;
 var key_left = 0;
 var key_right = 0;

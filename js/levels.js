@@ -1,7 +1,247 @@
+function level_logic(id){
+    /* randomized lava corridor logic */
+    if(id == -1){
+        /* create next obstacle every 400px traveled */
+        if(player_x > 400){
+            /* move the player back 400px */
+            player_x -= 400;
+
+            /* move the lava wall back 400px */
+            world_dynamic[0][0] -= 400;
+
+            /* move all world objects back 400px, except for lava wall and floor/ceiling */
+            i = world_dynamic.length - 1;
+            do{
+                if(i > 2){
+                    world_dynamic[i][0] -= 400;
+                }
+            }while(i--);
+
+            /* randomly pick next obstacle*/
+            i = random_number(4);
+
+            /* lava pit obstacle */
+            if(i == 0){
+                world_dynamic.push([
+                    player_x + x,
+                    -25,
+                    50,
+                    75,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+                world_dynamic.push([
+                    player_x + x + 50,
+                    0,
+                    175,
+                    50,
+                    3,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+                world_dynamic.push([
+                    player_x + x + 50 + random_number(200),
+                    25,
+                    25,
+                    25,
+                    3,
+                    0,
+                    0,
+                    0,
+                    -200,
+                    25,
+                    2
+                ]);
+                world_dynamic.push([
+                    player_x + x + 225,
+                    -25,
+                    50,
+                    75,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+
+            /* booster obstacle */
+            }else if(i == 1){
+                world_dynamic.push([
+                    player_x + x,
+                    -200,
+                    25,
+                    200,
+                    3,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+                world_dynamic.push([
+                    player_x + x + 75,
+                    25,
+                    25,
+                    25,
+                    4,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    -15
+                ]);
+                world_dynamic.push([
+                    player_x + x + 100,
+                    -125,
+                    25,
+                    175,
+                    3,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+
+            /* wall backtrack obstacle */
+            }else if(i == 2){
+                world_dynamic.push([
+                    player_x + x,
+                    -200,
+                    25,
+                    200,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+                world_dynamic.push([
+                    player_x + x + 25,
+                    -25,
+                    125,
+                    25,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+                world_dynamic.push([
+                    player_x + x + 75,
+                    -125,
+                    125,
+                    25,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+                world_dynamic.push([
+                    player_x + x + 200,
+                    -125,
+                    25,
+                    175,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+
+            /* lava pillars obstacle */
+            }else{
+                world_dynamic.push([
+                    player_x + x,
+                    0,
+                    25,
+                    50,
+                    3,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+                world_dynamic.push([
+                    player_x + x + 100,
+                    -25,
+                    25,
+                    75,
+                    3,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+                world_dynamic.push([
+                    player_x + x + 200,
+                    0,
+                    25,
+                    50,
+                    3,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
+            }
+        }
+
+        /* set lava wall goal to player position to keep it moving */
+        world_dynamic[0][6] = player_x;
+
+        /* reset floor/celing x positions to match player position */
+        world_dynamic[1][0] = player_x - x;
+        world_dynamic[2][0] = player_x - x;
+
+        /* make sure floor/ceiling length equals width of screen */
+        world_dynamic[1][2] = width;
+        world_dynamic[2][2] = width;
+
+        /* delete objects that are eaten by the lava wall */
+        i = world_dynamic.length - 1;
+        do{
+            if(i>2 && world_dynamic[i][0] < world_dynamic[0][0]){
+                world_dynamic.splice(i, 1);
+            }
+        }while(i--);
+    }
+}
+
 function load_level(id){
 
     /* randomized level */
-    if(id < 0){
+    if(id == -2){
         get('canvas').style.backgroundColor = '#3c3c3c';
 
         tile_count = random_number(9) + 1;
@@ -246,6 +486,19 @@ function load_level(id){
             0,
             0
         ])
+
+    /* randomized lava corridor */
+    }else if(id == -1){
+        world_static = [];
+        world_text = [];
+
+        world_dynamic = [
+            [-250,-200,50,250,3,-250,200,3,0,0,0],
+            [0,50,0,25,1,0,0,0,0,0,0],
+            [0,-225,0,25,1,0,0,0,0,0,0]
+        ];
+
+        interval_logic = setInterval('level_logic(-1)', 100);
 
     /* premade levels */
     }else{
