@@ -215,6 +215,7 @@ function level_logic(id){
                     0
                 ]);
             }
+            update_static_buffer();
         }
 
         /* set lava wall goal to player position to keep it moving */
@@ -223,17 +224,10 @@ function level_logic(id){
         /* reset floor x position to match player position */
         world_dynamic[1][0] = player_x - 50;
 
-        /* move corridor background */
-        world_static[0][0] = world_dynamic[0][0] + world_dynamic[0][2];
-        if(world_static[0][0] < player_x - x){
-            world_static[0][0] = player_x - x;
-        }
-        world_static[0][2] = width;
-
         /* delete objects that are eaten by the lava wall */
         i = world_dynamic.length - 1;
         do{
-            if(i>1 && world_dynamic[i][0] < world_dynamic[0][0]){
+            if(i > 1 && world_dynamic[i][0] < world_dynamic[0][0]){
                 world_dynamic.splice(i, 1);
             }
         }while(i--);
@@ -499,7 +493,7 @@ function load_level(id){
         ];
 
         world_static = [
-            [-x,-200,0,250,0,0,0]
+            [-x, -200, width + 400, 250, 0, 0, 0]
         ];
 
         world_text = [];
