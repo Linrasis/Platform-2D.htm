@@ -1,15 +1,15 @@
 function level_logic(id){
-    /* randomized lava corridor logic */
+    // randomized lava corridor logic
     if(id == -1){
-        /* create next obstacle every 400px traveled */
+        // create next obstacle every 400px traveled
         if(player_x > 400){
-            /* move the player back 400px */
+            // move the player back 400px
             player_x -= 400;
 
-            /* move the lava wall back 400px */
+            // move the lava wall back 400px
             world_dynamic[0][0] -= 400;
 
-            /* move all world objects back 400px, except for lava wall and floor/ceiling */
+            // move all world objects back 400px, except for lava wall and floor/ceiling
             i = world_dynamic.length - 1;
             do{
                 if(i > 1){
@@ -17,10 +17,10 @@ function level_logic(id){
                 }
             }while(i--);
 
-            /* randomly pick next obstacle*/
+            // randomly pick next obstacle*/
             i = random_number(4);
 
-            /* lava pit obstacle */
+            // lava pit obstacle
             if(i == 0){
                 world_dynamic.push([
                     player_x + x,
@@ -75,7 +75,7 @@ function level_logic(id){
                     0
                 ]);
 
-            /* booster obstacle */
+            // booster obstacle
             }else if(i == 1){
                 world_dynamic.push([
                     player_x + x,
@@ -118,7 +118,7 @@ function level_logic(id){
                     0
                 ]);
 
-            /* wall backtrack obstacle */
+            // wall backtrack obstacle
             }else if(i == 2){
                 world_dynamic.push([
                     player_x + x,
@@ -173,7 +173,7 @@ function level_logic(id){
                     0
                 ]);
 
-            /* lava pillars obstacle */
+            // lava pillars obstacle
             }else{
                 world_dynamic.push([
                     player_x + x,
@@ -218,13 +218,13 @@ function level_logic(id){
             update_static_buffer();
         }
 
-        /* set lava wall goal to player position to keep it moving */
+        // set lava wall goal to player position to keep it moving
         world_dynamic[0][6] = player_x;
 
-        /* reset floor x position to match player position */
+        // reset floor x position to match player position
         world_dynamic[1][0] = player_x - 50;
 
-        /* delete objects that are eaten by the lava wall */
+        // delete objects that are eaten by the lava wall
         i = world_dynamic.length - 1;
         do{
             if(i > 1 && world_dynamic[i][0] < world_dynamic[0][0]){
@@ -236,7 +236,7 @@ function level_logic(id){
 
 function load_level(id){
 
-    /* randomized level */
+    // randomized level
     if(id == -2){
         get('canvas').style.backgroundColor = '#3c3c3c';
 
@@ -483,7 +483,7 @@ function load_level(id){
             0
         ])
 
-    /* randomized lava corridor */
+    // randomized lava corridor
     }else if(id == -1){
         get('canvas').style.backgroundColor = '#3c3c3c';
 
@@ -500,7 +500,7 @@ function load_level(id){
 
         interval_logic = setInterval('level_logic(-1)', 100);
 
-    /* premade levels */
+    // premade levels
     }else{
         world_dynamic = [
             [

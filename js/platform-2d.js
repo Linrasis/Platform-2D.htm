@@ -17,9 +17,9 @@ function draw(){
 
         i = world_dynamic.length - 1;
         do{
-            /* if current game is still going, move objects */
+            // if current game is still going, move objects
             if(state < 1){
-                /* x movement */
+                // x movement
                 if(world_dynamic[i][7] != 0){
                     if(world_dynamic[i][0] < world_dynamic[i][5]){
                         world_dynamic[i][7] = Math.abs(world_dynamic[i][7]);
@@ -27,14 +27,14 @@ function draw(){
                         world_dynamic[i][7] = -world_dynamic[i][7];
                     }
 
-                    /* if player on moving platform, move player x */
+                    // if player on moving platform, move player x
                     if(platform === i){
                         player_dx += world_dynamic[i][7];
                     }
 
                     world_dynamic[i][0] += world_dynamic[i][7];
                 }
-                /* y movement*/
+                // y movement*/
                 if(world_dynamic[i][10] != 0){
                     if(world_dynamic[i][1] < world_dynamic[i][8]){
                         world_dynamic[i][10] = Math.abs(world_dynamic[i][10]);
@@ -42,7 +42,7 @@ function draw(){
                         world_dynamic[i][10] = -world_dynamic[i][10];
                     }
 
-                    /* if player on moving platform, move player y */
+                    // if player on moving platform, move player y
                     if(platform === i){
                         player_dy += world_dynamic[i][10];
                     }
@@ -51,7 +51,7 @@ function draw(){
                 }
             }
 
-            /* if player is moving or object is moving, check for collision */
+            // if player is moving or object is moving, check for collision
             if(player_dx != 0
              || player_dy != 0
              || player_y_vel != 0
@@ -60,16 +60,16 @@ function draw(){
                 var temp_object_right_x = world_dynamic[i][0] + world_dynamic[i][2];
                 var temp_object_right_y = world_dynamic[i][1] + world_dynamic[i][3];
 
-                /* check if player position + movmenet is within bounds of object */
+                // check if player position + movmenet is within bounds of object
                 if(!(temp_player_x - 20 > temp_object_right_x
                     || temp_player_x + 20 < world_dynamic[i][0]
                     || temp_player_y - 20 > temp_object_right_y
                     || temp_player_y + 20 < world_dynamic[i][1])
                   ){
-                    /* collide with platform or key-locked wall */
+                    // collide with platform or key-locked wall
                     if(world_dynamic[i][4] === 1 || world_dynamic[i][4] === 's'){
 
-                        /* handle collisions with platforms while jumping or falling */
+                        // handle collisions with platforms while jumping or falling
                         if(player_y_vel != 0
                          && player_x != world_dynamic[i][0] - 20
                          && player_x != temp_object_right_x + 20){
@@ -93,7 +93,7 @@ function draw(){
                             }
                         }
 
-                        /* handle collisions with platforms while moving left/right */
+                        // handle collisions with platforms while moving left/right
                         if(platform != i){
                             if(key_left
                              && !key_right
@@ -115,23 +115,23 @@ function draw(){
                             }
                         }
 
-                    /* collided with booster*/
+                    // collided with booster*/
                     }else if(world_dynamic[i][4] === 4){
                         player_y_vel = world_dynamic[i][11];
 
-                    /* collided with green goal */
+                    // collided with green goal
                     }else if(world_dynamic[i][4] === 2){
                         clearInterval(interval);
                         clearInterval(interval_logic);
                         state = 2;
 
-                    /* collided with red rectangles */
+                    // collided with red rectangles
                     }else if(world_dynamic[i][4] === 3){
                         clearInterval(interval);
                         clearInterval(interval_logic);
                         state = 3;
 
-                    /* collided with a key */
+                    // collided with a key
                     }else if(world_dynamic[i][4] === 5){
                         temp_key = i;
                     }
@@ -139,7 +139,7 @@ function draw(){
             }
         }while(i--);
 
-        /* delete keys and key-locked walls if collided with key */
+        // delete keys and key-locked walls if collided with key
         if(temp_key > 1){
             world_dynamic.splice(temp_key, 1);
 
@@ -157,19 +157,19 @@ function draw(){
 
         if(can_jump){
             if(hop_permission && key_jump){
-                player_y_vel = settings[2];/* jump velocity */
+                player_y_vel = settings[2];// jump velocity
                 hop_permission = 0;
             }else{
                 player_y_vel = 0;
             }
-        }else if(player_y_vel < settings[4]){/* terminal velocity */
-            player_y_vel += settings[3];/* gravity */
+        }else if(player_y_vel < settings[4]){// terminal velocity
+            player_y_vel += settings[3];// gravity
         }
 
         frames += 1;
     }
 
-    if(settings[7]){/* clear? */
+    if(settings[7]){// clear?
         buffer.clearRect(
             0,
             0,
@@ -178,7 +178,7 @@ function draw(){
         );
     }
 
-    /* draw buffer_static */
+    // draw buffer_static
     buffer.drawImage(
         get('buffer-static'),
         x - player_x + buffer_static_left,
@@ -188,22 +188,22 @@ function draw(){
     x_offset = x - player_x;
     y_offset = y - player_y;
 
-    /* draw dynamic world objects that aren't in the buffer_static */
+    // draw dynamic world objects that aren't in the buffer_static
     i = world_dynamic.length - 1;
     do{
-        /* only draw objects that are reds, keywalls, keys, or moving */
+        // only draw objects that are reds, keywalls, keys, or moving
         if(world_dynamic[i][4] == 3
          || world_dynamic[i][4] == 5
          || world_dynamic[i][4] == 's'
          || world_dynamic[i][7] != 0
          || world_dynamic[i][10] != 0){
-            /* if dynamic object is on screen, draw it */
+            // if dynamic object is on screen, draw it
             if(world_dynamic[i][0] + world_dynamic[i][2] + x_offset > 0
              && world_dynamic[i][0] + x_offset < width
              && world_dynamic[i][1] + world_dynamic[i][3] + y_offset > 0
              && world_dynamic[i][1] + y_offset < height){
 
-                /* if object has a texture, draw texture. else draw rect */
+                // if object has a texture, draw texture. else draw rect
                 if(world_dynamic[i][4] > 1
                  && world_dynamic[i][4] < 6){
                     var temp_x = world_dynamic[i][0] + x_offset;
@@ -242,7 +242,7 @@ function draw(){
         }
     }while(i--);
 
-    /* draw player */
+    // draw player
     buffer.fillStyle = '#090';
     buffer.fillRect(
         x - 20,
@@ -256,7 +256,7 @@ function draw(){
     buffer.textAlign = 'center';
     buffer.textBaseline = 'top';
 
-    /* if game is over, draw game over text */
+    // if game is over, draw game over text
     if(state > 0){
         buffer.fillText(
             settings[10] + ' = Restart',
@@ -278,7 +278,7 @@ function draw(){
         );
     }
 
-    /* if tracking frames, draw number of frames */
+    // if tracking frames, draw number of frames
     if(settings[1]){
         buffer.textAlign = 'left';
         buffer.fillText(
@@ -288,7 +288,7 @@ function draw(){
         );
     }
 
-    if(settings[7]){/* clear? */
+    if(settings[7]){// clear?
         canvas.clearRect(
             0,
             0,
@@ -312,7 +312,7 @@ function random_number(i){
 }
 
 function play_audio(i){
-    if(settings[0] > 0){/* audio volume */
+    if(settings[0] > 0){// audio volume
         get(i).currentTime = 0;
         get(i).play();
     }
@@ -331,7 +331,7 @@ function resize(){
         x = width / 2;
         y = height / 2;
 
-        /* if game is over, draw if resized */
+        // if game is over, draw if resized
         if(state > 0){
             draw();
         }
@@ -413,7 +413,7 @@ function setmode(newmode, newgame){
 
     mode = newmode;
 
-    /* new game mode */
+    // new game mode
     if(mode > 0){
         if(newgame){
             save();
@@ -445,7 +445,7 @@ function setmode(newmode, newgame){
 
         interval = setInterval('draw()', settings[5]);
 
-    /* main menu mode */
+    // main menu mode
     }else{
         buffer = 0;
         buffer_static = 0;
@@ -456,16 +456,16 @@ function setmode(newmode, newgame){
         world_text = [];
 
         get('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><b>Platform-2D</b></div><hr><div class=c><a onclick=setmode(3,1)>Generate Random Level</a><br><a onclick=setmode(4,1)>Randomized Lava Corridor</a></div><hr><div class=c><a onclick=setmode(5,1)>A Pit of Your Design</a><br><a onclick=setmode(6,1)>Booster Towers</a><br><a onclick=setmode(7,1)>Keys of a Father</a><br><a onclick=setmode(8,1)>Tutorial Island</a><br><a onclick=setmode(9,1)>Village of the Wolves</a></div><hr><div class=c><label><input'
-            + (settings[1] ? ' checked' : '') + ' id=tz type=checkbox>Time</label></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=kj maxlength=1 size=3 type=text value='
-            + settings[8] + '>Jump<br><input disabled size=3 style=border:0 type=text value=ESC>Main Menu<br><input id=km maxlength=2 size=3 type=text value='
-            + settings[9] + '>Move ←→<br><input id=kr maxlength=1 size=3 type=text value='
+            + (settings[1] ? ' checked' : '') + ' id=tz type=checkbox>Time</label></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=kj maxlength=1 size=3 value='
+            + settings[8] + '>Jump<br><input disabled size=3 style=border:0 value=ESC>Main Menu<br><input id=km maxlength=2 size=3 value='
+            + settings[9] + '>Move ←→<br><input id=kr maxlength=1 size=3 value='
             + settings[10] + '>Restart</div><hr><div class=c><input id=sv max=1 min=0 step=.01 type=range value='
             + settings[0] + '>Audio<br><label><input '
-            + (settings[7] ? 'checked ' : '') + 'id=cl type=checkbox>Clear</label><br><a onclick="if(confirm(\'Reset settings?\')){get(\'cl\').checked=get(\'sv\').value=get(\'tz\').checked=1;get(\'gg\').value=.5;get(\'kj\').value=\'W\';get(\'km\').value=\'AD\';get(\'kr\').value=\'H\';get(\'jv\').value=-10;get(\'si\').value=25;get(\'sp\').value=4;get(\'tv\').value=9;save();setmode(0,1)}">Reset Settings</a><br><a onclick="get(\'hz\').style.display=get(\'hz\').style.display===\'none\'?\'inline\':\'none\'">Hack</a><span id=hz style=display:none><br><br><input id=gg size=1 type=text value='
-            + settings[3] + '>Gravity<br><input id=jv size=1 type=text value='
-            + settings[2] + '>Jump Speed<br><input id=si size=1 type=text value='
-            + settings[5] + '>ms/Frame<br><input id=sp size=1 type=text value='
-            + settings[6] + '>Speed<br><input id=tv size=1 type=text value='
+            + (settings[7] ? 'checked ' : '') + 'id=cl type=checkbox>Clear</label><br><a onclick="if(confirm(\'Reset settings?\')){get(\'cl\').checked=get(\'sv\').value=get(\'tz\').checked=1;get(\'gg\').value=.5;get(\'kj\').value=\'W\';get(\'km\').value=\'AD\';get(\'kr\').value=\'H\';get(\'jv\').value=-10;get(\'si\').value=25;get(\'sp\').value=4;get(\'tv\').value=9;save();setmode(0,1)}">Reset Settings</a><br><a onclick="get(\'hz\').style.display=get(\'hz\').style.display===\'none\'?\'inline\':\'none\'">Hack</a><span id=hz style=display:none><br><br><input id=gg size=1 value='
+            + settings[3] + '>Gravity<br><input id=jv size=1 value='
+            + settings[2] + '>Jump Speed<br><input id=si size=1 value='
+            + settings[5] + '>ms/Frame<br><input id=sp size=1 value='
+            + settings[6] + '>Speed<br><input id=tv size=1 value='
             + settings[4] + '>Terminal Velocity</span></div></div>';
     }
 }
@@ -476,32 +476,32 @@ function update_static_buffer(){
     var temp_bottom = 0;
     var temp_right = 0;
 
-    /* determine limits required to hold certain dynamic objects */
+    // determine limits required to hold certain dynamic objects
     i = world_dynamic.length - 1;
     if(i >= 0){
         do{
-            /* only check objects that aren't reds, keywalls, keys, or moving */
+            // only check objects that aren't reds, keywalls, keys, or moving
             if(world_dynamic[i][4] != 3
              && world_dynamic[i][4] != 5
              && world_dynamic[i][4] != 's'
              && world_dynamic[i][7] == 0
              && world_dynamic[i][10] == 0){
-                /* check if object is leftmost object so far */
+                // check if object is leftmost object so far
                 if(world_dynamic[i][0] < buffer_static_left){
                     buffer_static_left = world_dynamic[i][0];
                 }
 
-                /* check if object is rightmost object so far */
+                // check if object is rightmost object so far
                 if(world_dynamic[i][0] + world_dynamic[i][2] > temp_right){
                     temp_right = world_dynamic[i][0] + world_dynamic[i][2];
                 }
 
-                /* check if object is topmost object so far */
+                // check if object is topmost object so far
                 if(world_dynamic[i][1] < buffer_static_top){
                     buffer_static_top = world_dynamic[i][1];
                 }
 
-                /* check if object is bottommost object so far */
+                // check if object is bottommost object so far
                 if(world_dynamic[i][1] + world_dynamic[i][3] > temp_bottom){
                     temp_bottom = world_dynamic[i][1] + world_dynamic[i][3];
                 }
@@ -509,33 +509,33 @@ function update_static_buffer(){
         }while(i--);
     }
 
-    /* determine limits required to hold static objects */
+    // determine limits required to hold static objects
     i = world_static.length - 1;
     if(i >= 0){
         do{
-            /* check if object is leftmost object so far */
+            // check if object is leftmost object so far
             if(world_static[i][0] < buffer_static_left){
                 buffer_static_left = world_static[i][0];
             }
 
-            /* check if object is rightmost object so far */
+            // check if object is rightmost object so far
             if(world_static[i][0] + world_static[i][2] > temp_right){
                 temp_right = world_static[i][0] + world_static[i][2];
             }
 
-            /* check if object is topmost object so far */
+            // check if object is topmost object so far
             if(world_static[i][1] < buffer_static_top){
                 buffer_static_top = world_static[i][1];
             }
 
-            /* check if object is bottommost object so far */
+            // check if object is bottommost object so far
             if(world_static[i][1] + world_static[i][3] > temp_bottom){
                 temp_bottom = world_static[i][1] + world_static[i][3];
             }
         }while(i--);
     }
 
-    /* calculate minimum width of buffer_static canvas, set and clear */
+    // calculate minimum width of buffer_static canvas, set and clear
     var temp_width = Math.abs(buffer_static_left) + Math.abs(temp_right);
     var temp_height = Math.abs(buffer_static_top) + Math.abs(temp_bottom);
 
@@ -549,13 +549,13 @@ function update_static_buffer(){
         temp_height
     );
 
-    /* translate to top left of canvas to simplify drawing code */
+    // translate to top left of canvas to simplify drawing code
     buffer_static.translate(
         -buffer_static_left,
         -buffer_static_top
     );
 
-    /* add static world objects to the buffer_static */
+    // add static world objects to the buffer_static
     i = world_static.length - 1;
     if(i >= 0){
         do{
@@ -571,17 +571,17 @@ function update_static_buffer(){
         }while(i--);
     }
 
-    /* add certain dynamic world objects to the buffer_static */
+    // add certain dynamic world objects to the buffer_static
     i = world_dynamic.length - 1;
     do{
-        /* only check objects that aren't reds, keywalls, keys, or moving */
+        // only check objects that aren't reds, keywalls, keys, or moving
         if(world_dynamic[i][4] != 3
          && world_dynamic[i][4] != 5
          && world_dynamic[i][4] != 's'
          && world_dynamic[i][7] == 0
          && world_dynamic[i][10] == 0){
 
-            /* if object has a texture, draw texture. else draw rect */
+            // if object has a texture, draw texture. else draw rect
             if(world_dynamic[i][4] > 1
              && world_dynamic[i][4] < 6){
                 buffer_static.translate(
@@ -616,7 +616,7 @@ function update_static_buffer(){
         }
     }while(i--);
 
-    /* add world text to buffer_static */
+    // add world text to buffer_static
     i = world_text.length-1;
     if(i >= 0){
         buffer_static.fillStyle = '#fff';
@@ -667,17 +667,17 @@ var player_x = 0;
 var player_y = 0;
 var player_y_vel = 0;
 var settings = [
-    ls.getItem('platform-0') === null ? 1 : parseFloat(ls.getItem('platform-0')),/* audio volume */
-    ls.getItem('platform-1') === null,/* track frames */
-    ls.getItem('platform-2') === null ? -10 : parseFloat(ls.getItem('platform-2')),/* jump speed */
-    ls.getItem('platform-3') === null ? .5 : parseFloat(ls.getItem('platform-3')),/* gravity */
-    ls.getItem('platform-4') === null ? 9 : parseFloat(ls.getItem('platform-4')),/* terminal velocity */
-    ls.getItem('platform-5') === null ? 25 : parseInt(ls.getItem('platform-5')),/* milliseconds per frame */
-    ls.getItem('platform-6') === null ? 4 : parseFloat(ls.getItem('platform-6')),/* movement speed */
-    ls.getItem('platform-7') === null,/* clear? */
-    ls.getItem('platform-8') === null ? 'W' : ls.getItem('platform-8'),/* jump key */
-    ls.getItem('platform-9') === null ? 'AD' : ls.getItem('platform-9'),/* movement keys */
-    ls.getItem('platform-10') === null ? 'H' : ls.getItem('platform-10')/* restart key */
+    ls.getItem('platform-0') === null ? 1 : parseFloat(ls.getItem('platform-0')),// audio volume
+    ls.getItem('platform-1') === null,// track frames
+    ls.getItem('platform-2') === null ? -10 : parseFloat(ls.getItem('platform-2')),// jump speed
+    ls.getItem('platform-3') === null ? .5 : parseFloat(ls.getItem('platform-3')),// gravity
+    ls.getItem('platform-4') === null ? 9 : parseFloat(ls.getItem('platform-4')),// terminal velocity
+    ls.getItem('platform-5') === null ? 25 : parseInt(ls.getItem('platform-5')),// milliseconds per frame
+    ls.getItem('platform-6') === null ? 4 : parseFloat(ls.getItem('platform-6')),// movement speed
+    ls.getItem('platform-7') === null,// clear?
+    ls.getItem('platform-8') === null ? 'W' : ls.getItem('platform-8'),// jump key
+    ls.getItem('platform-9') === null ? 'AD' : ls.getItem('platform-9'),// movement keys
+    ls.getItem('platform-10') === null ? 'H' : ls.getItem('platform-10')// restart key
 ];
 var state = 0;
 var width = 0;
@@ -705,7 +705,7 @@ window.onkeydown = function(e){
         }else if(String.fromCharCode(i) === settings[8]){
             key_jump = 1;
 
-        }else if(i === 27){/* ESC */
+        }else if(i === 27){// ESC
             setmode(0, 1);
 
         }else if(String.fromCharCode(i) === settings[10]){
