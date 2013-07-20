@@ -96,7 +96,6 @@ function draw(){
                         // handle collisions with platforms while moving left/right
                         if(platform != i){
                             if(key_left
-                             && !key_right
                              && player_y + 20 > world_dynamic[i][1]
                              && player_y - 20 < temp_object_right_y
                              && player_x != world_dynamic[i][0] - 20
@@ -105,7 +104,6 @@ function draw(){
                                 temp_player_x = player_x + player_dx;
                             }
                             if(key_right
-                             && !key_left
                              && player_y + 20 > world_dynamic[i][1]
                              && player_y - 20 < temp_object_right_y
                              && player_x != temp_object_right_x + 20
@@ -254,7 +252,6 @@ function draw(){
     buffer.fillStyle = '#fff';
     buffer.font = '23pt sans-serif';
     buffer.textAlign = 'center';
-    buffer.textBaseline = 'top';
 
     // if game is over, draw game over text
     if(state > 0){
@@ -281,6 +278,7 @@ function draw(){
     // if tracking frames, draw number of frames
     if(settings[1]){
         buffer.textAlign = 'left';
+        buffer.textBaseline = 'top';
         buffer.fillText(
             frames,
             5,
