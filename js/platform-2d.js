@@ -6,6 +6,7 @@ function draw(){
         if(key_left){
             player_dx -= settings[6];
         }
+
         if(key_right){
             player_dx += settings[6];
         }
@@ -23,6 +24,7 @@ function draw(){
                 if(world_dynamic[i][7] != 0){
                     if(world_dynamic[i][0] < world_dynamic[i][5]){
                         world_dynamic[i][7] = Math.abs(world_dynamic[i][7]);
+
                     }else if(world_dynamic[i][0] > world_dynamic[i][6] && world_dynamic[i][7] > 0){
                         world_dynamic[i][7] = -world_dynamic[i][7];
                     }
@@ -38,6 +40,7 @@ function draw(){
                 if(world_dynamic[i][10] != 0){
                     if(world_dynamic[i][1] < world_dynamic[i][8]){
                         world_dynamic[i][10] = Math.abs(world_dynamic[i][10]);
+
                     }else if(world_dynamic[i][1] > world_dynamic[i][9] && world_dynamic[i][10] > 0){
                         world_dynamic[i][10] = -world_dynamic[i][10];
                     }
@@ -86,6 +89,7 @@ function draw(){
 
                                     platform = i;
                                 }
+
                             }else if(temp_player_y < temp_object_right_y + 20
                                   && temp_player_y >= temp_object_right_y + 10){
                                 player_y_vel = temp_object_right_y - player_y + 20;
@@ -103,6 +107,7 @@ function draw(){
                                 player_dx = temp_object_right_x - player_x + 20;
                                 temp_player_x = player_x + player_dx;
                             }
+
                             if(key_right
                              && player_y + 20 > world_dynamic[i][1]
                              && player_y - 20 < temp_object_right_y
@@ -157,9 +162,11 @@ function draw(){
             if(hop_permission && key_jump){
                 player_y_vel = settings[2];// jump velocity
                 hop_permission = 0;
+
             }else{
                 player_y_vel = 0;
             }
+
         }else if(player_y_vel < settings[4]){// terminal velocity
             player_y_vel += settings[3];// gravity
         }
@@ -227,6 +234,7 @@ function draw(){
                         -temp_x,
                         -temp_y
                     );
+
                 }else{
                     buffer.fillStyle = '#3c3c3c';
                     buffer.fillRect(
@@ -340,13 +348,13 @@ function save(){
     i = 6;
     do{
         j = [
-            'sv',
-            'tz',
-            'jv',
-            'gg',
-            'tv',
-            'si',
-            'sp'
+            'audio-volume',
+            'time-display',
+            'jump-speed',
+            'gravity',
+            'terminal-velocity',
+            'ms-per-frame',
+            'speed'
         ][i];
 
         if(isNaN(get(j).value) || get(j).value === [1, 1, -10, .5, 9, 25, 4][i]){
@@ -373,7 +381,7 @@ function save(){
 
     i = 1;
     do{
-        settings[[1, 7][i]] = get(['tz', 'cl'][i]).checked;
+        settings[[1, 7][i]] = get(['time-display', 'clear'][i]).checked;
         if(settings[[1, 7][i]]){
             ls.removeItem('platform-' + [1, 7][i]);
 
@@ -387,7 +395,7 @@ function save(){
 
     i = 2;
     do{
-        if(get(['kj', 'km', 'kr'][i]).value === ['W', 'AD', 'H'][i]){
+        if(get(['key-jump', 'keys-move', 'key-restart'][i]).value === ['W', 'AD', 'H'][i]){
             ls.removeItem('platform-' + (i + 8));
             settings[i + 8] = [
                 'W',
@@ -396,7 +404,7 @@ function save(){
             ][i];
 
         }else{
-            settings[i + 8] = get(['kj', 'km', 'kr'][i]).value;
+            settings[i + 8] = get(['key-jump', 'keys-move', 'key-restart'][i]).value;
             ls.setItem(
                 'platform-' + (i + 8),
                 settings[i + 8]
@@ -454,16 +462,16 @@ function setmode(newmode, newgame){
         world_text = [];
 
         get('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><b>Platform-2D</b></div><hr><div class=c><ul><li><a onclick=setmode(3,1)>Generate Random Level</a><li><a onclick=setmode(4,1)>Randomized Lava Corridor</a></ul></div><hr><div class=c><ul><li><a onclick=setmode(5,1)>A Pit of Your Design</a><li><a onclick=setmode(6,1)>Booster Towers</a><li><a onclick=setmode(7,1)>Keys of a Father</a><li><a onclick=setmode(8,1)>Tutorial Island</a><li><a onclick=setmode(9,1)>Village of the Wolves</a></ul></div><hr><div class=c><label><input'
-            + (settings[1] ? ' checked' : '') + ' id=tz type=checkbox>Time</label></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=kj maxlength=1 size=3 value='
-            + settings[8] + '>Jump<br><input disabled size=3 style=border:0 value=ESC>Main Menu<br><input id=km maxlength=2 size=3 value='
-            + settings[9] + '>Move ←→<br><input id=kr maxlength=1 size=3 value='
-            + settings[10] + '>Restart</div><hr><div class=c><input id=sv max=1 min=0 step=.01 type=range value='
+            + (settings[1] ? ' checked' : '') + ' id=time-display type=checkbox>Time</label></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=key-jump maxlength=1 size=3 value='
+            + settings[8] + '>Jump<br><input disabled size=3 style=border:0 value=ESC>Main Menu<br><input id=keys-move maxlength=2 size=3 value='
+            + settings[9] + '>Move ←→<br><input id=key-restart maxlength=1 size=3 value='
+            + settings[10] + '>Restart</div><hr><div class=c><input id=audio-volume max=1 min=0 step=.01 type=range value='
             + settings[0] + '>Audio<br><label><input '
-            + (settings[7] ? 'checked ' : '') + 'id=cl type=checkbox>Clear</label><br><a onclick="if(confirm(\'Reset settings?\')){get(\'cl\').checked=get(\'sv\').value=get(\'tz\').checked=1;get(\'gg\').value=.5;get(\'kj\').value=\'W\';get(\'km\').value=\'AD\';get(\'kr\').value=\'H\';get(\'jv\').value=-10;get(\'si\').value=25;get(\'sp\').value=4;get(\'tv\').value=9;save();setmode(0,1)}">Reset Settings</a><br><a onclick="get(\'hz\').style.display=get(\'hz\').style.display===\'none\'?\'inline\':\'none\'">Hack</a><span id=hz style=display:none><br><br><input id=gg size=1 value='
-            + settings[3] + '>Gravity<br><input id=jv size=1 value='
-            + settings[2] + '>Jump Speed<br><input id=si size=1 value='
-            + settings[5] + '>ms/Frame<br><input id=sp size=1 value='
-            + settings[6] + '>Speed<br><input id=tv size=1 value='
+            + (settings[7] ? 'checked ' : '') + 'id=clear type=checkbox>Clear</label><br><a onclick="if(confirm(\'Reset settings?\')){get(\'clear\').checked=get(\'audio-volume\').value=get(\'time-display\').checked=1;get(\'gravity\').value=.5;get(\'key-jump\').value=\'W\';get(\'keys-move\').value=\'AD\';get(\'key-restart\').value=\'H\';get(\'jump-speed\').value=-10;get(\'ms-per-frame\').value=25;get(\'speed\').value=4;get(\'terminal-velocity\').value=9;save();setmode(0, 1)}">Reset Settings</a><br><a onclick="get(\'hz\').style.display=get(\'hz\').style.display===\'none\'?\'inline\':\'none\'">Hack</a><span id=hz style=display:none><br><br><input id=gravity size=1 value='
+            + settings[3] + '>Gravity<br><input id=jump-speed size=1 value='
+            + settings[2] + '>Jump Speed<br><input id=ms-per-frame size=1 value='
+            + settings[5] + '>ms/Frame<br><input id=speed size=1 value='
+            + settings[6] + '>Speed<br><input id=terminal-velocity size=1 value='
             + settings[4] + '>Terminal Velocity</span></div></div>';
     }
 }
@@ -558,8 +566,8 @@ function update_static_buffer(){
     if(i >= 0){
         do{
             buffer_static.fillStyle = 'rgb(' + world_static[i][4] + ', '
-                                      + world_static[i][5] + ', '
-                                      + world_static[i][6] + ')';
+                                             + world_static[i][5] + ', '
+                                             + world_static[i][6] + ')';
             buffer_static.fillRect(
                 world_static[i][0],
                 world_static[i][1],
