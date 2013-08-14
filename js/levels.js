@@ -49,7 +49,7 @@ function level_logic(id){
                     0
                 ]);
                 world_dynamic.push([
-                    player_x + x + 50 + random_number(175),
+                    player_x + x + 50 + random_number(150),
                     25,
                     25,
                     25,
