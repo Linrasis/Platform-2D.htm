@@ -457,9 +457,9 @@ function setmode(newmode, newgame){
         buffer_static = 0;
         canvas = 0;
 
-        world_dynamic = [];
-        world_static = [];
-        world_text = [];
+        world_dynamic.length = 0;
+        world_static.length = 0;
+        world_text.length = 0;
 
         get('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><b>Platform-2D</b></div><hr><div class=c><ul><li><a onclick=setmode(3,1)>Generate Random Level</a><li><a onclick=setmode(4,1)>Randomized Lava Corridor</a></ul></div><hr><div class=c><ul><li><a onclick=setmode(5,1)>A Pit of Your Design</a><li><a onclick=setmode(6,1)>Booster Towers</a><li><a onclick=setmode(7,1)>Keys of a Father</a><li><a onclick=setmode(8,1)>Tutorial Island</a><li><a onclick=setmode(9,1)>Village of the Wolves</a></ul></div><hr><div class=c><label><input'
             + (settings[1] ? ' checked' : '') + ' id=time-display type=checkbox>Time</label></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=key-jump maxlength=1 size=3 value='

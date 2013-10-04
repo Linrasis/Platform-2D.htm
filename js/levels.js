@@ -235,6 +235,7 @@ function level_logic(id){
 }
 
 function load_level(id){
+    world_text.length = 0;
 
     // randomized level
     if(id == -2){
@@ -266,8 +267,6 @@ function load_level(id){
             [-100, -100, 75, 75, random_number(256), random_number(256), random_number(256)],
             [-75, -50, 25, 100, 190, 100, 0]
         ];
-
-        world_text = [];
 
         world_dynamic.push([
             -100,
@@ -440,6 +439,7 @@ function load_level(id){
                 0,
                 0
             ])
+
         }else{
             if(endtile_right === 1){
                 key_y = -90
@@ -495,8 +495,6 @@ function load_level(id){
         world_static = [
             [-x, -200, width + 400, 250, 0, 0, 0]
         ];
-
-        world_text = [];
 
         interval_logic = setInterval('level_logic(-1)', 100);
 
