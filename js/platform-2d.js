@@ -467,11 +467,11 @@ function setmode(newmode, newgame){
             + settings[9] + '>Move ←→<br><input id=key-restart maxlength=1 size=3 value='
             + settings[10] + '>Restart</div><hr><div class=c><input id=audio-volume max=1 min=0 step=.01 type=range value='
             + settings[0] + '>Audio<br><label><input '
-            + (settings[7] ? 'checked ' : '') + 'id=clear type=checkbox>Clear</label><br><a onclick="if(confirm(\'Reset settings?\')){get(\'clear\').checked=get(\'audio-volume\').value=get(\'time-display\').checked=1;get(\'gravity\').value=.5;get(\'key-jump\').value=\'W\';get(\'keys-move\').value=\'AD\';get(\'key-restart\').value=\'H\';get(\'jump-speed\').value=-10;get(\'ms-per-frame\').value=25;get(\'speed\').value=4;get(\'terminal-velocity\').value=9;save();setmode(0, 1)}">Reset Settings</a><br><a onclick="get(\'hz\').style.display=get(\'hz\').style.display===\'none\'?\'inline\':\'none\'">Hack</a><span id=hz style=display:none><br><br><input id=gravity size=1 value='
-            + settings[3] + '>Gravity<br><input id=jump-speed size=1 value='
-            + settings[2] + '>Jump Speed<br><input id=ms-per-frame size=1 value='
-            + settings[5] + '>ms/Frame<br><input id=speed size=1 value='
-            + settings[6] + '>Speed<br><input id=terminal-velocity size=1 value='
+            + (settings[7] ? 'checked ' : '') + 'id=clear type=checkbox>Clear</label><br><a onclick="if(confirm(\'Reset settings?\')){get(\'clear\').checked=get(\'audio-volume\').value=get(\'time-display\').checked=1;get(\'gravity\').value=.5;get(\'key-jump\').value=\'W\';get(\'keys-move\').value=\'AD\';get(\'key-restart\').value=\'H\';get(\'jump-speed\').value=-10;get(\'ms-per-frame\').value=25;get(\'speed\').value=4;get(\'terminal-velocity\').value=9;save();setmode(0, 1)}">Reset Settings</a><br><a onclick="get(\'hz\').style.display=get(\'hz\').style.display===\'none\'?\'inline\':\'none\'">Hack</a><span id=hz style=display:none><br><br><input id=gravity size=2 value='
+            + settings[3] + '>Gravity<br><input id=jump-speed size=2 value='
+            + settings[2] + '>Jump Speed<br><input id=ms-per-frame size=2 value='
+            + settings[5] + '>ms/Frame<br><input id=speed size=2 value='
+            + settings[6] + '>Speed<br><input id=terminal-velocity size=2 value='
             + settings[4] + '>Terminal Velocity</span></div></div>';
     }
 }
