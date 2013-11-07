@@ -647,10 +647,10 @@ function load_level(id){
                 [ 'most logical of paths.', 999, -55]
             ],
             [
-                [ 'A = Move Left', -185, -99],
-                ['D = Move Right', -185, 101],
-                ['Avoid the Red!',    0, 420],
-                [      'W = Jump',  170, 101]
+                [ settings[9][0] + ' = Move Left', -185, -99],
+                [settings[9][1] + ' = Move Right', -185, 101],
+                [                'Avoid the Red!',    0, 420],
+                [         settings[8] + ' = Jump',  170, 101]
             ],
             [
                 ['Village of the Wolves', -535, 175]
