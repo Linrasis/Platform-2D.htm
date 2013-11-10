@@ -421,10 +421,6 @@ function setmode(newmode, newgame){
 
     // new game mode
     if(mode > 0){
-        if(newgame){
-            save();
-        }
-
         frames = 0;
 
         key_left = 0;
@@ -438,6 +434,7 @@ function setmode(newmode, newgame){
         state = 0;
 
         if(newgame){
+            save();
             get('page').innerHTML = '<canvas id=canvas></canvas>';
             buffer = get('buffer').getContext('2d');
             buffer_static = get('buffer-static').getContext('2d');
