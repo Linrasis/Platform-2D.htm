@@ -229,6 +229,10 @@ function level_logic(id){
         do{
             if(i > 1 && world_dynamic[i][0] < world_dynamic[0][0]){
                 world_dynamic.splice(i, 1);
+
+                // might have to move this for performance reasons
+                update_static_buffer();
+                break
             }
         }while(i--);
     }
