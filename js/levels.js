@@ -245,6 +245,8 @@ function load_level(id){
     if(id == -2){
         get('canvas').style.backgroundColor = '#3c3c3c';
 
+        world_background = [];
+
         tile_count = random_number(9) + 1;
         if(tile_count % 2 === 0){
             tile_count += 1
@@ -491,6 +493,8 @@ function load_level(id){
     }else if(id == -1){
         get('canvas').style.backgroundColor = '#3c3c3c';
 
+        world_background = [];
+
         world_dynamic = [
             [-250, -200,  50, 250, 3, -250, 200, 3, 0, 0, 0],
             [ -50,   50, 100,  25, 1,    0,   0, 0, 0, 0, 0]
@@ -504,10 +508,16 @@ function load_level(id){
 
     // premade levels
     }else{
+        world_background = [
+            [-150, '#000', '#3c3c3c'],
+            [  60, '#000', '#3c3c3c'],
+            [],
+            [ 250, '#000', '#3c3c3c'],
+            [ 125, '#000', '#3c3c3c']
+        ][id];
+
         world_dynamic = [
             [
-                [-45, -175, 670,  25,   1,   0,   0, 0,    0,   0, 0],
-                [-45, -150,  25, 225,   1,   0,   0, 0,    0,   0, 0],
                 [-20,   50, 220,  25,   1,   0,   0, 0,    0,   0, 0],
                 [175,   75,  25, 475,   1,   0,   0, 0,    0,   0, 0],
                 [200,  525, 200,  25,   1,   0,   0, 0,    0,   0, 0],
@@ -608,10 +618,11 @@ function load_level(id){
         world_static = [
             [
                 [400,  75, 75,  75, random_number(256), random_number(256), random_number(256)],
-                [425, 125, 25, 125,                190,                100,                  0]
+                [425, 125, 25, 125,                190,                100,                  0],
+                [-20,-155,620, 205,                  0,                  0,                  0],
+                [200,  50,400, 450,                  0,                  0,                  0]
             ],
             [
-                [275,   110, 250, 25,                 60,                 60,                 60],
                 [-37, -1200,  75, 75, random_number(256), random_number(256), random_number(256)],
                 [-12, -1125,  25, 75,                190,                100,                  0]
             ],
@@ -627,10 +638,11 @@ function load_level(id){
                 [-405, 300, 800,  25,                 60,                 60,                 60],
                 [  20,  75,  25, 175,                 25,                 25,                 25],
                 [ 260, 100,  75,  75, random_number(256), random_number(256), random_number(256)],
-                [ 285, 150,  25, 100,                190,                100,                  0]
+                [ 285, 150,  25, 100,                190,                100,                  0],
+                [-405, 245, 850, 255,                  0,                  0,                  0]
             ],
             [
-                [-360, 275, 481, 20, 60, 60, 60]
+                [-360, 120, 481, 130, 0, 0, 0]
             ]
         ][id];
 

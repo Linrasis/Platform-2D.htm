@@ -183,6 +183,25 @@ function draw(){
         );
     }
 
+    // draw background colors if level asks for it
+    if(world_background.length > 0){
+        buffer.fillStyle = world_background[1];
+        buffer.fillRect(
+            0,
+            0,
+            width,
+            y - player_y + world_background[0]
+        );
+
+        buffer.fillStyle = world_background[2];
+        buffer.fillRect(
+            0,
+            y - player_y + world_background[0],
+            width,
+            height + player_y
+        );
+    }
+
     // draw buffer_static
     buffer.drawImage(
         get('buffer-static'),
@@ -684,6 +703,7 @@ var settings = [
 ];
 var state = 0;
 var width = 0;
+var world_background = [];
 var world_dynamic = [];
 var world_static = [];
 var world_text = [];
