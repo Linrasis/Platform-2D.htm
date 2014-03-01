@@ -13,8 +13,6 @@ function draw(){
 
         can_jump = 0;
         var temp_key = 0;
-        var temp_player_x = player_x + player_dx;
-        var temp_player_y = player_y + player_y_vel;
 
         i = world_dynamic.length - 1;
         do{
@@ -64,10 +62,10 @@ function draw(){
                 var temp_object_right_y = world_dynamic[i][1] + world_dynamic[i][3];
 
                 // check if player position + movmenet is within bounds of object
-                if(!(temp_player_x - 20 > temp_object_right_x
-                    || temp_player_x + 20 < world_dynamic[i][0]
-                    || temp_player_y - 20 > temp_object_right_y
-                    || temp_player_y + 20 < world_dynamic[i][1])
+                if(!(player_x + player_dx - 20 > temp_object_right_x
+                    || player_x + player_dx + 20 < world_dynamic[i][0]
+                    || player_y + player_y_vel - 20 > temp_object_right_y
+                    || player_y + player_y_vel + 20 < world_dynamic[i][1])
                   ){
                     // collide with platform or key-locked wall
                     if(world_dynamic[i][4] === 1 || world_dynamic[i][4] === 's'){
@@ -77,11 +75,11 @@ function draw(){
                          && player_x != world_dynamic[i][0] - 20
                          && player_x != temp_object_right_x + 20){
                             if(player_y_vel > 0){
-                                if(temp_player_y <= world_dynamic[i][1]-10 && temp_player_y > world_dynamic[i][1] - 20){
+                                if(player_y + player_y_vel <= world_dynamic[i][1] - 10
+                                 && player_y + player_y_vel > world_dynamic[i][1] - 20){
                                     can_jump = 1;
                                     player_y_vel = world_dynamic[i][1] - player_y - 20;
                                     player_dy = 0;
-                                    temp_player_y = player_y + player_y_vel;
 
                                     if(world_dynamic[i][7] != 0){
                                         player_dx += world_dynamic[i][7];
@@ -90,10 +88,9 @@ function draw(){
                                     platform = i;
                                 }
 
-                            }else if(temp_player_y < temp_object_right_y + 20
-                                  && temp_player_y >= temp_object_right_y + 10){
+                            }else if(player_y + player_y_vel < temp_object_right_y + 20
+                                  && player_y + player_y_vel >= temp_object_right_y + 10){
                                 player_y_vel = temp_object_right_y - player_y + 20;
-                                temp_player_y = player_y + player_y_vel;
                             }
                         }
 
@@ -105,7 +102,6 @@ function draw(){
                              && player_x != world_dynamic[i][0] - 20
                              && player_x > world_dynamic[i][0]){
                                 player_dx = temp_object_right_x - player_x + 20;
-                                temp_player_x = player_x + player_dx;
                             }
 
                             if(key_right
@@ -114,7 +110,6 @@ function draw(){
                              && player_x != temp_object_right_x + 20
                              && player_x < world_dynamic[i][0]){
                                 player_dx = world_dynamic[i][0] - player_x - 20;
-                                temp_player_x = player_x + player_dx;
                             }
                         }
 
