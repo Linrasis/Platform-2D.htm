@@ -243,7 +243,7 @@ function load_level(id){
 
     // randomized level
     if(id == -2){
-        get('canvas').style.backgroundColor = '#3c3c3c';
+        document.getElementById('canvas').style.backgroundColor = '#3c3c3c';
 
         world_background = [];
 
@@ -491,7 +491,7 @@ function load_level(id){
 
     // randomized lava corridor
     }else if(id == -1){
-        get('canvas').style.backgroundColor = '#3c3c3c';
+        document.getElementById('canvas').style.backgroundColor = '#3c3c3c';
 
         world_background = [];
 

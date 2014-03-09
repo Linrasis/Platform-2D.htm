@@ -199,7 +199,7 @@ function draw(){
 
     // draw buffer_static
     buffer.drawImage(
-        get('buffer-static'),
+        document.getElementById('buffer-static'),
         x - player_x + buffer_static_left,
         y - player_y + buffer_static_top
     );
@@ -317,36 +317,49 @@ function draw(){
         );
     }
     canvas.drawImage(
-        get('buffer'),
+        document.getElementById('buffer'),
         0,
         0
     );
 }
 
-function get(i){
-    return document.getElementById(i);
+function play_audio(i){
+    if(settings[0] > 0){// audio volume
+        document.getElementById(i).currentTime = 0;
+        document.getElementById(i).play();
+    }
 }
 
 function random_number(i){
     return Math.floor(Math.random() * i);
 }
 
-function play_audio(i){
-    if(settings[0] > 0){// audio volume
-        get(i).currentTime = 0;
-        get(i).play();
+function reset(){
+    if(confirm('Reset settings?')){
+        document.getElementById('audio-volume').value = 1;
+        document.getElementById('clear').checked = 1;
+        document.getElementById('gravity').value = .5;
+        document.getElementById('jump-speed').value = -10;
+        document.getElementById('key-jump').value = 'W';
+        document.getElementById('keys-move').value = 'AD';
+        document.getElementById('key-restart').value = 'H';
+        document.getElementById('ms-per-frame').value = 25;
+        document.getElementById('speed').value = 4;
+        document.getElementById('terminal-velocity').value = 9;
+        document.getElementById('time-display').checked = 1;
+        save();
     }
 }
 
 function resize(){
     if(mode > 0){
         width = window.innerWidth;
-        get('buffer').width = width;
-        get('canvas').width = width;
+        document.getElementById('buffer').width = width;
+        document.getElementById('canvas').width = width;
 
         height = window.innerHeight;
-        get('buffer').height = height;
-        get('canvas').height = height;
+        document.getElementById('buffer').height = height;
+        document.getElementById('canvas').height = height;
 
         x = width / 2;
         y = height / 2;
@@ -371,7 +384,7 @@ function save(){
             'speed'
         ][i];
 
-        if(isNaN(get(j).value) || get(j).value === [1, 1, -10, .5, 9, 25, 4][i]){
+        if(isNaN(document.getElementById(j).value) || document.getElementById(j).value === [1, 1, -10, .5, 9, 25, 4][i]){
             ls.removeItem('platform-' + i);
             settings[i] = [
                 1,
@@ -382,10 +395,10 @@ function save(){
                 25,
                 4
             ][i];
-            get(j).value = settings[i];
+            document.getElementById(j).value = settings[i];
 
         }else{
-            settings[i] = parseFloat(get(j).value);
+            settings[i] = parseFloat(document.getElementById(j).value);
             ls.setItem(
                 'platform-' + i,
                 settings[i]
@@ -395,7 +408,7 @@ function save(){
 
     i = 1;
     do{
-        settings[[1, 7][i]] = get(['time-display', 'clear'][i]).checked;
+        settings[[1, 7][i]] = document.getElementById(['time-display', 'clear'][i]).checked;
         if(settings[[1, 7][i]]){
             ls.removeItem('platform-' + [1, 7][i]);
 
@@ -409,7 +422,7 @@ function save(){
 
     i = 2;
     do{
-        if(get(['key-jump', 'keys-move', 'key-restart'][i]).value === ['W', 'AD', 'H'][i]){
+        if(document.getElementById(['key-jump', 'keys-move', 'key-restart'][i]).value === ['W', 'AD', 'H'][i]){
             ls.removeItem('platform-' + (i + 8));
             settings[i + 8] = [
                 'W',
@@ -418,7 +431,7 @@ function save(){
             ][i];
 
         }else{
-            settings[i + 8] = get(['key-jump', 'keys-move', 'key-restart'][i]).value;
+            settings[i + 8] = document.getElementById(['key-jump', 'keys-move', 'key-restart'][i]).value;
             ls.setItem(
                 'platform-' + (i + 8),
                 settings[i + 8]
@@ -449,10 +462,10 @@ function setmode(newmode, newgame){
 
         if(newgame){
             save();
-            get('page').innerHTML = '<canvas id=canvas></canvas>';
-            buffer = get('buffer').getContext('2d');
-            buffer_static = get('buffer-static').getContext('2d');
-            canvas = get('canvas').getContext('2d');
+            document.getElementById('page').innerHTML = '<canvas id=canvas></canvas>';
+            buffer = document.getElementById('buffer').getContext('2d');
+            buffer_static = document.getElementById('buffer-static').getContext('2d');
+            canvas = document.getElementById('canvas').getContext('2d');
             resize();
         }
 
@@ -472,7 +485,7 @@ function setmode(newmode, newgame){
         world_static.length = 0;
         world_text.length = 0;
 
-        get('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><b>Platform-2D</b></div><hr><div class=c><ul><li><a onclick=setmode(3,1)>Generate Random Level</a><li><a onclick=setmode(4,1)>Randomized Lava Corridor</a></ul></div><hr><div class=c><ul><li><a onclick=setmode(5,1)>A Pit of Your Design</a><li><a onclick=setmode(6,1)>Booster Towers</a><li><a onclick=setmode(7,1)>Keys of a Father</a><li><a onclick=setmode(8,1)>Tutorial Island</a><li><a onclick=setmode(9,1)>Village of the Wolves</a></ul></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=key-jump maxlength=1 value='
+        document.getElementById('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><b>Platform-2D</b></div><hr><div class=c><ul><li><a onclick=setmode(3,1)>Generate Random Level</a><li><a onclick=setmode(4,1)>Randomized Lava Corridor</a></ul></div><hr><div class=c><ul><li><a onclick=setmode(5,1)>A Pit of Your Design</a><li><a onclick=setmode(6,1)>Booster Towers</a><li><a onclick=setmode(7,1)>Keys of a Father</a><li><a onclick=setmode(8,1)>Tutorial Island</a><li><a onclick=setmode(9,1)>Village of the Wolves</a></ul></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=key-jump maxlength=1 value='
             + settings[8] + '>Jump<br><input disabled style=border:0 value=ESC>Main Menu<br><input id=keys-move maxlength=2 value='
             + settings[9] + '>Move ←→<br><input id=key-restart maxlength=1 value='
             + settings[10] + '>Restart</div><hr><div class=c><input id=audio-volume max=1 min=0 step=.01 type=range value='
@@ -483,7 +496,7 @@ function setmode(newmode, newgame){
             + settings[5] + '>ms/Frame<br><input id=speed value='
             + settings[6] + '>Speed<br><input id=terminal-velocity value='
             + settings[4] + '>Terminal Velocity<br><label><input'
-            + (settings[1] ? ' checked' : '') + ' id=time-display type=checkbox>Time</label><br><a onclick="if(confirm(\'Reset settings?\')){get(\'clear\').checked=get(\'audio-volume\').value=get(\'time-display\').checked=1;get(\'gravity\').value=.5;get(\'key-jump\').value=\'W\';get(\'keys-move\').value=\'AD\';get(\'key-restart\').value=\'H\';get(\'jump-speed\').value=-10;get(\'ms-per-frame\').value=25;get(\'speed\').value=4;get(\'terminal-velocity\').value=9;save();setmode(0, 1)}">Reset Settings</a></div></div>';
+            + (settings[1] ? ' checked' : '') + ' id=time-display type=checkbox>Time</label><br><a onclick=reset()>Reset Settings</a></div></div>';
     }
 }
 
@@ -556,8 +569,8 @@ function update_static_buffer(){
     var temp_width = Math.abs(buffer_static_left) + Math.abs(temp_right);
     var temp_height = Math.abs(buffer_static_top) + Math.abs(temp_bottom);
 
-    get('buffer-static').width = temp_width;
-    get('buffer-static').height = temp_height;
+    document.getElementById('buffer-static').width = temp_width;
+    document.getElementById('buffer-static').height = temp_height;
 
     buffer_static.clearRect(
         0,
