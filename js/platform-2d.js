@@ -385,7 +385,7 @@ function save(){
         ][i];
 
         if(isNaN(document.getElementById(j).value) || document.getElementById(j).value === [1, 1, -10, .5, 9, 25, 4][i]){
-            ls.removeItem('platform-' + i);
+            window.localStorage.removeItem('platform-' + i);
             settings[i] = [
                 1,
                 1,
@@ -399,7 +399,7 @@ function save(){
 
         }else{
             settings[i] = parseFloat(document.getElementById(j).value);
-            ls.setItem(
+            window.localStorage.setItem(
                 'platform-' + i,
                 settings[i]
             );
@@ -410,10 +410,10 @@ function save(){
     do{
         settings[[1, 7][i]] = document.getElementById(['time-display', 'clear'][i]).checked;
         if(settings[[1, 7][i]]){
-            ls.removeItem('platform-' + [1, 7][i]);
+            window.localStorage.removeItem('platform-' + [1, 7][i]);
 
         }else{
-            ls.setItem(
+            window.localStorage.setItem(
                 'platform-' + [1, 7][i],
                 0
             );
@@ -423,7 +423,7 @@ function save(){
     i = 2;
     do{
         if(document.getElementById(['key-jump', 'keys-move', 'key-restart'][i]).value === ['W', 'AD', 'H'][i]){
-            ls.removeItem('platform-' + (i + 8));
+            window.localStorage.removeItem('platform-' + (i + 8));
             settings[i + 8] = [
                 'W',
                 'AD',
@@ -432,7 +432,7 @@ function save(){
 
         }else{
             settings[i + 8] = document.getElementById(['key-jump', 'keys-move', 'key-restart'][i]).value;
-            ls.setItem(
+            window.localStorage.setItem(
                 'platform-' + (i + 8),
                 settings[i + 8]
             );
@@ -690,24 +690,23 @@ var j = 0;
 var key_left = 0;
 var key_right = 0;
 var key_jump = 0;
-var ls = window.localStorage;
 var mode = 0;
 var platform = -1;
 var player_x = 0;
 var player_y = 0;
 var player_y_vel = 0;
 var settings = [
-    ls.getItem('platform-0') === null ? 1 : parseFloat(ls.getItem('platform-0')),// audio volume
-    ls.getItem('platform-1') === null,// track frames
-    ls.getItem('platform-2') === null ? -10 : parseFloat(ls.getItem('platform-2')),// jump speed
-    ls.getItem('platform-3') === null ? .5 : parseFloat(ls.getItem('platform-3')),// gravity
-    ls.getItem('platform-4') === null ? 9 : parseFloat(ls.getItem('platform-4')),// terminal velocity
-    ls.getItem('platform-5') === null ? 25 : parseInt(ls.getItem('platform-5')),// milliseconds per frame
-    ls.getItem('platform-6') === null ? 4 : parseFloat(ls.getItem('platform-6')),// movement speed
-    ls.getItem('platform-7') === null,// clear?
-    ls.getItem('platform-8') === null ? 'W' : ls.getItem('platform-8'),// jump key
-    ls.getItem('platform-9') === null ? 'AD' : ls.getItem('platform-9'),// movement keys
-    ls.getItem('platform-10') === null ? 'H' : ls.getItem('platform-10')// restart key
+    window.localStorage.getItem('platform-0') === null ? 1 : parseFloat(window.localStorage.getItem('platform-0')),// audio volume
+    window.localStorage.getItem('platform-1') === null,// track frames
+    window.localStorage.getItem('platform-2') === null ? -10 : parseFloat(window.localStorage.getItem('platform-2')),// jump speed
+    window.localStorage.getItem('platform-3') === null ? .5 : parseFloat(window.localStorage.getItem('platform-3')),// gravity
+    window.localStorage.getItem('platform-4') === null ? 9 : parseFloat(window.localStorage.getItem('platform-4')),// terminal velocity
+    window.localStorage.getItem('platform-5') === null ? 25 : parseInt(window.localStorage.getItem('platform-5')),// milliseconds per frame
+    window.localStorage.getItem('platform-6') === null ? 4 : parseFloat(window.localStorage.getItem('platform-6')),// movement speed
+    window.localStorage.getItem('platform-7') === null,// clear?
+    window.localStorage.getItem('platform-8') === null ? 'W' : window.localStorage.getItem('platform-8'),// jump key
+    window.localStorage.getItem('platform-9') === null ? 'AD' : window.localStorage.getItem('platform-9'),// movement keys
+    window.localStorage.getItem('platform-10') === null ? 'H' : window.localStorage.getItem('platform-10')// restart key
 ];
 var state = 0;
 var width = 0;
