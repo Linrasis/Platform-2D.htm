@@ -723,38 +723,41 @@ setmode(0, 1);
 
 window.onkeydown = function(e){
     if(mode > 0){
-        i = window.event ? event : e;
-        i = i.charCode ? i.charCode : i.keyCode;
+        var key = window.event ? event : e;
+        key = key.charCode ? key.charCode : key.keyCode;
 
-        if(String.fromCharCode(i) === settings[9][0]){
-            key_left = 1;
-
-        }else if(String.fromCharCode(i) === settings[9][1]){
-            key_right = 1;
-
-        }else if(String.fromCharCode(i) === settings[8]){
-            key_jump = 1;
-
-        }else if(i === 27){// ESC
+        if(key === 27){// ESC
             setmode(0, 1);
 
-        }else if(String.fromCharCode(i) === settings[10]){
-            setmode(mode, 0);
+        }else{
+            key = String.fromCharCode(key);
+            if(key === settings[9][0]){
+                key_left = 1;
+
+            }else if(key === settings[9][1]){
+                key_right = 1;
+
+            }else if(key === settings[8]){
+                key_jump = 1;
+
+            }else if(key === settings[10]){
+                setmode(mode, 0);
+            }
         }
     }
 };
 
 window.onkeyup = function(e){
-    i = window.event ? event : e;
-    i = i.charCode ? i.charCode : i.keyCode;
+    var key = window.event ? event : e;
+    key = String.fromCharCode(key.charCode ? key.charCode : key.keyCode);
 
-    if(String.fromCharCode(i) === settings[9][0]){
+    if(key === settings[9][0]){
         key_left = 0;
 
-    }else if(String.fromCharCode(i) === settings[9][1]){
+    }else if(key === settings[9][1]){
         key_right = 0;
 
-    }else if(String.fromCharCode(i) === settings[8]){
+    }else if(key === settings[8]){
         key_jump = 0;
         hop_permission = 1;
     }
