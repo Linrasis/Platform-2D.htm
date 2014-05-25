@@ -330,10 +330,10 @@ function draw(){
     );
 }
 
-function play_audio(i){
+function play_audio(id){
     if(settings[0] > 0){// audio volume
-        document.getElementById(i).currentTime = 0;
-        document.getElementById(i).play();
+        document.getElementById(id).currentTime = 0;
+        document.getElementById(id).play();
     }
 }
 
@@ -390,7 +390,8 @@ function save(){
           'speed'
         ][i];
 
-        if(isNaN(document.getElementById(j).value) || document.getElementById(j).value === [1, 1, -10, .5, 9, 25, 4][i]){
+        if(isNaN(document.getElementById(j).value)
+          || document.getElementById(j).value === [1, 1, -10, .5, 9, 25, 4][i]){
             window.localStorage.removeItem('platform-' + i);
             settings[i] = [
               1,
