@@ -10,18 +10,18 @@ function level_logic(id){
             world_dynamic[0][0] -= 400;
 
             // move all world objects back 400px, except for lava wall and floor/ceiling
-            i = world_dynamic.length - 1;
+            var loop_counter = world_dynamic.length - 1;
             do{
-                if(i > 1){
-                    world_dynamic[i][0] -= 400;
+                if(loop_counter > 1){
+                    world_dynamic[loop_counter][0] -= 400;
                 }
-            }while(i--);
+            }while(loop_counter--);
 
             // randomly pick next obstacle*/
-            i = random_number(4);
+            var obstacle = random_number(4);
 
             // lava pit obstacle
-            if(i == 0){
+            if(obstacle == 0){
                 world_dynamic.push([
                   player_x + x,
                   -25,
@@ -76,7 +76,7 @@ function level_logic(id){
                 ]);
 
             // booster obstacle
-            }else if(i == 1){
+            }else if(obstacle == 1){
                 world_dynamic.push([
                   player_x + x,
                   -200,
@@ -119,7 +119,7 @@ function level_logic(id){
                 ]);
 
             // wall backtrack obstacle
-            }else if(i == 2){
+            }else if(obstacle == 2){
                 world_dynamic.push([
                   player_x + x,
                   -200,
@@ -225,17 +225,20 @@ function level_logic(id){
         world_dynamic[1][0] = player_x - 50;
 
         // delete objects that are eaten by the lava wall
-        i = world_dynamic.length - 1;
+        var loop_counter = world_dynamic.length - 1;
         do{
-            if(i > 1
-              && world_dynamic[i][0] < world_dynamic[0][0]){
-                world_dynamic.splice(i, 1);
+            if(loop_counter > 1
+              && world_dynamic[loop_counter][0] < world_dynamic[0][0]){
+                world_dynamic.splice(
+                  loop_counter,
+                  1
+                );
 
                 // might have to move this for performance reasons
                 update_static_buffer();
                 break;
             }
-        }while(i--);
+        }while(loop_counter--);
     }
 }
 
