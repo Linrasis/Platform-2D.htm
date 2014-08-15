@@ -347,7 +347,7 @@ function random_number(i){
 function reset(){
     if(confirm('Reset settings?')){
         document.getElementById('audio-volume').value = 1;
-        document.getElementById('clear').checked = 1;
+        document.getElementById('clear').checked = true;
         document.getElementById('gravity').value = .5;
         document.getElementById('jump-speed').value = -10;
         document.getElementById('key-jump').value = 'W';
@@ -356,7 +356,7 @@ function reset(){
         document.getElementById('ms-per-frame').value = 25;
         document.getElementById('speed').value = 4;
         document.getElementById('terminal-velocity').value = 9;
-        document.getElementById('time-display').checked = 1;
+        document.getElementById('time-display').checked = true;
         save();
     }
 }
