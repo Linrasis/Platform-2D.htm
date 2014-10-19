@@ -380,25 +380,25 @@ function save(){
     do{
         var id = [
           'audio-volume',
-          'time-display',
-          'jump-speed',
           'gravity',
-          'terminal-velocity',
+          'jump-speed',
           'ms-per-frame',
-          'speed'
+          'speed',
+          'terminal-velocity',
+          'time-display',
         ][loop_counter];
 
         if(isNaN(document.getElementById(id).value)
-          || document.getElementById(id).value === [1, 1, -10, .5, 9, 25, 4][loop_counter]){
+          || document.getElementById(id).value === [1, .5, -10, 25, 4, 9, 1][loop_counter]){
             window.localStorage.removeItem('Platform-2D.htm-' + id);
             settings[id] = [
               1,
-              1,
-              -10,
               .5,
-              9,
+              -10,
               25,
-              4
+              4,
+              9,
+              1,
             ][loop_counter];
             document.getElementById(id).value = settings[id];
 
@@ -436,7 +436,7 @@ function save(){
             settings[id] = [
               'W',
               'AD',
-              'H'
+              'H',
             ][loop_counter];
 
         }else{
@@ -680,7 +680,7 @@ var assets_images = [
   new Image(),
   new Image(),
   new Image(),
-  new Image()
+  new Image(),
 ];
 assets_images[0].src = 'assets/goal.png';
 assets_images[1].src = 'assets/red.png';

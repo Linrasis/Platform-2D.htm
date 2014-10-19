@@ -33,7 +33,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
                 world_dynamic.push([
                   player_x + x + 50,
@@ -46,7 +46,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
                 world_dynamic.push([
                   player_x + x + 50 + random_number(150),
@@ -59,7 +59,7 @@ function level_logic(id){
                   0,
                   -200,
                   25,
-                  2
+                  2,
                 ]);
                 world_dynamic.push([
                   player_x + x + 225,
@@ -72,7 +72,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
 
             // booster obstacle
@@ -88,7 +88,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
                 world_dynamic.push([
                   player_x + x + 75,
@@ -102,7 +102,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  -14
+                  -14,
                 ]);
                 world_dynamic.push([
                   player_x + x + 100,
@@ -115,7 +115,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
 
             // wall backtrack obstacle
@@ -131,7 +131,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
                 world_dynamic.push([
                   player_x + x + 25,
@@ -144,7 +144,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
                 world_dynamic.push([
                   player_x + x + 75,
@@ -157,7 +157,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
                 world_dynamic.push([
                   player_x + x + 200,
@@ -170,7 +170,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
 
             // lava pillars obstacle
@@ -186,7 +186,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
                 world_dynamic.push([
                   player_x + x + 100,
@@ -199,7 +199,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
                 world_dynamic.push([
                   player_x + x + 200,
@@ -212,7 +212,7 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                  0
+                  0,
                 ]);
             }
             update_static_buffer();
@@ -264,18 +264,18 @@ function load_level(id){
           [
             [ (total_tiles * 200) / 2 + 200, -200, 25, 325,   1, 0, 0, 0, 0, 0, 0],
             [(-total_tiles * 200) / 2 - 200, -200, 25, 325, 's', 0, 0, 0, 0, 0, 0],
-            [(-total_tiles * 200) / 2 - 225, -200, 25, 325,   2, 0, 0, 0, 0, 0, 0]
+            [(-total_tiles * 200) / 2 - 225, -200, 25, 325,   2, 0, 0, 0, 0, 0, 0],
           ],
           [
             [(-total_tiles * 200) / 2 - 225, -200, 25, 325,   1, 0, 0, 0, 0, 0, 0],
             [ (total_tiles * 200) / 2 + 175, -200, 25, 325, 's', 0, 0, 0, 0, 0, 0],
-            [ (total_tiles * 200) / 2 + 200, -200, 25, 325,   2, 0, 0, 0, 0, 0, 0]
-          ]
+            [ (total_tiles * 200) / 2 + 200, -200, 25, 325,   2, 0, 0, 0, 0, 0, 0],
+          ],
         ][side];
 
         world_static = [
           [-100, -100, 75, 75, random_number(256), random_number(256), random_number(256)],
-          [-75, -50, 25, 100, 190, 100, 0]
+          [-75, -50, 25, 100, 190, 100, 0],
         ];
 
         world_dynamic.push([
@@ -289,7 +289,7 @@ function load_level(id){
           0,
           0,
           0,
-          0
+          0,
         ]);
 
         do{
@@ -314,7 +314,7 @@ function load_level(id){
               0,
               0,
               0,
-              0
+              0,
             ]);
 
             if(tile_type === 1){
@@ -375,7 +375,7 @@ function load_level(id){
                       Math.random() < .5 ? 2 : -2,
                       0,
                       0,
-                      0
+                      0,
                     ]);
                 }
                 world_dynamic.push([tile_middle_x, 60, 200, 25,4, 0, 0, 0, 0, 0, 0, -12]);
@@ -398,7 +398,7 @@ function load_level(id){
                           0,
                           -175,
                           100,
-                          2
+                          2,
                         ]);
                     }
                 }
@@ -434,7 +434,7 @@ function load_level(id){
               0,
               0,
               0,
-              0
+              0,
             ]);
         }while(tile_count--);
 
@@ -449,7 +449,7 @@ function load_level(id){
           0,
           0,
           0,
-          0
+          0,
         ]);
 
         var key_y = 10;
@@ -490,7 +490,7 @@ function load_level(id){
               0,
               0,
               0,
-              0
+              0,
             ]);
 
         }else{
@@ -530,7 +530,7 @@ function load_level(id){
               0,
               0,
               0,
-              0
+              0,
             ]);
         }
         world_static.push([
@@ -540,7 +540,7 @@ function load_level(id){
           250,
           0,
           0,
-          0
+          0,
         ]);
 
     // randomized lava corridor
@@ -551,11 +551,11 @@ function load_level(id){
 
         world_dynamic = [
           [-250, -200,  50, 250, 3, -250, 200, 3, 0, 0, 0],
-          [ -50,   50, 100,  25, 1,    0,   0, 0, 0, 0, 0]
+          [ -50,   50, 100,  25, 1,    0,   0, 0, 0, 0, 0],
         ];
 
         world_static = [
-          [-x, -200, width + 400, 250, 0, 0, 0]
+          [-x, -200, width + 400, 250, 0, 0, 0],
         ];
 
         interval_logic = setInterval('level_logic(-1)', 100);
@@ -567,7 +567,7 @@ function load_level(id){
           [  60, '#000', '#3c3c3c'],
           [],
           [ 250, '#000', '#3c3c3c'],
-          [ 125, '#000', '#3c3c3c']
+          [ 125, '#000', '#3c3c3c'],
         ][id];
 
         world_dynamic = [
@@ -593,7 +593,7 @@ function load_level(id){
             [200,   75,  50,  50,   5,   0,   0, 0,    0,   0, 0],
             [300,  215,  50,  50,   5,   0,   0, 0,    0,   0, 0],
             [200,  350,  50,  50,   5,   0,   0, 0,    0,   0, 0],
-            [200,  475, 200,  25, 's',   0,   0, 0,    0,   0, 0]
+            [200,  475, 200,  25, 's',   0,   0, 0,    0,   0, 0],
           ],
           [
             [-45, -1050, 595,   25, 1, 0, 0, 0, 0, 0, 0],
@@ -612,7 +612,7 @@ function load_level(id){
             [500,  -515,  25,  625, 3, 0, 0, 0, 0, 0, 0],
             [275,    60, 100,   25, 4, 0, 0, 0, 0, 0, 0, -20],
             [400,  -565, 125,   25, 4, 0, 0, 0, 0, 0, 0, -20],
-            [400,    60, 100,   25, 4, 0, 0, 0, 0, 0, 0, -26]
+            [400,    60, 100,   25, 4, 0, 0, 0, 0, 0, 0, -26],
           ],
           [
             [ -45, -150, 1300,  25,   1, 0, 0, 0,   0,   0,  0],
@@ -629,7 +629,7 @@ function load_level(id){
             [ 675,  -60,   25,  25,   3, 0, 0, 0, -75, 150, -3],
             [ 700,  -60,   25,  25,   3, 0, 0, 0, -75, 150, -2],
             [ -20,   75,   50,  50,   5, 0, 0, 0,   0,   0,  0],
-            [ 400, -125,   25, 200, 's', 0, 0, 0,   0,   0,  0]
+            [ 400, -125,   25, 200, 's', 0, 0, 0,   0,   0,  0],
           ],
           [
             [-430, -150, 475,  25, 1, 0, 0, 0,   0,   0,  0],
@@ -648,7 +648,7 @@ function load_level(id){
             [  -5,  365,  25,  25, 3, 0, 0, 0, 325, 450, -1],
             [  95,  399,  25,  25, 3, 0, 0, 0, 325, 450, -2],
             [ 195,  411,  25,  25, 3, 0, 0, 0, 325, 450,  4],
-            [ 370,  200,  25,  75, 3, 0, 0, 0,   0,   0,  0]
+            [ 370,  200,  25,  75, 3, 0, 0, 0,   0,   0,  0],
           ],
           [
             [-715,   36,  35, 113, 1,    0,    0,  0, 0, 0, 0],
@@ -665,8 +665,8 @@ function load_level(id){
             [-715, -160,  25, 196, 3,    0,    0,  0, 0, 0, 0],
             [-690, -160, 140,  25, 3,    0,    0,  0, 0, 0, 0],
             [-550,   74,  50,  50, 3, -680, -410, -1, 0, 0, 0],
-            [-345,  250, 450,  25, 3,    0,    0,  0, 0, 0, 0]
-          ]
+            [-345,  250, 450,  25, 3,    0,    0,  0, 0, 0, 0],
+          ],
         ][id];
 
         world_static = [
@@ -674,11 +674,11 @@ function load_level(id){
             [400,  75, 75,  75, random_number(256), random_number(256), random_number(256)],
             [425, 125, 25, 125,                190,                100,                  0],
             [-20,-155,620, 205,                  0,                  0,                  0],
-            [200,  50,400, 450,                  0,                  0,                  0]
+            [200,  50,400, 450,                  0,                  0,                  0],
           ],
           [
             [-37, -1200,  75, 75, random_number(256), random_number(256), random_number(256)],
-            [-12, -1125,  25, 75,                190,                100,                  0]
+            [-12, -1125,  25, 75,                190,                100,                  0],
           ],
           [
             [525, -100,  75,  75, random_number(256), random_number(256), random_number(256)],
@@ -686,45 +686,45 @@ function load_level(id){
             [850,  100,  50,  35,                 60,                 60,                 60],
             [890,    0,  75,  50, random_number(256), random_number(256), random_number(256)],
             [915,   50,  25,  25,                190,                100,                  0],
-            [280,  185, 950,  25,                 60,                 60,                 60]
+            [280,  185, 950,  25,                 60,                 60,                 60],
           ],
           [
             [-405, 300, 800,  25,                 60,                 60,                 60],
             [  20,  75,  25, 175,                 25,                 25,                 25],
             [ 260, 100,  75,  75, random_number(256), random_number(256), random_number(256)],
             [ 285, 150,  25, 100,                190,                100,                  0],
-            [-405, 245, 850, 255,                  0,                  0,                  0]
+            [-405, 245, 850, 255,                  0,                  0,                  0],
           ],
           [
-            [-360, 120, 481, 130, 0, 0, 0]
-          ]
+            [-360, 120, 481, 130, 0, 0, 0],
+          ],
         ][id];
 
         world_text = [
           [
-            ['Trust No Mass', 165, -75]
+            ['Trust No Mass', 165, -75],
           ],
           [
             [     '☺',  .5, -1090],
             ['Booster', 150,  -210],
             [ 'Towers', 150,  -170],
-            [    'INC', 150,  -130]
+            [    'INC', 150,  -130],
           ],
           [
             [      'Yellow keys guide', 200, -90],
             [    'you through life...', 200, -55],
             ['...but not often on the', 999, -90],
-            [ 'most logical of paths.', 999, -55]
+            [ 'most logical of paths.', 999, -55],
           ],
           [
             [ settings['movement-keys'][0] + ' = Move Left', -185, -99],
             [settings['movement-keys'][1] + ' = Move Right', -185, 101],
             [                'Avoid the Red!',    0, 420],
-            [         settings['jump-key'] + ' = Jump',  170, 101]
+            [         settings['jump-key'] + ' = Jump',  170, 101],
           ],
           [
-            ['Village of the Wolves', -535, 175]
-          ]
+            ['Village of the Wolves', -535, 175],
+          ],
         ][id];
     }
 }
