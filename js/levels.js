@@ -717,10 +717,10 @@ function load_level(id){
             [ 'most logical of paths.', 999, -55]
           ],
           [
-            [ settings[9][0] + ' = Move Left', -185, -99],
-            [settings[9][1] + ' = Move Right', -185, 101],
+            [ settings['movement-keys'][0] + ' = Move Left', -185, -99],
+            [settings['movement-keys'][1] + ' = Move Right', -185, 101],
             [                'Avoid the Red!',    0, 420],
-            [         settings[8] + ' = Jump',  170, 101]
+            [         settings['jump-key'] + ' = Jump',  170, 101]
           ],
           [
             ['Village of the Wolves', -535, 175]

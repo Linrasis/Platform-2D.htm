@@ -4,11 +4,11 @@ function draw(){
         var player_dy = 0;
 
         if(key_left){
-            player_dx -= settings[6];
+            player_dx -= settings['speed'];
         }
 
         if(key_right){
-            player_dx += settings[6];
+            player_dx += settings['speed'];
         }
 
         can_jump = 0;
@@ -161,28 +161,26 @@ function draw(){
         if(can_jump){
             if(hop_permission
               && key_jump){
-                player_y_vel = settings[2];// jump velocity
+                player_y_vel = settings['jump-speed'];
                 hop_permission = 0;
 
             }else{
                 player_y_vel = 0;
             }
 
-        }else if(player_y_vel < settings[4]){// terminal velocity
-            player_y_vel += settings[3];// gravity
+        }else if(player_y_vel < settings['terminal-velocity']){
+            player_y_vel += settings['gravity'];
         }
 
         frames += 1;
     }
 
-    if(settings[7]){// clear?
-        buffer.clearRect(
-          0,
-          0,
-          width,
-          height
-        );
-    }
+    buffer.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
 
     // draw background colors if level asks for it
     if(world_background.length > 0){
@@ -284,7 +282,7 @@ function draw(){
     // if game is over, draw game over text
     if(state > 0){
         buffer.fillText(
-          settings[10] + ' = Restart',
+          settings['restart-key'] + ' = Restart',
           x,
           y / 2 + 60
         );
@@ -308,7 +306,7 @@ function draw(){
     }
 
     // if tracking frames, draw number of frames
-    if(settings[1]){
+    if(settings['time-display']){
         buffer.textAlign = 'left';
         buffer.textBaseline = 'top';
         buffer.fillText(
@@ -318,14 +316,12 @@ function draw(){
         );
     }
 
-    if(settings[7]){// clear?
-        canvas.clearRect(
-          0,
-          0,
-          width,
-          height
-        );
-    }
+    canvas.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
     canvas.drawImage(
       document.getElementById('buffer'),
       0,
@@ -334,7 +330,7 @@ function draw(){
 }
 
 function play_audio(id){
-    if(settings[0] > 0){// audio volume
+    if(settings['audio-volume'] > 0){
         document.getElementById(id).currentTime = 0;
         document.getElementById(id).play();
     }
@@ -347,13 +343,12 @@ function random_number(i){
 function reset(){
     if(confirm('Reset settings?')){
         document.getElementById('audio-volume').value = 1;
-        document.getElementById('clear').checked = true;
         document.getElementById('gravity').value = .5;
+        document.getElementById('jump-key').value = 'W';
         document.getElementById('jump-speed').value = -10;
-        document.getElementById('key-jump').value = 'W';
-        document.getElementById('keys-move').value = 'AD';
-        document.getElementById('key-restart').value = 'H';
+        document.getElementById('movement-keys').value = 'AD';
         document.getElementById('ms-per-frame').value = 25;
+        document.getElementById('restart-key').value = 'H';
         document.getElementById('speed').value = 4;
         document.getElementById('terminal-velocity').value = 9;
         document.getElementById('time-display').checked = true;
@@ -383,7 +378,7 @@ function resize(){
 function save(){
     var loop_counter = 6;
     do{
-        j = [
+        var id = [
           'audio-volume',
           'time-display',
           'jump-speed',
@@ -393,10 +388,10 @@ function save(){
           'speed'
         ][loop_counter];
 
-        if(isNaN(document.getElementById(j).value)
-          || document.getElementById(j).value === [1, 1, -10, .5, 9, 25, 4][loop_counter]){
-            window.localStorage.removeItem('platform-' + loop_counter);
-            settings[loop_counter] = [
+        if(isNaN(document.getElementById(id).value)
+          || document.getElementById(id).value === [1, 1, -10, .5, 9, 25, 4][loop_counter]){
+            window.localStorage.removeItem('Platform-2D.htm-' + id);
+            settings[id] = [
               1,
               1,
               -10,
@@ -405,46 +400,50 @@ function save(){
               25,
               4
             ][loop_counter];
-            document.getElementById(j).value = settings[loop_counter];
+            document.getElementById(id).value = settings[id];
 
         }else{
-            settings[loop_counter] = parseFloat(document.getElementById(j).value);
+            settings[id] = parseFloat(document.getElementById(id).value);
             window.localStorage.setItem(
-              'platform-' + loop_counter,
-              settings[loop_counter]
+              'Platform-2D.htm-' + id,
+              settings[id]
             );
         }
     }while(loop_counter--);
 
-    loop_counter = 1;
-    do{
-        settings[[1, 7][loop_counter]] = document.getElementById(['time-display', 'clear'][loop_counter]).checked;
-        if(settings[[1, 7][loop_counter]]){
-            window.localStorage.removeItem('platform-' + [1, 7][loop_counter]);
+    // Save time-display setting.
+    settings['time-display'] = document.getElementById('time-display').checked;
+    if(settings['time-display']){
+        window.localStorage.removeItem('Platform-2D.htm-time-display');
 
-        }else{
-            window.localStorage.setItem(
-              'platform-' + [1, 7][loop_counter],
-              0
-            );
-        }
-    }while(loop_counter--);
+    }else{
+        window.localStorage.setItem(
+          'Platform-2D.htm-time-display',
+          1
+        );
+    }
 
     loop_counter = 2;
     do{
-        if(document.getElementById(['key-jump', 'keys-move', 'key-restart'][loop_counter]).value === ['W', 'AD', 'H'][loop_counter]){
-            window.localStorage.removeItem('platform-' + (loop_counter + 8));
-            settings[loop_counter + 8] = [
+        id = [
+          'jump-key',
+          'movement-keys',
+          'restart-key',
+        ][loop_counter];
+
+        if(document.getElementById(id).value === ['W', 'AD', 'H'][loop_counter]){
+            window.localStorage.removeItem('Platform-2D.htm-' + id);
+            settings[id] = [
               'W',
               'AD',
               'H'
             ][loop_counter];
 
         }else{
-            settings[loop_counter + 8] = document.getElementById(['key-jump', 'keys-move', 'key-restart'][loop_counter]).value;
+            settings[id] = document.getElementById(id).value;
             window.localStorage.setItem(
-              'platform-' + (loop_counter + 8),
-              settings[loop_counter + 8]
+              'Platform-2D.htm-' + id,
+              settings[id]
             );
         }
     }while(loop_counter--);
@@ -485,7 +484,7 @@ function setmode(newmode, newgame){
 
         interval = setInterval(
           'draw()',
-          settings[5]
+          settings['ms-per-frame']
         );
 
     // main menu mode
@@ -498,18 +497,17 @@ function setmode(newmode, newgame){
         world_static.length = 0;
         world_text.length = 0;
 
-        document.getElementById('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><b>Platform-2D.htm</b></div><hr><div class=c><ul><li><a onclick=setmode(3,1)>Generate Random Level</a><li><a onclick=setmode(4,1)>Randomized Lava Corridor</a></ul></div><hr><div class=c><ul><li><a onclick=setmode(5,1)>A Pit of Your Design</a><li><a onclick=setmode(6,1)>Booster Towers</a><li><a onclick=setmode(7,1)>Keys of a Father</a><li><a onclick=setmode(8,1)>Tutorial Island</a><li><a onclick=setmode(9,1)>Village of the Wolves</a></ul></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=key-jump maxlength=1 value='
-          + settings[8] + '>Jump<br><input disabled style=border:0 value=ESC>Main Menu<br><input id=keys-move maxlength=2 value='
-          + settings[9] + '>Move ←→<br><input id=key-restart maxlength=1 value='
-          + settings[10] + '>Restart</div><hr><div class=c><input id=audio-volume max=1 min=0 step=.01 type=range value='
-          + settings[0] + '>Audio<br><label><input '
-          + (settings[7] ? 'checked ' : '') + 'id=clear type=checkbox>Clear</label><br><input id=gravity value='
-          + settings[3] + '>Gravity<br><input id=jump-speed value='
-          + settings[2] + '>Jump Speed<br><input id=ms-per-frame value='
-          + settings[5] + '>ms/Frame<br><input id=speed value='
-          + settings[6] + '>Speed<br><input id=terminal-velocity value='
-          + settings[4] + '>Terminal Velocity<br><label><input'
-          + (settings[1] ? ' checked' : '') + ' id=time-display type=checkbox>Time</label><br><a onclick=reset()>Reset Settings</a></div></div>';
+        document.getElementById('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><b>Platform-2D.htm</b></div><hr><div class=c><ul><li><a onclick=setmode(3,1)>Generate Random Level</a><li><a onclick=setmode(4,1)>Randomized Lava Corridor</a></ul></div><hr><div class=c><ul><li><a onclick=setmode(5,1)>A Pit of Your Design</a><li><a onclick=setmode(6,1)>Booster Towers</a><li><a onclick=setmode(7,1)>Keys of a Father</a><li><a onclick=setmode(8,1)>Tutorial Island</a><li><a onclick=setmode(9,1)>Village of the Wolves</a></ul></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=jump-key maxlength=1 value='
+          + settings['jump-key'] + '>Jump<br><input disabled style=border:0 value=ESC>Main Menu<br><input id=movement-keys maxlength=2 value='
+          + settings['movement-keys'] + '>Move ←→<br><input id=restart-key maxlength=1 value='
+          + settings['restart-key'] + '>Restart</div><hr><div class=c><input id=audio-volume max=1 min=0 step=.01 type=range value='
+          + settings['audio-volume'] + '>Audio<br><input id=gravity value='
+          + settings['gravity'] + '>Gravity<br><input id=jump-speed value='
+          + settings['jump-speed'] + '>Jump Speed<br><input id=ms-per-frame value='
+          + settings['ms-per-frame'] + '>ms/Frame<br><input id=speed value='
+          + settings['speed'] + '>Speed<br><input id=terminal-velocity value='
+          + settings['terminal-velocity'] + '>Terminal Velocity<br><label><input'
+          + (settings['time-display'] ? ' checked' : '') + ' id=time-display type=checkbox>Time</label><br><a onclick=reset()>Reset Settings</a></div></div>';
     }
 }
 
@@ -708,37 +706,36 @@ var platform = -1;
 var player_x = 0;
 var player_y = 0;
 var player_y_vel = 0;
-var settings = [
-  window.localStorage.getItem('platform-0') === null
+var settings = {
+  'audio-volume': window.localStorage.getItem('Platform-2D.htm-audio-volume') === null
     ? 1
-    : parseFloat(window.localStorage.getItem('platform-0')),// audio volume
-  window.localStorage.getItem('platform-1') === null,// track frames
-  window.localStorage.getItem('platform-2') === null
-    ? -10
-    : parseFloat(window.localStorage.getItem('platform-2')),// jump speed
-  window.localStorage.getItem('platform-3') === null
+    : parseFloat(window.localStorage.getItem('Platform-2D.htm-audio-volume')),
+  'gravity': window.localStorage.getItem('Platform-2D.htm-gravity') === null
     ? .5
-    : parseFloat(window.localStorage.getItem('platform-3')),// gravity
-  window.localStorage.getItem('platform-4') === null
-    ? 9
-    : parseFloat(window.localStorage.getItem('platform-4')),// terminal velocity
-  window.localStorage.getItem('platform-5') === null
-    ? 25
-    : parseInt(window.localStorage.getItem('platform-5')),// milliseconds per frame
-  window.localStorage.getItem('platform-6') === null
-    ? 4
-    : parseFloat(window.localStorage.getItem('platform-6')),// movement speed
-  window.localStorage.getItem('platform-7') === null,// clear?
-  window.localStorage.getItem('platform-8') === null
+    : parseFloat(window.localStorage.getItem('Platform-2D.htm-gravity')),
+  'jump-key': window.localStorage.getItem('Platform-2D.htm-jump-key') === null
     ? 'W'
-    : window.localStorage.getItem('platform-8'),// jump key
-  window.localStorage.getItem('platform-9') === null
+    : window.localStorage.getItem('Platform-2D.htm-jump-key'),
+  'jump-speed': window.localStorage.getItem('Platform-2D.htm-jump-speed') === null
+    ? -10
+    : parseFloat(window.localStorage.getItem('Platform-2D.htm-jump-speed')),
+  'movement-keys': window.localStorage.getItem('Platform-2D.htm-movement-keys') === null
     ? 'AD'
-    : window.localStorage.getItem('platform-9'),// movement keys
-  window.localStorage.getItem('platform-10') === null
+    : window.localStorage.getItem('Platform-2D.htm-movement-keys'),
+  'ms-per-frame': window.localStorage.getItem('Platform-2D.htm-ms-per-frame') === null
+    ? 25
+    : parseInt(window.localStorage.getItem('Platform-2D.htm-ms-per-frame')),
+  'speed': window.localStorage.getItem('Platform-2D.htm-speed') === null
+    ? 4
+    : parseFloat(window.localStorage.getItem('Platform-2D.htm-speed')),
+  'restart-key': window.localStorage.getItem('Platform-2D.htm-restart-key') === null
     ? 'H'
-    : window.localStorage.getItem('platform-10')// restart key
-];
+    : window.localStorage.getItem('Platform-2D.htm-restart-key'),
+  'terminal-velocity': window.localStorage.getItem('Platform-2D.htm-terminal-velocity') === null
+    ? 9
+    : parseFloat(window.localStorage.getItem('Platform-2D.htm-terminal-velocity')),
+  'time-display': window.localStorage.getItem('Platform-2D.htm-time-display') === null,
+};
 var state = 0;
 var width = 0;
 var world_background = [];
@@ -762,16 +759,16 @@ window.onkeydown = function(e){
 
         }else{
             key = String.fromCharCode(key);
-            if(key === settings[9][0]){
+            if(key === settings['movement-keys'][0]){
                 key_left = 1;
 
-            }else if(key === settings[9][1]){
+            }else if(key === settings['movement-keys'][1]){
                 key_right = 1;
 
-            }else if(key === settings[8]){
+            }else if(key === settings['jump-key']){
                 key_jump = 1;
 
-            }else if(key === settings[10]){
+            }else if(key === settings['restart-key']){
                 setmode(mode, 0);
             }
         }
@@ -782,13 +779,13 @@ window.onkeyup = function(e){
     var key = window.event ? event : e;
     key = String.fromCharCode(key.charCode ? key.charCode : key.keyCode);
 
-    if(key === settings[9][0]){
+    if(key === settings['movement-keys'][0]){
         key_left = 0;
 
-    }else if(key === settings[9][1]){
+    }else if(key === settings['movement-keys'][1]){
         key_right = 0;
 
-    }else if(key === settings[8]){
+    }else if(key === settings['jump-key']){
         key_jump = 0;
         hop_permission = 1;
     }
