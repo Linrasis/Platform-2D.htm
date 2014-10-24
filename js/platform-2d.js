@@ -16,9 +16,9 @@ function draw(){
 
         var loop_counter = world_dynamic.length - 1;
         do{
-            // if current game is still going, move objects
+            // If current game is still going, move objects.
             if(state < 1){
-                // x movement
+                // X movement.
                 if(world_dynamic[loop_counter][7] != 0){
                     if(world_dynamic[loop_counter][0] < world_dynamic[loop_counter][5]){
                         world_dynamic[loop_counter][7] = Math.abs(world_dynamic[loop_counter][7]);
@@ -28,14 +28,14 @@ function draw(){
                         world_dynamic[loop_counter][7] = -world_dynamic[loop_counter][7];
                     }
 
-                    // if player on moving platform, move player x
+                    // If player on moving platform, move player X.
                     if(platform === loop_counter){
                         player_dx += world_dynamic[loop_counter][7];
                     }
 
                     world_dynamic[loop_counter][0] += world_dynamic[loop_counter][7];
                 }
-                // y movement*/
+                // Y movement.
                 if(world_dynamic[loop_counter][10] != 0){
                     if(world_dynamic[loop_counter][1] < world_dynamic[loop_counter][8]){
                         world_dynamic[loop_counter][10] = Math.abs(world_dynamic[loop_counter][10]);
@@ -45,7 +45,7 @@ function draw(){
                         world_dynamic[loop_counter][10] = -world_dynamic[loop_counter][10];
                     }
 
-                    // if player on moving platform, move player y
+                    // If player on moving platform, move player Y.
                     if(platform === loop_counter){
                         player_dy += world_dynamic[loop_counter][10];
                     }
@@ -54,7 +54,7 @@ function draw(){
                 }
             }
 
-            // if player is moving or object is moving, check for collision
+            // If player is moving or object is moving, check for collision.
             if(player_dx != 0
               || player_dy != 0
               || player_y_vel != 0
@@ -63,16 +63,16 @@ function draw(){
                 var temp_object_right_x = world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2];
                 var temp_object_right_y = world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3];
 
-                // check if player position + movmenet is within bounds of object
+                // Check if player position + movmenet is within bounds of object.
                 if(!(player_x + player_dx - 20 > temp_object_right_x
                   || player_x + player_dx + 20 < world_dynamic[loop_counter][0]
                   || player_y + player_y_vel - 20 > temp_object_right_y
                   || player_y + player_y_vel + 20 < world_dynamic[loop_counter][1])
                 ){
-                    // collide with platform or key-locked wall
+                    // Collide with platform or key-locked wall.
                     if(world_dynamic[loop_counter][4] === 1
                       || world_dynamic[loop_counter][4] === 's'){
-                        // handle collisions with platforms while jumping or falling
+                        // Handle collisions with platforms while jumping or falling.
                         if(player_y_vel != 0
                           && player_x != world_dynamic[loop_counter][0] - 20
                           && player_x != temp_object_right_x + 20){
@@ -96,7 +96,7 @@ function draw(){
                             }
                         }
 
-                        // handle collisions with platforms while moving left/right
+                        // Handle collisions with platforms while moving left/right.
                         if(platform != loop_counter){
                             if(key_left
                               && player_y + 20 > world_dynamic[loop_counter][1]
@@ -115,23 +115,23 @@ function draw(){
                             }
                         }
 
-                    // collided with booster*/
+                    // Collided with booster.
                     }else if(world_dynamic[loop_counter][4] === 4){
                         player_y_vel = world_dynamic[loop_counter][11];
 
-                    // collided with green goal
+                    // Collided with green goal.
                     }else if(world_dynamic[loop_counter][4] === 2){
                         clearInterval(interval);
                         clearInterval(interval_logic);
                         state = 2;
 
-                    // collided with red rectangles
+                    // Collided with red rectangles.
                     }else if(world_dynamic[loop_counter][4] === 3){
                         clearInterval(interval);
                         clearInterval(interval_logic);
                         state = 3;
 
-                    // collided with a key
+                    // Collided with a key.
                     }else if(world_dynamic[loop_counter][4] === 5){
                         temp_key = loop_counter;
                     }
@@ -139,7 +139,7 @@ function draw(){
             }
         }while(loop_counter--);
 
-        // delete keys and key-locked walls if collided with key
+        // Delete keys and key-locked walls if collided with key.
         if(temp_key > 1){
             world_dynamic.splice(temp_key, 1);
 
@@ -182,7 +182,7 @@ function draw(){
       height
     );
 
-    // draw background colors if level asks for it
+    // Draw background colors if level asks for it.
     if(world_background.length > 0){
         buffer.fillStyle = world_background[1];
         buffer.fillRect(
@@ -201,7 +201,7 @@ function draw(){
         );
     }
 
-    // draw buffer_static
+    // Draw buffer_static.
     buffer.drawImage(
       document.getElementById('buffer-static'),
       x - player_x + buffer_static_left,
@@ -211,22 +211,22 @@ function draw(){
     x_offset = x - player_x;
     y_offset = y - player_y;
 
-    // draw dynamic world objects that aren't in the buffer_static
+    // Draw dynamic world objects that aren't in the buffer_static.
     var loop_counter = world_dynamic.length - 1;
     do{
-        // only draw objects that are reds, keywalls, keys, or moving
+        // Only draw objects that are reds, keywalls, keys, or moving.
         if(world_dynamic[loop_counter][4] == 3
           || world_dynamic[loop_counter][4] == 5
           || world_dynamic[loop_counter][4] == 's'
           || world_dynamic[loop_counter][7] != 0
           || world_dynamic[loop_counter][10] != 0){
-            // if dynamic object is on screen, draw it
+            // If dynamic object is on screen, draw it.
             if(world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] + x_offset > 0
               && world_dynamic[loop_counter][0] + x_offset < width
               && world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] + y_offset > 0
               && world_dynamic[loop_counter][1] + y_offset < height){
 
-                // if object has a texture, draw texture. else draw rect
+                // If object has a texture, draw texture. else draw rect.
                 if(world_dynamic[loop_counter][4] > 1
                   && world_dynamic[loop_counter][4] < 6){
                     var temp_x = world_dynamic[loop_counter][0] + x_offset;
@@ -266,7 +266,7 @@ function draw(){
         }
     }while(loop_counter--);
 
-    // draw player
+    // Draw player.
     buffer.fillStyle = '#090';
     buffer.fillRect(
       x - 20,
@@ -279,7 +279,7 @@ function draw(){
     buffer.font = '23pt sans-serif';
     buffer.textAlign = 'center';
 
-    // if game is over, draw game over text
+    // If game is over, draw game over text.
     if(state > 0){
         buffer.fillText(
           settings['restart-key'] + ' = Restart',
@@ -305,7 +305,7 @@ function draw(){
         );
     }
 
-    // if tracking frames, draw number of frames
+    // If tracking frames, draw number of frames.
     if(settings['time-display']){
         buffer.textAlign = 'left';
         buffer.textBaseline = 'top';
@@ -330,10 +330,12 @@ function draw(){
 }
 
 function play_audio(id){
-    if(settings['audio-volume'] > 0){
-        document.getElementById(id).currentTime = 0;
-        document.getElementById(id).play();
+    if(settings['audio-volume'] <= 0){
+        return;
     }
+
+    document.getElementById(id).currentTime = 0;
+    document.getElementById(id).play();
 }
 
 function random_number(i){
@@ -341,37 +343,42 @@ function random_number(i){
 }
 
 function reset(){
-    if(confirm('Reset settings?')){
-        document.getElementById('audio-volume').value = 1;
-        document.getElementById('gravity').value = .5;
-        document.getElementById('jump-key').value = 'W';
-        document.getElementById('jump-speed').value = -10;
-        document.getElementById('movement-keys').value = 'AD';
-        document.getElementById('ms-per-frame').value = 25;
-        document.getElementById('restart-key').value = 'H';
-        document.getElementById('speed').value = 4;
-        document.getElementById('terminal-velocity').value = 9;
-        document.getElementById('time-display').checked = true;
-        save();
+    if(!confirm('Reset settings?')){
+        return;
     }
+
+    document.getElementById('audio-volume').value = 1;
+    document.getElementById('gravity').value = .5;
+    document.getElementById('jump-key').value = 'W';
+    document.getElementById('jump-speed').value = -10;
+    document.getElementById('movement-keys').value = 'AD';
+    document.getElementById('ms-per-frame').value = 25;
+    document.getElementById('restart-key').value = 'H';
+    document.getElementById('speed').value = 4;
+    document.getElementById('terminal-velocity').value = 9;
+    document.getElementById('time-display').checked = true;
+
+    save();
 }
 
 function resize(){
-    if(mode > 0){
-        height = window.innerHeight;
-        document.getElementById('buffer').height = height;
-        document.getElementById('canvas').height = height;
-        y = height / 2;
+    if(mode <= 0){
+        return;
+    }
 
-        width = window.innerWidth;
-        document.getElementById('buffer').width = width;
-        document.getElementById('canvas').width = width;
-        x = width / 2;
+    height = window.innerHeight;
+    document.getElementById('buffer').height = height;
+    document.getElementById('canvas').height = height;
+    y = height / 2;
 
-        // if game is over, draw if resized
-        if(state > 0){
-            draw();
-        }
+    width = window.innerWidth;
+    document.getElementById('buffer').width = width;
+    document.getElementById('canvas').width = width;
+    x = width / 2;
+
+    // If game is over, draw if resized.
+    if(state > 0){
+        draw();
     }
 }
 
@@ -389,7 +396,7 @@ function save(){
         ][loop_counter];
 
         if(isNaN(document.getElementById(id).value)
-          || document.getElementById(id).value === [1, .5, -10, 25, 4, 9, 1][loop_counter]){
+          || document.getElementById(id).value === [1, .5, -10, 25, 4, 9, 1,][loop_counter]){
             window.localStorage.removeItem('Platform-2D.htm-' + id);
             settings[id] = [
               1,
@@ -431,7 +438,7 @@ function save(){
           'restart-key',
         ][loop_counter];
 
-        if(document.getElementById(id).value === ['W', 'AD', 'H'][loop_counter]){
+        if(document.getElementById(id).value === ['W', 'AD', 'H',][loop_counter]){
             window.localStorage.removeItem('Platform-2D.htm-' + id);
             settings[id] = [
               'W',
@@ -455,7 +462,7 @@ function setmode(newmode, newgame){
 
     mode = newmode;
 
-    // new game mode
+    // New game mode.
     if(mode > 0){
         frames = 0;
 
@@ -487,7 +494,7 @@ function setmode(newmode, newgame){
           settings['ms-per-frame']
         );
 
-    // main menu mode
+    // Main menu mode.
     }else{
         buffer = 0;
         buffer_static = 0;
@@ -517,32 +524,32 @@ function update_static_buffer(){
     var temp_bottom = 0;
     var temp_right = 0;
 
-    // determine limits required to hold certain dynamic objects
+    // Determine limits required to hold certain dynamic objects.
     var loop_counter = world_dynamic.length - 1;
     if(loop_counter >= 0){
         do{
-            // only check objects that aren't reds, keywalls, keys, or moving
+            // Only check objects that aren't reds, keywalls, keys, or moving.
             if(world_dynamic[loop_counter][4] != 3
               && world_dynamic[loop_counter][4] != 5
               && world_dynamic[loop_counter][4] != 's'
               && world_dynamic[loop_counter][7] == 0
               && world_dynamic[loop_counter][10] == 0){
-                // check if object is leftmost object so far
+                // Check if object is leftmost object so far.
                 if(world_dynamic[loop_counter][0] < buffer_static_left){
                     buffer_static_left = world_dynamic[loop_counter][0];
                 }
 
-                // check if object is rightmost object so far
+                // Check if object is rightmost object so far.
                 if(world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] > temp_right){
                     temp_right = world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2];
                 }
 
-                // check if object is topmost object so far
+                // Check if object is topmost object so far.
                 if(world_dynamic[loop_counter][1] < buffer_static_top){
                     buffer_static_top = world_dynamic[loop_counter][1];
                 }
 
-                // check if object is bottommost object so far
+                // Check if object is bottommost object so far.
                 if(world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] > temp_bottom){
                     temp_bottom = world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3];
                 }
@@ -550,33 +557,33 @@ function update_static_buffer(){
         }while(loop_counter--);
     }
 
-    // determine limits required to hold static objects
+    // Determine limits required to hold static objects.
     loop_counter = world_static.length - 1;
     if(loop_counter >= 0){
         do{
-            // check if object is leftmost object so far
+            // Check if object is leftmost object so far.
             if(world_static[loop_counter][0] < buffer_static_left){
                 buffer_static_left = world_static[loop_counter][0];
             }
 
-            // check if object is rightmost object so far
+            // Check if object is rightmost object so far.
             if(world_static[loop_counter][0] + world_static[loop_counter][2] > temp_right){
                 temp_right = world_static[loop_counter][0] + world_static[loop_counter][2];
             }
 
-            // check if object is topmost object so far
+            // Check if object is topmost object so far.
             if(world_static[loop_counter][1] < buffer_static_top){
                 buffer_static_top = world_static[loop_counter][1];
             }
 
-            // check if object is bottommost object so far
+            // Check if object is bottommost object so far.
             if(world_static[loop_counter][1] + world_static[loop_counter][3] > temp_bottom){
                 temp_bottom = world_static[loop_counter][1] + world_static[loop_counter][3];
             }
         }while(loop_counter--);
     }
 
-    // calculate minimum width of buffer_static canvas, set and clear
+    // Calculate minimum width of buffer_static canvas, set and clear.
     var temp_height = Math.abs(buffer_static_top) + Math.abs(temp_bottom);
     var temp_width = Math.abs(buffer_static_left) + Math.abs(temp_right);
 
@@ -590,13 +597,13 @@ function update_static_buffer(){
       temp_height
     );
 
-    // translate to top left of canvas to simplify drawing code
+    // Translate to top left of canvas to simplify drawing code.
     buffer_static.translate(
       -buffer_static_left,
       -buffer_static_top
     );
 
-    // add static world objects to the buffer_static
+    // Add static world objects to the buffer_static.
     loop_counter = world_static.length - 1;
     if(loop_counter >= 0){
         do{
@@ -613,17 +620,17 @@ function update_static_buffer(){
         }while(loop_counter--);
     }
 
-    // add certain dynamic world objects to the buffer_static
+    // Add certain dynamic world objects to the buffer_static.
     loop_counter = world_dynamic.length - 1;
     do{
-        // only check objects that aren't reds, keywalls, keys, or moving
+        // Only check objects that aren't reds, keywalls, keys, or moving.
         if(world_dynamic[loop_counter][4] != 3
          && world_dynamic[loop_counter][4] != 5
          && world_dynamic[loop_counter][4] != 's'
          && world_dynamic[loop_counter][7] == 0
          && world_dynamic[loop_counter][10] == 0){
 
-            // if object has a texture, draw texture. else draw rect
+            // If object has a texture, draw texture. else draw rect.
             if(world_dynamic[loop_counter][4] > 1
              && world_dynamic[loop_counter][4] < 6){
                 buffer_static.translate(
@@ -646,6 +653,7 @@ function update_static_buffer(){
                   -world_dynamic[loop_counter][0],
                   -world_dynamic[loop_counter][1]
                 );
+
             }else{
                 buffer_static.fillStyle = '#3c3c3c';
                 buffer_static.fillRect(
@@ -658,7 +666,7 @@ function update_static_buffer(){
         }
     }while(loop_counter--);
 
-    // add world text to buffer_static
+    // Add world text to buffer_static.
     loop_counter = world_text.length-1;
     if(loop_counter >= 0){
         buffer_static.fillStyle = '#fff';
@@ -747,30 +755,34 @@ var x_offset = 0;
 var y = 0;
 var y_offset = 0;
 
-setmode(0, 1);// Main Menu
+setmode(0, 1);
 
 window.onkeydown = function(e){
-    if(mode > 0){
-        var key = window.event ? event : e;
-        key = key.charCode ? key.charCode : key.keyCode;
+    if(mode <= 0){
+        return;
+    }
 
-        if(key === 27){// ESC
-            setmode(0, 1);// Main Menu
+    var key = window.event ? event : e;
+    key = key.charCode ? key.charCode : key.keyCode;
 
-        }else{
-            key = String.fromCharCode(key);
-            if(key === settings['movement-keys'][0]){
-                key_left = 1;
+    // ESC: return to main menu.
+    if(key === 27){
+        setmode(0, 1);
 
-            }else if(key === settings['movement-keys'][1]){
-                key_right = 1;
+    }else{
+        key = String.fromCharCode(key);
 
-            }else if(key === settings['jump-key']){
-                key_jump = 1;
+        if(key === settings['movement-keys'][0]){
+            key_left = 1;
 
-            }else if(key === settings['restart-key']){
-                setmode(mode, 0);
-            }
+        }else if(key === settings['movement-keys'][1]){
+            key_right = 1;
+
+        }else if(key === settings['jump-key']){
+            key_jump = 1;
+
+        }else if(key === settings['restart-key']){
+            setmode(mode, 0);
         }
     }
 };
