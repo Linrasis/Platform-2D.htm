@@ -232,6 +232,10 @@ function draw(){
                     var temp_x = world_dynamic[loop_counter][0] + x_offset;
                     var temp_y = world_dynamic[loop_counter][1] + y_offset;
 
+                    // Save current buffer state.
+                    buffer.save();
+
+                    // Translate to object location.
                     buffer.translate(
                       temp_x,
                       temp_y
@@ -248,10 +252,8 @@ function draw(){
                       world_dynamic[loop_counter][3]
                     );
 
-                    buffer.translate(
-                      -temp_x,
-                      -temp_y
-                    );
+                    // Restore buffer state.
+                    buffer.restore();
 
                 }else{
                     buffer.fillStyle = '#3c3c3c';
@@ -633,6 +635,10 @@ function update_static_buffer(){
             // If object has a texture, draw texture. else draw rect.
             if(world_dynamic[loop_counter][4] > 1
              && world_dynamic[loop_counter][4] < 6){
+                // Save current buffer_static state.
+                buffer_static.save();
+
+                // Translate to object location.
                 buffer_static.translate(
                   world_dynamic[loop_counter][0],
                   world_dynamic[loop_counter][1]
@@ -649,10 +655,8 @@ function update_static_buffer(){
                   world_dynamic[loop_counter][3]
                 );
 
-                buffer_static.translate(
-                  -world_dynamic[loop_counter][0],
-                  -world_dynamic[loop_counter][1]
-                );
+                // Restore buffer_static state.
+                buffer_static.restore();
 
             }else{
                 buffer_static.fillStyle = '#3c3c3c';
