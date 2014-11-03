@@ -240,7 +240,7 @@ function load_level(id){
 
         tile_count = random_number(9) + 1;
         if(tile_count % 2 === 0){
-            tile_count += 1
+            tile_count += 1;
         }
         var total_tiles = tile_count;
         var endtile_left = 0;
@@ -250,13 +250,13 @@ function load_level(id){
         world_dynamic = [
           [
             [ (total_tiles * 200) / 2 + 200, -200, 25, 325,   1, 0, 0, 0, 0, 0, 0],
-            [(-total_tiles * 200) / 2 - 200, -200, 25, 325, 's', 0, 0, 0, 0, 0, 0],
-            [(-total_tiles * 200) / 2 - 225, -200, 25, 325,   2, 0, 0, 0, 0, 0, 0],
+            [(-total_tiles * 200) / 2 - 200, -175, 25, 300, 's', 0, 0, 0, 0, 0, 0],
+            [(-total_tiles * 200) / 2 - 225, -175, 25, 300,   2, 0, 0, 0, 0, 0, 0],
           ],
           [
             [(-total_tiles * 200) / 2 - 225, -200, 25, 325,   1, 0, 0, 0, 0, 0, 0],
-            [ (total_tiles * 200) / 2 + 175, -200, 25, 325, 's', 0, 0, 0, 0, 0, 0],
-            [ (total_tiles * 200) / 2 + 200, -200, 25, 325,   2, 0, 0, 0, 0, 0, 0],
+            [ (total_tiles * 200) / 2 + 175, -175, 25, 300, 's', 0, 0, 0, 0, 0, 0],
+            [ (total_tiles * 200) / 2 + 200, -175, 25, 300,   2, 0, 0, 0, 0, 0, 0],
           ],
         ][side];
 
@@ -545,7 +545,10 @@ function load_level(id){
           [-x, -200, width + 400, 250, 0, 0, 0],
         ];
 
-        interval_logic = setInterval('level_logic(-1)', 100);
+        interval_logic = setInterval(
+          'level_logic(-1)',
+          100
+        );
 
     // Premade levels.
     }else{
