@@ -269,7 +269,7 @@ function draw(){
     }while(loop_counter--);
 
     // Draw player.
-    buffer.fillStyle = '#090';
+    buffer.fillStyle = settings['color'];
     buffer.fillRect(
       x - 20,
       y - 20,
@@ -350,6 +350,7 @@ function reset(){
     }
 
     document.getElementById('audio-volume').value = 1;
+    document.getElementById('color').value = '#009900';
     document.getElementById('gravity').value = .5;
     document.getElementById('jump-key').value = 'W';
     document.getElementById('jump-speed').value = -10;
@@ -432,17 +433,19 @@ function save(){
         );
     }
 
-    loop_counter = 2;
+    loop_counter = 3;
     do{
         id = [
+          'color',
           'jump-key',
           'movement-keys',
           'restart-key',
         ][loop_counter];
 
-        if(document.getElementById(id).value === ['W', 'AD', 'H',][loop_counter]){
+        if(document.getElementById(id).value === ['#009900', 'W', 'AD', 'H',][loop_counter]){
             window.localStorage.removeItem('Platform-2D.htm-' + id);
             settings[id] = [
+              '#009900',
               'W',
               'AD',
               'H',
@@ -510,7 +513,8 @@ function setmode(newmode, newgame){
           + settings['jump-key'] + '>Jump<br><input disabled style=border:0 value=ESC>Main Menu<br><input id=movement-keys maxlength=2 value='
           + settings['movement-keys'] + '>Move ←→<br><input id=restart-key maxlength=1 value='
           + settings['restart-key'] + '>Restart</div><hr><div class=c><input id=audio-volume max=1 min=0 step=.01 type=range value='
-          + settings['audio-volume'] + '>Audio<br><input id=gravity value='
+          + settings['audio-volume'] + '>Audio<br><input id=color type=color value='
+          + settings['color'] + '>Color<br><input id=gravity value='
           + settings['gravity'] + '>Gravity<br><input id=jump-speed value='
           + settings['jump-speed'] + '>Jump Speed<br><input id=ms-per-frame value='
           + settings['ms-per-frame'] + '>ms/Frame<br><input id=speed value='
@@ -722,6 +726,9 @@ var settings = {
   'audio-volume': window.localStorage.getItem('Platform-2D.htm-audio-volume') === null
     ? 1
     : parseFloat(window.localStorage.getItem('Platform-2D.htm-audio-volume')),
+  'color': window.localStorage.getItem('Platform-2D.htm-color') === null
+    ? '#009900'
+    : window.localStorage.getItem('Platform-2D.htm-color'),
   'gravity': window.localStorage.getItem('Platform-2D.htm-gravity') === null
     ? .5
     : parseFloat(window.localStorage.getItem('Platform-2D.htm-gravity')),
