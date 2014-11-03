@@ -1,15 +1,15 @@
 function level_logic(id){
-    // randomized lava corridor logic
+    // Randomized lava corridor logic.
     if(id == -1){
-        // create next obstacle every 400px traveled
+        // Create next obstacle every 400px traveled.
         if(player_x > 400){
-            // move the player back 400px
+            // Move the player back 400px.
             player_x -= 400;
 
-            // move the lava wall back 400px
+            // Move the lava wall back 400px.
             world_dynamic[0][0] -= 400;
 
-            // move all world objects back 400px, except for lava wall and floor/ceiling
+            // Move all world objects back 400px, except for lava wall and floor/ceiling.
             var loop_counter = world_dynamic.length - 1;
             do{
                 if(loop_counter > 1){
@@ -17,10 +17,10 @@ function level_logic(id){
                 }
             }while(loop_counter--);
 
-            // randomly pick next obstacle*/
+            // Randomly pick next obstacle.
             var obstacle = random_number(4);
 
-            // lava pit obstacle
+            // Lava pit obstacle.
             if(obstacle == 0){
                 world_dynamic.push([
                   player_x + x,
@@ -75,7 +75,7 @@ function level_logic(id){
                   0,
                 ]);
 
-            // booster obstacle
+            // Booster obstacle.
             }else if(obstacle == 1){
                 world_dynamic.push([
                   player_x + x,
@@ -118,10 +118,10 @@ function level_logic(id){
                   0,
                 ]);
 
-            // wall backtrack obstacle
+            // Wall backtrack obstacle.
             }else if(obstacle == 2){
                 world_dynamic.push([
-                  player_x + x,
+                  player_x + x + 25,
                   -200,
                   25,
                   200,
@@ -134,9 +134,9 @@ function level_logic(id){
                   0,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 25,
+                  player_x + x + 50,
                   -25,
-                  125,
+                  25,
                   25,
                   1,
                   0,
@@ -147,20 +147,7 @@ function level_logic(id){
                   0,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 75,
-                  -125,
-                  125,
-                  25,
-                  1,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                ]);
-                world_dynamic.push([
-                  player_x + x + 200,
+                  player_x + x + 175,
                   -125,
                   25,
                   175,
@@ -173,7 +160,7 @@ function level_logic(id){
                   0,
                 ]);
 
-            // lava pillars obstacle
+            // Lava pillars obstacle.
             }else{
                 world_dynamic.push([
                   player_x + x,
@@ -218,13 +205,13 @@ function level_logic(id){
             update_static_buffer();
         }
 
-        // set lava wall goal to player position to keep it moving
+        // Set lava wall goal to player position to keep it moving.
         world_dynamic[0][6] = player_x;
 
-        // reset floor x position to match player position
+        // Reset floor X position to match player position.
         world_dynamic[1][0] = player_x - 50;
 
-        // delete objects that are eaten by the lava wall
+        // Delete objects that are eaten by the lava wall.
         var loop_counter = world_dynamic.length - 1;
         do{
             if(loop_counter > 1
@@ -234,7 +221,7 @@ function level_logic(id){
                   1
                 );
 
-                // might have to move this for performance reasons
+                // Might have to move this for performance reasons.
                 update_static_buffer();
                 break;
             }
@@ -245,7 +232,7 @@ function level_logic(id){
 function load_level(id){
     world_text.length = 0;
 
-    // randomized level
+    // Randomized level.
     if(id == -2){
         document.getElementById('canvas').style.backgroundColor = '#3c3c3c';
 
@@ -543,7 +530,7 @@ function load_level(id){
           0,
         ]);
 
-    // randomized lava corridor
+    // Randomized lava corridor.
     }else if(id == -1){
         document.getElementById('canvas').style.backgroundColor = '#3c3c3c';
 
@@ -560,7 +547,7 @@ function load_level(id){
 
         interval_logic = setInterval('level_logic(-1)', 100);
 
-    // premade levels
+    // Premade levels.
     }else{
         world_background = [
           [-150, '#000', '#3c3c3c'],
@@ -652,7 +639,7 @@ function load_level(id){
           ],
           [
             [-715,   36,  35, 113, 1,    0,    0,  0, 0, 0, 0],
-            [-700, -175, 120,  15, 1,    0,    0,  0, 0, 0, 0],
+            [-715, -175, 135,  15, 1,    0,    0,  0, 0, 0, 0],
             [-680,  124, 320,  25, 1,    0,    0,  0, 0, 0, 0],
             [-600,  -50,  50,  25, 1,    0,    0,  0, 0, 0, 0],
             [-428, -120,  28, 170, 1,    0,    0,  0, 0, 0, 0],
@@ -661,7 +648,7 @@ function load_level(id){
             [-160,    0,  60,  25, 1,    0,    0,  0, 0, 0, 0],
             [ -40,   48,  80,  25, 1,    0,    0,  0, 0, 0, 0],
             [ 105, -120,  16, 395, 1,    0,    0,  0, 0, 0, 0],
-            [-700, -300,  25, 125, 2,    0,    0,  0, 0, 0, 0],
+            [-715, -300,  25, 125, 2,    0,    0,  0, 0, 0, 0],
             [-715, -160,  25, 196, 3,    0,    0,  0, 0, 0, 0],
             [-690, -160, 140,  25, 3,    0,    0,  0, 0, 0, 0],
             [-550,   74,  50,  50, 3, -680, -410, -1, 0, 0, 0],
@@ -696,7 +683,8 @@ function load_level(id){
             [-405, 245, 850, 255,                  0,                  0,                  0],
           ],
           [
-            [-360, 120, 481, 130, 0, 0, 0],
+            [-730, -300,  15, 425, 60, 60, 60],
+            [-360,  120, 481, 130,  0,  0,  0],
           ],
         ][id];
 
@@ -723,7 +711,7 @@ function load_level(id){
             [         settings['jump-key'] + ' = Jump',  170, 101],
           ],
           [
-            ['Village of the Wolves', -535, 175],
+            ['Village of the Wolves', -535, 150],
           ],
         ][id];
     }
