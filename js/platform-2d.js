@@ -221,49 +221,50 @@ function draw(){
           || world_dynamic[loop_counter][7] != 0
           || world_dynamic[loop_counter][10] != 0){
             // If dynamic object is on screen, draw it.
-            if(world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] + x_offset > 0
-              && world_dynamic[loop_counter][0] + x_offset < width
-              && world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] + y_offset > 0
-              && world_dynamic[loop_counter][1] + y_offset < height){
+            if(world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] + x_offset <= 0
+              || world_dynamic[loop_counter][0] + x_offset >= width
+              || world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] + y_offset <= 0
+              || world_dynamic[loop_counter][1] + y_offset >= height){
+                continue;
+            }
 
-                // If object has a texture, draw texture. else draw rect.
-                if(world_dynamic[loop_counter][4] > 1
-                  && world_dynamic[loop_counter][4] < 6){
-                    var temp_x = world_dynamic[loop_counter][0] + x_offset;
-                    var temp_y = world_dynamic[loop_counter][1] + y_offset;
+            // If object has a texture, draw texture. else draw rect.
+            if(world_dynamic[loop_counter][4] > 1
+              && world_dynamic[loop_counter][4] < 6){
+                var temp_x = world_dynamic[loop_counter][0] + x_offset;
+                var temp_y = world_dynamic[loop_counter][1] + y_offset;
 
-                    // Save current buffer state.
-                    buffer.save();
+                // Save current buffer state.
+                buffer.save();
 
-                    // Translate to object location.
-                    buffer.translate(
-                      temp_x,
-                      temp_y
-                    );
+                // Translate to object location.
+                buffer.translate(
+                  temp_x,
+                  temp_y
+                );
 
-                    buffer.fillStyle = buffer.createPattern(
-                      assets_images[world_dynamic[loop_counter][4] - 2],
-                      'repeat'
-                    );
-                    buffer.fillRect(
-                      0,
-                      0,
-                      world_dynamic[loop_counter][2],
-                      world_dynamic[loop_counter][3]
-                    );
+                buffer.fillStyle = buffer.createPattern(
+                  assets_images[world_dynamic[loop_counter][4] - 2],
+                  'repeat'
+                );
+                buffer.fillRect(
+                  0,
+                  0,
+                  world_dynamic[loop_counter][2],
+                  world_dynamic[loop_counter][3]
+                );
 
-                    // Restore buffer state.
-                    buffer.restore();
+                // Restore buffer state.
+                buffer.restore();
 
-                }else{
-                    buffer.fillStyle = '#3c3c3c';
-                    buffer.fillRect(
-                      world_dynamic[loop_counter][0] + x_offset,
-                      world_dynamic[loop_counter][1] + y_offset,
-                      world_dynamic[loop_counter][2],
-                      world_dynamic[loop_counter][3]
-                    );
-                }
+            }else{
+                buffer.fillStyle = '#3c3c3c';
+                buffer.fillRect(
+                  world_dynamic[loop_counter][0] + x_offset,
+                  world_dynamic[loop_counter][1] + y_offset,
+                  world_dynamic[loop_counter][2],
+                  world_dynamic[loop_counter][3]
+                );
             }
         }
     }while(loop_counter--);
@@ -537,30 +538,32 @@ function update_static_buffer(){
     if(loop_counter >= 0){
         do{
             // Only check objects that aren't reds, keywalls, keys, or moving.
-            if(world_dynamic[loop_counter][4] != 3
-              && world_dynamic[loop_counter][4] != 5
-              && world_dynamic[loop_counter][4] != 's'
-              && world_dynamic[loop_counter][7] == 0
-              && world_dynamic[loop_counter][10] == 0){
-                // Check if object is leftmost object so far.
-                if(world_dynamic[loop_counter][0] < buffer_static_left){
-                    buffer_static_left = world_dynamic[loop_counter][0];
-                }
+            if(world_dynamic[loop_counter][4] == 3
+              || world_dynamic[loop_counter][4] == 5
+              || world_dynamic[loop_counter][4] == 's'
+              || world_dynamic[loop_counter][7] != 0
+              || world_dynamic[loop_counter][10] != 0){
+                continue;
+            }
 
-                // Check if object is rightmost object so far.
-                if(world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] > temp_right){
-                    temp_right = world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2];
-                }
+            // Check if object is leftmost object so far.
+            if(world_dynamic[loop_counter][0] < buffer_static_left){
+                buffer_static_left = world_dynamic[loop_counter][0];
+            }
 
-                // Check if object is topmost object so far.
-                if(world_dynamic[loop_counter][1] < buffer_static_top){
-                    buffer_static_top = world_dynamic[loop_counter][1];
-                }
+            // Check if object is rightmost object so far.
+            if(world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] > temp_right){
+                temp_right = world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2];
+            }
 
-                // Check if object is bottommost object so far.
-                if(world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] > temp_bottom){
-                    temp_bottom = world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3];
-                }
+            // Check if object is topmost object so far.
+            if(world_dynamic[loop_counter][1] < buffer_static_top){
+                buffer_static_top = world_dynamic[loop_counter][1];
+            }
+
+            // Check if object is bottommost object so far.
+            if(world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] > temp_bottom){
+                temp_bottom = world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3];
             }
         }while(loop_counter--);
     }
@@ -632,47 +635,48 @@ function update_static_buffer(){
     loop_counter = world_dynamic.length - 1;
     do{
         // Only check objects that aren't reds, keywalls, keys, or moving.
-        if(world_dynamic[loop_counter][4] != 3
-         && world_dynamic[loop_counter][4] != 5
-         && world_dynamic[loop_counter][4] != 's'
-         && world_dynamic[loop_counter][7] == 0
-         && world_dynamic[loop_counter][10] == 0){
+        if(world_dynamic[loop_counter][4] == 3
+          || world_dynamic[loop_counter][4] == 5
+          || world_dynamic[loop_counter][4] == 's'
+          || world_dynamic[loop_counter][7] != 0
+          || world_dynamic[loop_counter][10] != 0){
+            continue;
+        }
 
-            // If object has a texture, draw texture. else draw rect.
-            if(world_dynamic[loop_counter][4] > 1
-             && world_dynamic[loop_counter][4] < 6){
-                // Save current buffer_static state.
-                buffer_static.save();
+        // If object has a texture, draw texture. else draw rect.
+        if(world_dynamic[loop_counter][4] > 1
+         && world_dynamic[loop_counter][4] < 6){
+            // Save current buffer_static state.
+            buffer_static.save();
 
-                // Translate to object location.
-                buffer_static.translate(
-                  world_dynamic[loop_counter][0],
-                  world_dynamic[loop_counter][1]
-                );
+            // Translate to object location.
+            buffer_static.translate(
+              world_dynamic[loop_counter][0],
+              world_dynamic[loop_counter][1]
+            );
 
-                buffer_static.fillStyle = buffer_static.createPattern(
-                  assets_images[world_dynamic[loop_counter][4] - 2],
-                  'repeat'
-                );
-                buffer_static.fillRect(
-                  0,
-                  0,
-                  world_dynamic[loop_counter][2],
-                  world_dynamic[loop_counter][3]
-                );
+            buffer_static.fillStyle = buffer_static.createPattern(
+              assets_images[world_dynamic[loop_counter][4] - 2],
+              'repeat'
+            );
+            buffer_static.fillRect(
+              0,
+              0,
+              world_dynamic[loop_counter][2],
+              world_dynamic[loop_counter][3]
+            );
 
-                // Restore buffer_static state.
-                buffer_static.restore();
+            // Restore buffer_static state.
+            buffer_static.restore();
 
-            }else{
-                buffer_static.fillStyle = '#3c3c3c';
-                buffer_static.fillRect(
-                  world_dynamic[loop_counter][0],
-                  world_dynamic[loop_counter][1],
-                  world_dynamic[loop_counter][2],
-                  world_dynamic[loop_counter][3]
-                );
-            }
+        }else{
+            buffer_static.fillStyle = '#3c3c3c';
+            buffer_static.fillRect(
+              world_dynamic[loop_counter][0],
+              world_dynamic[loop_counter][1],
+              world_dynamic[loop_counter][2],
+              world_dynamic[loop_counter][3]
+            );
         }
     }while(loop_counter--);
 
