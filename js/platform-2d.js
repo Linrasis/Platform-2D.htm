@@ -11,7 +11,7 @@ function draw(){
             player_dx += settings['speed'];
         }
 
-        can_jump = 0;
+        can_jump = false;
         var temp_key = 0;
 
         var loop_counter = world_dynamic.length - 1;
@@ -79,7 +79,7 @@ function draw(){
                             if(player_y_vel > 0){
                                 if(player_y + player_y_vel <= world_dynamic[loop_counter][1] - 10
                                   && player_y + player_y_vel > world_dynamic[loop_counter][1] - 20){
-                                    can_jump = 1;
+                                    can_jump = true;
                                     player_y_vel = world_dynamic[loop_counter][1] - player_y - 20;
                                     player_dy = 0;
 
@@ -162,7 +162,7 @@ function draw(){
             if(hop_permission
               && key_jump){
                 player_y_vel = settings['jump-speed'];
-                hop_permission = 0;
+                hop_permission = false;
 
             }else{
                 player_y_vel = 0;
@@ -472,9 +472,9 @@ function setmode(newmode, newgame){
     if(mode > 0){
         frames = 0;
 
-        key_left = 0;
-        key_right = 0;
-        key_jump = 0;
+        key_left = false;
+        key_right = false;
+        key_jump = false;
 
         player_x = 0;
         player_y = 0;
@@ -713,16 +713,16 @@ var buffer_static = 0;
 var buffer_static_left = 0;
 var buffer_static_top = 0;
 var canvas = 0;
-var can_jump = 0;
+var can_jump = false;
 var frames = 0;
 var height = 0;
-var hop_permission = 1;
+var hop_permission = true;
 var interval = 0;
 var interval_logic = 0;
 var j = 0;
-var key_left = 0;
-var key_right = 0;
-var key_jump = 0;
+var key_left = false;
+var key_right = false;
+var key_jump = false;
 var mode = 0;
 var platform = -1;
 var player_x = 0;
@@ -790,13 +790,13 @@ window.onkeydown = function(e){
         key = String.fromCharCode(key);
 
         if(key === settings['movement-keys'][0]){
-            key_left = 1;
+            key_left = true;
 
         }else if(key === settings['movement-keys'][1]){
-            key_right = 1;
+            key_right = true;
 
         }else if(key === settings['jump-key']){
-            key_jump = 1;
+            key_jump = true;
 
         }else if(key === settings['restart-key']){
             setmode(mode, 0);
@@ -809,14 +809,14 @@ window.onkeyup = function(e){
     key = String.fromCharCode(key.charCode ? key.charCode : key.keyCode);
 
     if(key === settings['movement-keys'][0]){
-        key_left = 0;
+        key_left = false;
 
     }else if(key === settings['movement-keys'][1]){
-        key_right = 0;
+        key_right = false;
 
     }else if(key === settings['jump-key']){
-        key_jump = 0;
-        hop_permission = 1;
+        key_jump = false;
+        hop_permission = true;
     }
 };
 
