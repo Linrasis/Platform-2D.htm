@@ -719,7 +719,6 @@ var height = 0;
 var hop_permission = true;
 var interval = 0;
 var interval_logic = 0;
-var j = 0;
 var key_left = false;
 var key_right = false;
 var key_jump = false;
