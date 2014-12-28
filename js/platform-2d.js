@@ -1,4 +1,164 @@
 function draw(){
+    buffer.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+    // Draw background colors if level asks for it.
+    if(world_background.length > 0){
+        buffer.fillStyle = world_background[1];
+        buffer.fillRect(
+          0,
+          0,
+          width,
+          y - player_y + world_background[0]
+        );
+
+        buffer.fillStyle = world_background[2];
+        buffer.fillRect(
+          0,
+          y - player_y + world_background[0],
+          width,
+          height + player_y
+        );
+    }
+
+    // Draw buffer_static.
+    buffer.drawImage(
+      document.getElementById('buffer-static'),
+      x - player_x + buffer_static_left,
+      y - player_y + buffer_static_top
+    );
+
+    x_offset = x - player_x;
+    y_offset = y - player_y;
+
+    // Draw dynamic world objects that aren't in the buffer_static.
+    var loop_counter = world_dynamic.length - 1;
+    do{
+        // Only draw objects that are reds, keywalls, keys, or moving.
+        if(world_dynamic[loop_counter][4] == 3
+          || world_dynamic[loop_counter][4] == 5
+          || world_dynamic[loop_counter][4] == 's'
+          || world_dynamic[loop_counter][7] != 0
+          || world_dynamic[loop_counter][10] != 0){
+            // If dynamic object is on screen, draw it.
+            if(world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] + x_offset <= 0
+              || world_dynamic[loop_counter][0] + x_offset >= width
+              || world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] + y_offset <= 0
+              || world_dynamic[loop_counter][1] + y_offset >= height){
+                continue;
+            }
+
+            // If object has a texture, draw texture. else draw rect.
+            if(world_dynamic[loop_counter][4] > 1
+              && world_dynamic[loop_counter][4] < 6){
+                var temp_x = world_dynamic[loop_counter][0] + x_offset;
+                var temp_y = world_dynamic[loop_counter][1] + y_offset;
+
+                // Save current buffer state.
+                buffer.save();
+
+                // Translate to object location.
+                buffer.translate(
+                  temp_x,
+                  temp_y
+                );
+
+                buffer.fillStyle = buffer.createPattern(
+                  assets_images[world_dynamic[loop_counter][4] - 2],
+                  'repeat'
+                );
+                buffer.fillRect(
+                  0,
+                  0,
+                  world_dynamic[loop_counter][2],
+                  world_dynamic[loop_counter][3]
+                );
+
+                // Restore buffer state.
+                buffer.restore();
+
+            }else{
+                buffer.fillStyle = '#3c3c3c';
+                buffer.fillRect(
+                  world_dynamic[loop_counter][0] + x_offset,
+                  world_dynamic[loop_counter][1] + y_offset,
+                  world_dynamic[loop_counter][2],
+                  world_dynamic[loop_counter][3]
+                );
+            }
+        }
+    }while(loop_counter--);
+
+    // Draw player.
+    buffer.fillStyle = settings['color'];
+    buffer.fillRect(
+      x - 20,
+      y - 20,
+      40,
+      40
+    );
+
+    buffer.fillStyle = '#fff';
+    buffer.font = '23pt sans-serif';
+    buffer.textAlign = 'center';
+
+    // If game is over, draw game over text.
+    if(state > 0){
+        buffer.fillText(
+          settings['restart-key'] + ' = Restart',
+          x,
+          y / 2 + 60
+        );
+        buffer.fillText(
+          'ESC = Main Menu',
+          x,
+          y / 2 + 99
+        );
+
+        buffer.font = '40pt sans-serif';
+        buffer.fillStyle = state === 2
+          ? '#2d8930'
+          : '#e02d30';
+        buffer.fillText(
+          state === 2
+            ? 'Level Complete! ☺'
+            : 'You Failed! ☹',
+          x,
+          y / 2
+        );
+    }
+
+    // If tracking frames, draw number of frames.
+    if(settings['time-display']){
+        buffer.textAlign = 'left';
+        buffer.textBaseline = 'top';
+        buffer.fillText(
+          frames,
+          5,
+          5
+        );
+    }
+
+    canvas.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
+    canvas.drawImage(
+      document.getElementById('buffer'),
+      0,
+      0
+    );
+
+    window.requestAnimationFrame(draw);
+}
+
+function logic(){
     if(state < 1){
         var player_dx = 0;
         var player_dy = 0;
@@ -174,162 +334,6 @@ function draw(){
 
         frames += 1;
     }
-
-    buffer.clearRect(
-      0,
-      0,
-      width,
-      height
-    );
-
-    // Draw background colors if level asks for it.
-    if(world_background.length > 0){
-        buffer.fillStyle = world_background[1];
-        buffer.fillRect(
-          0,
-          0,
-          width,
-          y - player_y + world_background[0]
-        );
-
-        buffer.fillStyle = world_background[2];
-        buffer.fillRect(
-          0,
-          y - player_y + world_background[0],
-          width,
-          height + player_y
-        );
-    }
-
-    // Draw buffer_static.
-    buffer.drawImage(
-      document.getElementById('buffer-static'),
-      x - player_x + buffer_static_left,
-      y - player_y + buffer_static_top
-    );
-
-    x_offset = x - player_x;
-    y_offset = y - player_y;
-
-    // Draw dynamic world objects that aren't in the buffer_static.
-    var loop_counter = world_dynamic.length - 1;
-    do{
-        // Only draw objects that are reds, keywalls, keys, or moving.
-        if(world_dynamic[loop_counter][4] == 3
-          || world_dynamic[loop_counter][4] == 5
-          || world_dynamic[loop_counter][4] == 's'
-          || world_dynamic[loop_counter][7] != 0
-          || world_dynamic[loop_counter][10] != 0){
-            // If dynamic object is on screen, draw it.
-            if(world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] + x_offset <= 0
-              || world_dynamic[loop_counter][0] + x_offset >= width
-              || world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] + y_offset <= 0
-              || world_dynamic[loop_counter][1] + y_offset >= height){
-                continue;
-            }
-
-            // If object has a texture, draw texture. else draw rect.
-            if(world_dynamic[loop_counter][4] > 1
-              && world_dynamic[loop_counter][4] < 6){
-                var temp_x = world_dynamic[loop_counter][0] + x_offset;
-                var temp_y = world_dynamic[loop_counter][1] + y_offset;
-
-                // Save current buffer state.
-                buffer.save();
-
-                // Translate to object location.
-                buffer.translate(
-                  temp_x,
-                  temp_y
-                );
-
-                buffer.fillStyle = buffer.createPattern(
-                  assets_images[world_dynamic[loop_counter][4] - 2],
-                  'repeat'
-                );
-                buffer.fillRect(
-                  0,
-                  0,
-                  world_dynamic[loop_counter][2],
-                  world_dynamic[loop_counter][3]
-                );
-
-                // Restore buffer state.
-                buffer.restore();
-
-            }else{
-                buffer.fillStyle = '#3c3c3c';
-                buffer.fillRect(
-                  world_dynamic[loop_counter][0] + x_offset,
-                  world_dynamic[loop_counter][1] + y_offset,
-                  world_dynamic[loop_counter][2],
-                  world_dynamic[loop_counter][3]
-                );
-            }
-        }
-    }while(loop_counter--);
-
-    // Draw player.
-    buffer.fillStyle = settings['color'];
-    buffer.fillRect(
-      x - 20,
-      y - 20,
-      40,
-      40
-    );
-
-    buffer.fillStyle = '#fff';
-    buffer.font = '23pt sans-serif';
-    buffer.textAlign = 'center';
-
-    // If game is over, draw game over text.
-    if(state > 0){
-        buffer.fillText(
-          settings['restart-key'] + ' = Restart',
-          x,
-          y / 2 + 60
-        );
-        buffer.fillText(
-          'ESC = Main Menu',
-          x,
-          y / 2 + 99
-        );
-
-        buffer.font = '40pt sans-serif';
-        buffer.fillStyle = state === 2
-          ? '#2d8930'
-          : '#e02d30';
-        buffer.fillText(
-          state === 2
-            ? 'Level Complete! ☺'
-            : 'You Failed! ☹',
-          x,
-          y / 2
-        );
-    }
-
-    // If tracking frames, draw number of frames.
-    if(settings['time-display']){
-        buffer.textAlign = 'left';
-        buffer.textBaseline = 'top';
-        buffer.fillText(
-          frames,
-          5,
-          5
-        );
-    }
-
-    canvas.clearRect(
-      0,
-      0,
-      width,
-      height
-    );
-    canvas.drawImage(
-      document.getElementById('buffer'),
-      0,
-      0
-    );
 }
 
 function play_audio(id){
@@ -497,8 +501,9 @@ function setmode(newmode, newgame){
 
         update_static_buffer();
 
+        window.requestAnimationFrame(draw);
         interval = setInterval(
-          'draw()',
+          'logic()',
           settings['ms-per-frame']
         );
 
