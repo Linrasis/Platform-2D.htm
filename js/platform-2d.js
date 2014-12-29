@@ -155,7 +155,7 @@ function draw(){
       0
     );
 
-    window.requestAnimationFrame(draw);
+    animationFrame = window.requestAnimationFrame(draw);
 }
 
 function logic(){
@@ -467,6 +467,7 @@ function save(){
 }
 
 function setmode(newmode, newgame){
+    window.cancelAnimationFrame(animationFrame);
     clearInterval(interval);
     clearInterval(interval_logic);
 
@@ -501,7 +502,7 @@ function setmode(newmode, newgame){
 
         update_static_buffer();
 
-        window.requestAnimationFrame(draw);
+        animationFrame = window.requestAnimationFrame(draw);
         interval = setInterval(
           'logic()',
           settings['ms-per-frame']
@@ -703,6 +704,7 @@ function update_static_buffer(){
     }
 }
 
+var animationFrame = 0;
 var assets_images = [
   new Image(),
   new Image(),
