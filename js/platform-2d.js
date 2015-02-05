@@ -159,181 +159,184 @@ function draw(){
 }
 
 function logic(){
-    if(state < 1){
-        var player_dx = 0;
-        var player_dy = 0;
+    if(state >= 1){
+        return;
+    }
 
-        if(key_left){
-            player_dx -= settings['speed'];
+    var player_dx = 0;
+    var player_dy = 0;
+
+    if(key_left){
+        player_dx -= settings['speed'];
+    }
+
+    if(key_right){
+        player_dx += settings['speed'];
+    }
+
+    can_jump = false;
+    var temp_key = 0;
+
+    var loop_counter = world_dynamic.length - 1;
+    do{
+        // X movement.
+        if(world_dynamic[loop_counter][7] != 0){
+            if(world_dynamic[loop_counter][0] < world_dynamic[loop_counter][5]){
+                world_dynamic[loop_counter][7] = Math.abs(world_dynamic[loop_counter][7]);
+
+            }else if(world_dynamic[loop_counter][0] > world_dynamic[loop_counter][6]
+              && world_dynamic[loop_counter][7] > 0){
+                world_dynamic[loop_counter][7] = -world_dynamic[loop_counter][7];
+            }
+
+            // If player on moving platform, move player X.
+            if(platform === loop_counter){
+                player_dx += world_dynamic[loop_counter][7];
+            }
+
+            world_dynamic[loop_counter][0] += world_dynamic[loop_counter][7];
         }
 
-        if(key_right){
-            player_dx += settings['speed'];
+        // Y movement.
+        if(world_dynamic[loop_counter][10] != 0){
+            if(world_dynamic[loop_counter][1] < world_dynamic[loop_counter][8]){
+                world_dynamic[loop_counter][10] = Math.abs(world_dynamic[loop_counter][10]);
+
+            }else if(world_dynamic[loop_counter][1] > world_dynamic[loop_counter][9]
+              && world_dynamic[loop_counter][10] > 0){
+                world_dynamic[loop_counter][10] = -world_dynamic[loop_counter][10];
+            }
+
+            // If player on moving platform, move player Y.
+            if(platform === loop_counter){
+                player_dy += world_dynamic[loop_counter][10];
+            }
+
+            world_dynamic[loop_counter][1] += world_dynamic[loop_counter][10];
         }
 
-        can_jump = false;
-        var temp_key = 0;
+        // If player is moving or object is moving, check for collision.
+        if(player_dx == 0
+          && player_dy == 0
+          && player_y_vel == 0
+          && world_dynamic[loop_counter][7] == 0
+          && world_dynamic[loop_counter][10] == 0){
+            continue;
+        }
 
-        var loop_counter = world_dynamic.length - 1;
-        do{
-            // If current game is still going, move objects.
-            if(state < 1){
-                // X movement.
-                if(world_dynamic[loop_counter][7] != 0){
-                    if(world_dynamic[loop_counter][0] < world_dynamic[loop_counter][5]){
-                        world_dynamic[loop_counter][7] = Math.abs(world_dynamic[loop_counter][7]);
+        var temp_object_right_x = world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2];
+        var temp_object_right_y = world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3];
 
-                    }else if(world_dynamic[loop_counter][0] > world_dynamic[loop_counter][6]
-                      && world_dynamic[loop_counter][7] > 0){
-                        world_dynamic[loop_counter][7] = -world_dynamic[loop_counter][7];
+        // Check if player position + movement is within bounds of object.
+        if(player_x + player_dx - 20 > temp_object_right_x
+          || player_x + player_dx + 20 < world_dynamic[loop_counter][0]
+          || player_y + player_y_vel - 20 > temp_object_right_y
+          || player_y + player_y_vel + 20 < world_dynamic[loop_counter][1]){
+            continue;
+        }
+
+        // Collide with platform or key-locked wall.
+        if(world_dynamic[loop_counter][4] === 1
+          || world_dynamic[loop_counter][4] === 's'){
+            // Handle collisions with platforms while jumping or falling.
+            if(player_y_vel != 0
+              && player_x != world_dynamic[loop_counter][0] - 20
+              && player_x != temp_object_right_x + 20){
+                if(player_y_vel > 0){
+                    if(player_y + player_y_vel <= world_dynamic[loop_counter][1] - 10
+                      && player_y + player_y_vel > world_dynamic[loop_counter][1] - 20){
+                        can_jump = true;
+                        player_y_vel = world_dynamic[loop_counter][1] - player_y - 20;
+                        player_dy = 0;
+
+                        if(world_dynamic[loop_counter][7] != 0){
+                            player_dx += world_dynamic[loop_counter][7];
+                        }
+
+                        platform = loop_counter;
                     }
 
-                    // If player on moving platform, move player X.
-                    if(platform === loop_counter){
-                        player_dx += world_dynamic[loop_counter][7];
-                    }
-
-                    world_dynamic[loop_counter][0] += world_dynamic[loop_counter][7];
-                }
-                // Y movement.
-                if(world_dynamic[loop_counter][10] != 0){
-                    if(world_dynamic[loop_counter][1] < world_dynamic[loop_counter][8]){
-                        world_dynamic[loop_counter][10] = Math.abs(world_dynamic[loop_counter][10]);
-
-                    }else if(world_dynamic[loop_counter][1] > world_dynamic[loop_counter][9]
-                      && world_dynamic[loop_counter][10] > 0){
-                        world_dynamic[loop_counter][10] = -world_dynamic[loop_counter][10];
-                    }
-
-                    // If player on moving platform, move player Y.
-                    if(platform === loop_counter){
-                        player_dy += world_dynamic[loop_counter][10];
-                    }
-
-                    world_dynamic[loop_counter][1] += world_dynamic[loop_counter][10];
+                }else if(player_y + player_y_vel < temp_object_right_y + 20
+                  && player_y + player_y_vel >= temp_object_right_y + 10){
+                    player_y_vel = temp_object_right_y - player_y + 20;
                 }
             }
 
-            // If player is moving or object is moving, check for collision.
-            if(player_dx != 0
-              || player_dy != 0
-              || player_y_vel != 0
-              || world_dynamic[loop_counter][7] != 0
-              || world_dynamic[loop_counter][10] != 0){
-                var temp_object_right_x = world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2];
-                var temp_object_right_y = world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3];
-
-                // Check if player position + movmenet is within bounds of object.
-                if(!(player_x + player_dx - 20 > temp_object_right_x
-                  || player_x + player_dx + 20 < world_dynamic[loop_counter][0]
-                  || player_y + player_y_vel - 20 > temp_object_right_y
-                  || player_y + player_y_vel + 20 < world_dynamic[loop_counter][1])
-                ){
-                    // Collide with platform or key-locked wall.
-                    if(world_dynamic[loop_counter][4] === 1
-                      || world_dynamic[loop_counter][4] === 's'){
-                        // Handle collisions with platforms while jumping or falling.
-                        if(player_y_vel != 0
-                          && player_x != world_dynamic[loop_counter][0] - 20
-                          && player_x != temp_object_right_x + 20){
-                            if(player_y_vel > 0){
-                                if(player_y + player_y_vel <= world_dynamic[loop_counter][1] - 10
-                                  && player_y + player_y_vel > world_dynamic[loop_counter][1] - 20){
-                                    can_jump = true;
-                                    player_y_vel = world_dynamic[loop_counter][1] - player_y - 20;
-                                    player_dy = 0;
-
-                                    if(world_dynamic[loop_counter][7] != 0){
-                                        player_dx += world_dynamic[loop_counter][7];
-                                    }
-
-                                    platform = loop_counter;
-                                }
-
-                            }else if(player_y + player_y_vel < temp_object_right_y + 20
-                              && player_y + player_y_vel >= temp_object_right_y + 10){
-                                player_y_vel = temp_object_right_y - player_y + 20;
-                            }
-                        }
-
-                        // Handle collisions with platforms while moving left/right.
-                        if(platform != loop_counter){
-                            if(key_left
-                              && player_y + 20 > world_dynamic[loop_counter][1]
-                              && player_y - 20 < temp_object_right_y
-                              && player_x != world_dynamic[loop_counter][0] - 20
-                              && player_x > world_dynamic[loop_counter][0]){
-                                player_dx = temp_object_right_x - player_x + 20;
-                            }
-
-                            if(key_right
-                              && player_y + 20 > world_dynamic[loop_counter][1]
-                              && player_y - 20 < temp_object_right_y
-                              && player_x != temp_object_right_x + 20
-                              && player_x < world_dynamic[loop_counter][0]){
-                                player_dx = world_dynamic[loop_counter][0] - player_x - 20;
-                            }
-                        }
-
-                    // Collided with booster.
-                    }else if(world_dynamic[loop_counter][4] === 4){
-                        player_y_vel = world_dynamic[loop_counter][11];
-
-                    // Collided with green goal.
-                    }else if(world_dynamic[loop_counter][4] === 2){
-                        clearInterval(interval);
-                        clearInterval(interval_logic);
-                        state = 2;
-
-                    // Collided with red rectangles.
-                    }else if(world_dynamic[loop_counter][4] === 3){
-                        clearInterval(interval);
-                        clearInterval(interval_logic);
-                        state = 3;
-
-                    // Collided with a key.
-                    }else if(world_dynamic[loop_counter][4] === 5){
-                        temp_key = loop_counter;
-                    }
+            // Handle collisions with platforms while moving left/right.
+            if(platform != loop_counter){
+                if(key_left
+                  && player_y + 20 > world_dynamic[loop_counter][1]
+                  && player_y - 20 < temp_object_right_y
+                  && player_x != world_dynamic[loop_counter][0] - 20
+                  && player_x > world_dynamic[loop_counter][0]){
+                    player_dx = temp_object_right_x - player_x + 20;
                 }
+
+                if(key_right
+                  && player_y + 20 > world_dynamic[loop_counter][1]
+                  && player_y - 20 < temp_object_right_y
+                  && player_x != temp_object_right_x + 20
+                  && player_x < world_dynamic[loop_counter][0]){
+                    player_dx = world_dynamic[loop_counter][0] - player_x - 20;
+                }
+            }
+
+        // Collided with booster.
+        }else if(world_dynamic[loop_counter][4] === 4){
+            player_y_vel = world_dynamic[loop_counter][11];
+
+        // Collided with green goal.
+        }else if(world_dynamic[loop_counter][4] === 2){
+            clearInterval(interval);
+            clearInterval(interval_logic);
+            state = 2;
+
+        // Collided with red rectangles.
+        }else if(world_dynamic[loop_counter][4] === 3){
+            clearInterval(interval);
+            clearInterval(interval_logic);
+            state = 3;
+
+        // Collided with a key.
+        }else if(world_dynamic[loop_counter][4] === 5){
+            temp_key = loop_counter;
+        }
+    }while(loop_counter--);
+
+    // Delete keys and key-locked walls if collided with key.
+    if(temp_key > 1){
+        world_dynamic.splice(temp_key, 1);
+
+        loop_counter = world_dynamic.length - 1;
+        do{
+            if(world_dynamic[loop_counter][4] === 's'){
+                world_dynamic.splice(
+                  loop_counter,
+                  1
+                );
             }
         }while(loop_counter--);
-
-        // Delete keys and key-locked walls if collided with key.
-        if(temp_key > 1){
-            world_dynamic.splice(temp_key, 1);
-
-            loop_counter = world_dynamic.length - 1;
-            do{
-                if(world_dynamic[loop_counter][4] === 's'){
-                    world_dynamic.splice(
-                      loop_counter,
-                      1
-                    );
-                }
-            }while(loop_counter--);
-        }
-
-        platform = -1;
-        player_x += Math.round(player_dx);
-        player_y += Math.round(player_dy + player_y_vel);
-
-        if(can_jump){
-            if(hop_permission
-              && key_jump){
-                player_y_vel = settings['jump-speed'];
-                hop_permission = false;
-
-            }else{
-                player_y_vel = 0;
-            }
-
-        }else if(player_y_vel < settings['terminal-velocity']){
-            player_y_vel += settings['gravity'];
-        }
-
-        frames += 1;
     }
+
+    platform = -1;
+    player_x += Math.round(player_dx);
+    player_y += Math.round(player_dy + player_y_vel);
+
+    if(can_jump){
+        if(jump_permission
+          && key_jump){
+            player_y_vel = settings['jump-speed'];
+            jump_permission = false;
+
+        }else{
+            player_y_vel = 0;
+        }
+
+    }else if(player_y_vel < settings['terminal-velocity']){
+        player_y_vel += settings['gravity'];
+    }
+
+    frames += 1;
 }
 
 function play_audio(id){
@@ -723,9 +726,9 @@ var canvas = 0;
 var can_jump = false;
 var frames = 0;
 var height = 0;
-var hop_permission = true;
 var interval = 0;
 var interval_logic = 0;
+var jump_permission = true;
 var key_left = false;
 var key_right = false;
 var key_jump = false;
@@ -820,7 +823,7 @@ window.onkeyup = function(e){
 
     }else if(key === settings['jump-key']){
         key_jump = false;
-        hop_permission = true;
+        jump_permission = true;
     }
 };
 
