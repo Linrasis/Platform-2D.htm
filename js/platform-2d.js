@@ -287,14 +287,14 @@ function logic(){
 
         // Collided with green goal.
         }else if(world_dynamic[loop_counter][4] === 2){
-            clearInterval(interval);
-            clearInterval(interval_logic);
+            window.clearInterval(interval);
+            window.clearInterval(interval_logic);
             state = 2;
 
         // Collided with red rectangles.
         }else if(world_dynamic[loop_counter][4] === 3){
-            clearInterval(interval);
-            clearInterval(interval_logic);
+            window.clearInterval(interval);
+            window.clearInterval(interval_logic);
             state = 3;
 
         // Collided with a key.
@@ -471,8 +471,8 @@ function save(){
 
 function setmode(newmode, newgame){
     window.cancelAnimationFrame(animationFrame);
-    clearInterval(interval);
-    clearInterval(interval_logic);
+    window.clearInterval(interval);
+    window.clearInterval(interval_logic);
 
     mode = newmode;
 
@@ -506,7 +506,7 @@ function setmode(newmode, newgame){
         update_static_buffer();
 
         animationFrame = window.requestAnimationFrame(draw);
-        interval = setInterval(
+        interval = window.setInterval(
           'logic()',
           settings['ms-per-frame']
         );

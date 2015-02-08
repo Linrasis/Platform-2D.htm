@@ -545,7 +545,7 @@ function load_level(id){
           [-x, -200, width + 400, 250, 0, 0, 0],
         ];
 
-        interval_logic = setInterval(
+        interval_logic = window.setInterval(
           'level_logic(-1)',
           100
         );
