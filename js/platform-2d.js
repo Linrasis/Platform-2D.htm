@@ -215,7 +215,7 @@ function logic(){
             world_dynamic[loop_counter][1] += world_dynamic[loop_counter][10];
         }
 
-        // If player is moving or object is moving, check for collision.
+        // If player and object aren't moving, no collision checks.
         if(player_dx == 0
           && player_dy == 0
           && player_y_vel == 0
@@ -393,32 +393,22 @@ function resize(){
     }
 }
 
+// Save settings into window.localStorage if they differ from default.
 function save(){
-    var loop_counter = 6;
-    do{
-        var id = [
-          'audio-volume',
-          'gravity',
-          'jump-speed',
-          'ms-per-frame',
-          'speed',
-          'terminal-velocity',
-          'time-display',
-        ][loop_counter];
-
+    var ids = {
+      'audio-volume': 1,
+      'gravity': .5,
+      'jump-speed': -10,
+      'ms-per-frame': 25,
+      'speed': 4,
+      'terminal-velocity': 9,
+      'time-display': 1,
+    };
+    for(var id in ids){
         if(isNaN(document.getElementById(id).value)
-          || document.getElementById(id).value === [1, .5, -10, 25, 4, 9, 1,][loop_counter]){
+          || document.getElementById(id).value === ids[id]){
             window.localStorage.removeItem('Platform-2D.htm-' + id);
-            settings[id] = [
-              1,
-              .5,
-              -10,
-              25,
-              4,
-              9,
-              1,
-            ][loop_counter];
-            document.getElementById(id).value = settings[id];
+            settings[id] = ids[id];
 
         }else{
             settings[id] = parseFloat(document.getElementById(id).value);
@@ -427,9 +417,8 @@ function save(){
               settings[id]
             );
         }
-    }while(loop_counter--);
+    }
 
-    // Save time-display setting.
     settings['time-display'] = document.getElementById('time-display').checked;
     if(settings['time-display']){
         window.localStorage.removeItem('Platform-2D.htm-time-display');
@@ -441,23 +430,16 @@ function save(){
         );
     }
 
-    loop_counter = 3;
-    do{
-        id = [
-          'color',
-          'jump-key',
-          'movement-keys',
-          'restart-key',
-        ][loop_counter];
-
-        if(document.getElementById(id).value === ['#009900', 'W', 'AD', 'H',][loop_counter]){
+    ids = {
+      'color': '#009900',
+      'jump-key': 'W',
+      'movement-keys': 'AD',
+      'restart-key': 'H',
+    };
+    for(id in ids){
+        if(document.getElementById(id).value === ids[id]){
             window.localStorage.removeItem('Platform-2D.htm-' + id);
-            settings[id] = [
-              '#009900',
-              'W',
-              'AD',
-              'H',
-            ][loop_counter];
+            settings[id] = ids[id];
 
         }else{
             settings[id] = document.getElementById(id).value;
@@ -466,7 +448,7 @@ function save(){
               settings[id]
             );
         }
-    }while(loop_counter--);
+    }
 }
 
 function setmode(newmode, newgame){
@@ -521,7 +503,7 @@ function setmode(newmode, newgame){
         world_static.length = 0;
         world_text.length = 0;
 
-        document.getElementById('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><b>Platform-2D.htm</b></div><hr><div class=c><ul><li><a onclick=setmode(3,1)>Generate Random Level</a><li><a onclick=setmode(4,1)>Randomized Lava Corridor</a></ul></div><hr><div class=c><ul><li><a onclick=setmode(5,1)>A Pit of Your Design</a><li><a onclick=setmode(6,1)>Booster Towers</a><li><a onclick=setmode(7,1)>Keys of a Father</a><li><a onclick=setmode(8,1)>Tutorial Island</a><li><a onclick=setmode(9,1)>Village of the Wolves</a></ul></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=jump-key maxlength=1 value='
+        document.getElementById('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><a onclick=setmode(3,1)>Generate Random Level</a><br><a onclick=setmode(4,1)>Randomized Lava Corridor</a></div><hr><div class=c><a onclick=setmode(5,1)>A Pit of Your Design</a><br><a onclick=setmode(6,1)>Booster Towers</a><br><a onclick=setmode(7,1)>Keys of a Father</a><br><a onclick=setmode(8,1)>Tutorial Island</a><br><a onclick=setmode(9,1)>Village of the Wolves</a></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=jump-key maxlength=1 value='
           + settings['jump-key'] + '>Jump<br><input disabled style=border:0 value=ESC>Main Menu<br><input id=movement-keys maxlength=2 value='
           + settings['movement-keys'] + '>Move ←→<br><input id=restart-key maxlength=1 value='
           + settings['restart-key'] + '>Restart</div><hr><div class=c><input id=audio-volume max=1 min=0 step=.01 type=range value='
@@ -543,64 +525,58 @@ function update_static_buffer(){
     var temp_right = 0;
 
     // Determine limits required to hold certain dynamic objects.
-    var loop_counter = world_dynamic.length - 1;
-    if(loop_counter >= 0){
-        do{
-            // Only check objects that aren't reds, keywalls, keys, or moving.
-            if(world_dynamic[loop_counter][4] == 3
-              || world_dynamic[loop_counter][4] == 5
-              || world_dynamic[loop_counter][4] == 's'
-              || world_dynamic[loop_counter][7] != 0
-              || world_dynamic[loop_counter][10] != 0){
-                continue;
-            }
+    for(var object in world_dynamic){
+        // Only check objects that aren't reds, keywalls, keys, or moving.
+        if(world_dynamic[object][4] == 3
+          || world_dynamic[object][4] == 5
+          || world_dynamic[object][4] == 's'
+          || world_dynamic[object][7] != 0
+          || world_dynamic[object][10] != 0){
+            continue;
+        }
 
-            // Check if object is leftmost object so far.
-            if(world_dynamic[loop_counter][0] < buffer_static_left){
-                buffer_static_left = world_dynamic[loop_counter][0];
-            }
+        // Check if object is leftmost object so far.
+        if(world_dynamic[object][0] < buffer_static_left){
+            buffer_static_left = world_dynamic[object][0];
+        }
 
-            // Check if object is rightmost object so far.
-            if(world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] > temp_right){
-                temp_right = world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2];
-            }
+        // Check if object is rightmost object so far.
+        if(world_dynamic[object][0] + world_dynamic[object][2] > temp_right){
+            temp_right = world_dynamic[object][0] + world_dynamic[object][2];
+        }
 
-            // Check if object is topmost object so far.
-            if(world_dynamic[loop_counter][1] < buffer_static_top){
-                buffer_static_top = world_dynamic[loop_counter][1];
-            }
+        // Check if object is topmost object so far.
+        if(world_dynamic[object][1] < buffer_static_top){
+            buffer_static_top = world_dynamic[object][1];
+        }
 
-            // Check if object is bottommost object so far.
-            if(world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] > temp_bottom){
-                temp_bottom = world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3];
-            }
-        }while(loop_counter--);
+        // Check if object is bottommost object so far.
+        if(world_dynamic[object][1] + world_dynamic[object][3] > temp_bottom){
+            temp_bottom = world_dynamic[object][1] + world_dynamic[object][3];
+        }
     }
 
     // Determine limits required to hold static objects.
-    loop_counter = world_static.length - 1;
-    if(loop_counter >= 0){
-        do{
-            // Check if object is leftmost object so far.
-            if(world_static[loop_counter][0] < buffer_static_left){
-                buffer_static_left = world_static[loop_counter][0];
-            }
+    for(object in world_static){
+        // Check if object is leftmost object so far.
+        if(world_static[object][0] < buffer_static_left){
+            buffer_static_left = world_static[object][0];
+        }
 
-            // Check if object is rightmost object so far.
-            if(world_static[loop_counter][0] + world_static[loop_counter][2] > temp_right){
-                temp_right = world_static[loop_counter][0] + world_static[loop_counter][2];
-            }
+        // Check if object is rightmost object so far.
+        if(world_static[object][0] + world_static[object][2] > temp_right){
+            temp_right = world_static[object][0] + world_static[object][2];
+        }
 
-            // Check if object is topmost object so far.
-            if(world_static[loop_counter][1] < buffer_static_top){
-                buffer_static_top = world_static[loop_counter][1];
-            }
+        // Check if object is topmost object so far.
+        if(world_static[object][1] < buffer_static_top){
+            buffer_static_top = world_static[object][1];
+        }
 
-            // Check if object is bottommost object so far.
-            if(world_static[loop_counter][1] + world_static[loop_counter][3] > temp_bottom){
-                temp_bottom = world_static[loop_counter][1] + world_static[loop_counter][3];
-            }
-        }while(loop_counter--);
+        // Check if object is bottommost object so far.
+        if(world_static[object][1] + world_static[object][3] > temp_bottom){
+            temp_bottom = world_static[object][1] + world_static[object][3];
+        }
     }
 
     // Calculate minimum width of buffer_static canvas, set and clear.
@@ -624,7 +600,7 @@ function update_static_buffer(){
     );
 
     // Add static world objects to the buffer_static.
-    loop_counter = world_static.length - 1;
+    var loop_counter = world_static.length - 1;
     if(loop_counter >= 0){
         do{
             buffer_static.fillStyle = 'rgb('
@@ -690,20 +666,17 @@ function update_static_buffer(){
     }while(loop_counter--);
 
     // Add world text to buffer_static.
-    loop_counter = world_text.length-1;
-    if(loop_counter >= 0){
-        buffer_static.fillStyle = '#fff';
-        buffer_static.font = '23pt sans-serif';
-        buffer_static.textAlign = 'center';
-        buffer_static.textBaseline = 'top';
+    buffer_static.fillStyle = '#fff';
+    buffer_static.font = '23pt sans-serif';
+    buffer_static.textAlign = 'center';
+    buffer_static.textBaseline = 'top';
 
-        do{
-            buffer_static.fillText(
-              world_text[loop_counter][0],
-              world_text[loop_counter][1],
-              world_text[loop_counter][2]
-            );
-        }while(loop_counter--);
+    for(var text in world_text){
+        buffer_static.fillText(
+          world_text[text][0],
+          world_text[text][1],
+          world_text[text][2]
+        );
     }
 }
 
