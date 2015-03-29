@@ -353,7 +353,7 @@ function random_number(i){
 }
 
 function reset(){
-    if(!confirm('Reset settings?')){
+    if(!window.confirm('Reset settings?')){
         return;
     }
 
