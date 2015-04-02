@@ -711,36 +711,16 @@ var player_x = 0;
 var player_y = 0;
 var player_y_vel = 0;
 var settings = {
-  'audio-volume': window.localStorage.getItem('Platform-2D.htm-audio-volume') === null
-    ? 1
-    : parseFloat(window.localStorage.getItem('Platform-2D.htm-audio-volume')),
-  'color': window.localStorage.getItem('Platform-2D.htm-color') === null
-    ? '#009900'
-    : window.localStorage.getItem('Platform-2D.htm-color'),
-  'gravity': window.localStorage.getItem('Platform-2D.htm-gravity') === null
-    ? .5
-    : parseFloat(window.localStorage.getItem('Platform-2D.htm-gravity')),
-  'jump-key': window.localStorage.getItem('Platform-2D.htm-jump-key') === null
-    ? 'W'
-    : window.localStorage.getItem('Platform-2D.htm-jump-key'),
-  'jump-speed': window.localStorage.getItem('Platform-2D.htm-jump-speed') === null
-    ? -10
-    : parseFloat(window.localStorage.getItem('Platform-2D.htm-jump-speed')),
-  'movement-keys': window.localStorage.getItem('Platform-2D.htm-movement-keys') === null
-    ? 'AD'
-    : window.localStorage.getItem('Platform-2D.htm-movement-keys'),
-  'ms-per-frame': window.localStorage.getItem('Platform-2D.htm-ms-per-frame') === null
-    ? 25
-    : parseInt(window.localStorage.getItem('Platform-2D.htm-ms-per-frame')),
-  'speed': window.localStorage.getItem('Platform-2D.htm-speed') === null
-    ? 4
-    : parseFloat(window.localStorage.getItem('Platform-2D.htm-speed')),
-  'restart-key': window.localStorage.getItem('Platform-2D.htm-restart-key') === null
-    ? 'H'
-    : window.localStorage.getItem('Platform-2D.htm-restart-key'),
-  'terminal-velocity': window.localStorage.getItem('Platform-2D.htm-terminal-velocity') === null
-    ? 9
-    : parseFloat(window.localStorage.getItem('Platform-2D.htm-terminal-velocity')),
+  'audio-volume': parseFloat(window.localStorage.getItem('Platform-2D.htm-audio-volume')) || 1,
+  'color': window.localStorage.getItem('Platform-2D.htm-color') || '#009900',
+  'gravity': parseFloat(window.localStorage.getItem('Platform-2D.htm-gravity')) || .5,
+  'jump-key': window.localStorage.getItem('Platform-2D.htm-jump-key') || 'W',
+  'jump-speed': parseFloat(window.localStorage.getItem('Platform-2D.htm-jump-speed')) || -10,
+  'movement-keys': window.localStorage.getItem('Platform-2D.htm-movement-keys') || 'AD',
+  'ms-per-frame': parseInt(window.localStorage.getItem('Platform-2D.htm-ms-per-frame')) || 25,
+  'speed': parseFloat(window.localStorage.getItem('Platform-2D.htm-speed')) || 4,
+  'restart-key': window.localStorage.getItem('Platform-2D.htm-restart-key') || 'H',
+  'terminal-velocity': parseFloat(window.localStorage.getItem('Platform-2D.htm-terminal-velocity')) || 9,
   'time-display': window.localStorage.getItem('Platform-2D.htm-time-display') === null,
 };
 var state = 0;
