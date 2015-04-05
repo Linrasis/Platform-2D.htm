@@ -734,8 +734,6 @@ var x_offset = 0;
 var y = 0;
 var y_offset = 0;
 
-setmode(0, 1);
-
 window.onkeydown = function(e){
     if(mode <= 0){
         return;
@@ -778,6 +776,10 @@ window.onkeyup = function(e){
         key_jump = false;
         jump_permission = true;
     }
+};
+
+window.onload = function(e){
+    setmode(0, 1);
 };
 
 window.onresize = resize;
