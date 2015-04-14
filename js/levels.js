@@ -708,13 +708,13 @@ function load_level(id){
             [ 'most logical of paths.', 999, -55],
           ],
           [
-            [ settings['movement-keys'][0] + ' = Move Left', -185, -99],
-            [settings['movement-keys'][1] + ' = Move Right', -185, 101],
-            [                'Avoid the Red!',    0, 420],
-            [         settings['jump-key'] + ' = Jump',  170, 101],
+            [ settings['movement-keys'][0] + ' = Move Left', -185, -89],
+            [settings['movement-keys'][1] + ' = Move Right', -185, 111],
+            [                'Avoid the Red!',    0, 430],
+            [         settings['jump-key'] + ' = Jump',  170, 111],
           ],
           [
-            ['Village of the Wolves', -535, 150],
+            ['Village of the Wolves', -535, 160],
           ],
         ][id];
     }

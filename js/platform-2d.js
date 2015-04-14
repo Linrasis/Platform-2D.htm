@@ -135,7 +135,6 @@ function draw(){
     // If tracking frames, draw number of frames.
     if(settings['time-display']){
         buffer.textAlign = 'left';
-        buffer.textBaseline = 'top';
         buffer.fillText(
           frames,
           5,
@@ -670,7 +669,6 @@ function update_static_buffer(){
     buffer_static.fillStyle = '#fff';
     buffer_static.font = '23pt sans-serif';
     buffer_static.textAlign = 'center';
-    buffer_static.textBaseline = 'top';
 
     for(var text in world_text){
         buffer_static.fillText(
