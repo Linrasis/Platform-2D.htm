@@ -136,9 +136,9 @@ function draw(){
     if(settings['time-display']){
         buffer.textAlign = 'left';
         buffer.fillText(
-          frames,
+          frame_counter,
           5,
-          5
+          25
         );
     }
 
@@ -335,7 +335,7 @@ function logic(){
         player_y_vel += settings['gravity'];
     }
 
-    frames += 1;
+    frame_counter += 1;
 }
 
 function play_audio(id){
@@ -459,7 +459,7 @@ function setmode(newmode, newgame){
 
     // New game mode.
     if(mode > 0){
-        frames = 0;
+        frame_counter = 0;
 
         key_left = false;
         key_right = false;
@@ -696,7 +696,7 @@ var buffer_static_left = 0;
 var buffer_static_top = 0;
 var canvas = 0;
 var can_jump = false;
-var frames = 0;
+var frame_counter = 0;
 var height = 0;
 var interval = 0;
 var interval_logic = 0;
