@@ -38,58 +38,57 @@ function draw(){
     // Draw dynamic world objects that aren't in the buffer_static.
     var loop_counter = world_dynamic.length - 1;
     do{
-        // Only draw objects that are reds, keywalls, keys, or moving.
-        if(world_dynamic[loop_counter][4] == 3
-          || world_dynamic[loop_counter][4] == 5
-          || world_dynamic[loop_counter][4] == 's'
-          || world_dynamic[loop_counter][7] != 0
-          || world_dynamic[loop_counter][10] != 0){
-            // If dynamic object is on screen, draw it.
-            if(world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] + x_offset <= 0
-              || world_dynamic[loop_counter][0] + x_offset >= width
-              || world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] + y_offset <= 0
-              || world_dynamic[loop_counter][1] + y_offset >= height){
-                continue;
-            }
+        // Only draw objects that are reds, keywalls, keys, or moving
+        //   and are on the screen.
+        if(!(world_dynamic[loop_counter][4] == 3
+            || world_dynamic[loop_counter][4] == 5
+            || world_dynamic[loop_counter][4] == 's'
+            || world_dynamic[loop_counter][7] != 0
+            || world_dynamic[loop_counter][10] != 0)
+          && (world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] + x_offset <= 0
+            || world_dynamic[loop_counter][0] + x_offset >= width
+            || world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] + y_offset <= 0
+            || world_dynamic[loop_counter][1] + y_offset >= height)){
+            continue;
+        }
 
-            // If object has a texture, draw texture. else draw rect.
-            if(world_dynamic[loop_counter][4] > 1
-              && world_dynamic[loop_counter][4] < 6){
-                var temp_x = world_dynamic[loop_counter][0] + x_offset;
-                var temp_y = world_dynamic[loop_counter][1] + y_offset;
+        // If object has a texture, draw texture. else draw rect.
+        if(world_dynamic[loop_counter][4] > 1
+          && world_dynamic[loop_counter][4] < 6){
+            var temp_x = world_dynamic[loop_counter][0] + x_offset;
+            var temp_y = world_dynamic[loop_counter][1] + y_offset;
 
-                // Save current buffer state.
-                buffer.save();
+            // Save current buffer state.
+            buffer.save();
 
-                // Translate to object location.
-                buffer.translate(
-                  temp_x,
-                  temp_y
-                );
+            // Translate to object location.
+            buffer.translate(
+              temp_x,
+              temp_y
+            );
 
-                buffer.fillStyle = buffer.createPattern(
-                  assets_images[world_dynamic[loop_counter][4] - 2],
-                  'repeat'
-                );
-                buffer.fillRect(
-                  0,
-                  0,
-                  world_dynamic[loop_counter][2],
-                  world_dynamic[loop_counter][3]
-                );
+            buffer.fillStyle = buffer.createPattern(
+              assets_images[world_dynamic[loop_counter][4] - 2],
+              'repeat'
+            );
+            buffer.fillRect(
+              0,
+              0,
+              world_dynamic[loop_counter][2],
+              world_dynamic[loop_counter][3]
+            );
 
-                // Restore buffer state.
-                buffer.restore();
+            // Restore buffer state.
+            buffer.restore();
 
-            }else{
-                buffer.fillStyle = '#3c3c3c';
-                buffer.fillRect(
-                  world_dynamic[loop_counter][0] + x_offset,
-                  world_dynamic[loop_counter][1] + y_offset,
-                  world_dynamic[loop_counter][2],
-                  world_dynamic[loop_counter][3]
-                );
-            }
+        }else{
+            buffer.fillStyle = '#3c3c3c';
+            buffer.fillRect(
+              world_dynamic[loop_counter][0] + x_offset,
+              world_dynamic[loop_counter][1] + y_offset,
+              world_dynamic[loop_counter][2],
+              world_dynamic[loop_counter][3]
+            );
         }
     }while(loop_counter--);
 
