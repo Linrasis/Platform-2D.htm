@@ -103,22 +103,30 @@ function draw(){
 
     buffer.fillStyle = '#fff';
     buffer.font = '23pt sans-serif';
-    buffer.textAlign = 'center';
+
+    // If tracking frames, draw number of frames.
+    if(settings['time-display']){
+        buffer.fillText(
+          frame_counter,
+          5,
+          25
+        );
+    }
 
     // If game is over, draw game over text.
     if(state > 0){
         buffer.fillText(
           settings['restart-key'] + ' = Restart',
-          x,
-          y / 2 + 60
+          5,
+          75
         );
         buffer.fillText(
           'ESC = Main Menu',
-          x,
-          y / 2 + 99
+          5,
+          100
         );
 
-        buffer.font = '40pt sans-serif';
+        buffer.font = '42pt sans-serif';
         buffer.fillStyle = state === 2
           ? '#2d8930'
           : '#e02d30';
@@ -126,18 +134,8 @@ function draw(){
           state === 2
             ? 'Level Complete! ☺'
             : 'You Failed! ☹',
-          x,
-          y / 2
-        );
-    }
-
-    // If tracking frames, draw number of frames.
-    if(settings['time-display']){
-        buffer.textAlign = 'left';
-        buffer.fillText(
-          frame_counter,
           5,
-          25
+          170
         );
     }
 
@@ -667,7 +665,6 @@ function update_static_buffer(){
     // Add world text to buffer_static.
     buffer_static.fillStyle = '#fff';
     buffer_static.font = '23pt sans-serif';
-    buffer_static.textAlign = 'center';
 
     for(var text in world_text){
         buffer_static.fillText(

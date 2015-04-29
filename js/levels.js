@@ -693,7 +693,7 @@ function load_level(id){
 
         world_text = [
           [
-            ['Trust No Mass', 165, -75],
+            ['Trust No Mass', 99, -75],
           ],
           [
             [     '☺',  .5, -1090],
@@ -702,19 +702,19 @@ function load_level(id){
             [    'INC', 150,  -130],
           ],
           [
-            [      'Yellow keys guide', 200, -90],
-            [    'you through life...', 200, -55],
-            ['...but not often on the', 999, -90],
-            [ 'most logical of paths.', 999, -55],
+            [      'Yellow keys guide', 100, -90],
+            [    'you through life...', 100, -55],
+            ['...but not often on the', 899, -90],
+            [ 'most logical of paths.', 899, -55],
           ],
           [
-            [ settings['movement-keys'][0] + ' = Move Left', -185, -89],
-            [settings['movement-keys'][1] + ' = Move Right', -185, 111],
-            [                'Avoid the Red!',    0, 430],
-            [         settings['jump-key'] + ' = Jump',  170, 111],
+            [ settings['movement-keys'][0] + ' = Move Left', -250, -89],
+            [settings['movement-keys'][1] + ' = Move Right', -250, 111],
+            [                'Avoid the Red!',    -50, 430],
+            [         settings['jump-key'] + ' = Jump',  90, 111],
           ],
           [
-            ['Village of the Wolves', -535, 160],
+            ['Village of the Wolves', -660, 200],
           ],
         ][id];
     }
