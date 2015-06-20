@@ -706,16 +706,26 @@ var player_x = 0;
 var player_y = 0;
 var player_y_vel = 0;
 var settings = {
-  'audio-volume': parseFloat(window.localStorage.getItem('Platform-2D.htm-audio-volume')) || 1,
+  'audio-volume': window.localStorage.getItem('Platform-2D.htm-audio-volume') != null
+    ? parseFloat(window.localStorage.getItem('Platform-2D.htm-audio-volume'))
+    : 1,
   'color': window.localStorage.getItem('Platform-2D.htm-color') || '#009900',
-  'gravity': parseFloat(window.localStorage.getItem('Platform-2D.htm-gravity')) || .5,
+  'gravity': window.localStorage.getItem('Platform-2D.htm-gravity') != null
+    ? parseFloat(window.localStorage.getItem('Platform-2D.htm-gravity'))
+    : .5,
   'jump-key': window.localStorage.getItem('Platform-2D.htm-jump-key') || 'W',
-  'jump-speed': parseFloat(window.localStorage.getItem('Platform-2D.htm-jump-speed')) || -10,
+  'jump-speed': window.localStorage.getItem('Platform-2D.htm-jump-speed') != null
+    ? parseFloat(window.localStorage.getItem('Platform-2D.htm-jump-speed'))
+    : -10,
   'movement-keys': window.localStorage.getItem('Platform-2D.htm-movement-keys') || 'AD',
   'ms-per-frame': parseInt(window.localStorage.getItem('Platform-2D.htm-ms-per-frame')) || 25,
-  'speed': parseFloat(window.localStorage.getItem('Platform-2D.htm-speed')) || 4,
+  'speed': window.localStorage.getItem('Platform-2D.htm-speed') != null
+    ? parseFloat(window.localStorage.getItem('Platform-2D.htm-speed'))
+    : 4,
   'restart-key': window.localStorage.getItem('Platform-2D.htm-restart-key') || 'H',
-  'terminal-velocity': parseFloat(window.localStorage.getItem('Platform-2D.htm-terminal-velocity')) || 9,
+  'terminal-velocity': window.localStorage.getItem('Platform-2D.htm-terminal-velocity') != null
+    ? parseFloat(window.localStorage.getItem('Platform-2D.htm-terminal-velocity'))
+    : 9,
   'time-display': window.localStorage.getItem('Platform-2D.htm-time-display') === null,
 };
 var state = 0;
