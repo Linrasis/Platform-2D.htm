@@ -470,7 +470,7 @@ function setmode(newmode, newgame){
 
         if(newgame){
             save();
-            document.getElementById('page').innerHTML = '<canvas id=canvas></canvas><canvas id=buffer style=display:none></canvas><canvas id=buffer-static style=display:none></canvas>';
+            document.getElementById('page').innerHTML = '<canvas id=canvas></canvas><canvas id=buffer></canvas><canvas id=buffer-static></canvas>';
 
             buffer = document.getElementById('buffer').getContext('2d');
             buffer_static = document.getElementById('buffer-static').getContext('2d');
