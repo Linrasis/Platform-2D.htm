@@ -1,3 +1,5 @@
+'use strict';
+
 function level_logic(id){
     // Randomized lava corridor logic.
     if(id == -1){
@@ -238,7 +240,7 @@ function load_level(id){
 
         world_background = [];
 
-        tile_count = random_number(9) + 1;
+        var tile_count = random_number(9) + 1;
         if(tile_count % 2 === 0){
             tile_count += 1;
         }
