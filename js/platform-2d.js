@@ -172,7 +172,7 @@ function logic(){
         player_dx += settings['speed'];
     }
 
-    can_jump = false;
+    var can_jump = false;
     var temp_key = 0;
 
     var loop_counter = world_dynamic.length - 1;
@@ -693,7 +693,6 @@ var buffer_static = 0;
 var buffer_static_left = 0;
 var buffer_static_top = 0;
 var canvas = 0;
-var can_jump = false;
 var frame_counter = 0;
 var height = 0;
 var interval = 0;
