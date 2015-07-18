@@ -187,11 +187,6 @@ function logic(){
                 world_dynamic[loop_counter][7] = -world_dynamic[loop_counter][7];
             }
 
-            // If player on moving platform, move player X.
-            if(platform === loop_counter){
-                player_dx += world_dynamic[loop_counter][7];
-            }
-
             world_dynamic[loop_counter][0] += world_dynamic[loop_counter][7];
         }
 
@@ -203,11 +198,6 @@ function logic(){
             }else if(world_dynamic[loop_counter][1] > world_dynamic[loop_counter][9]
               && world_dynamic[loop_counter][10] > 0){
                 world_dynamic[loop_counter][10] = -world_dynamic[loop_counter][10];
-            }
-
-            // If player on moving platform, move player Y.
-            if(platform === loop_counter){
-                player_dy += world_dynamic[loop_counter][10];
             }
 
             world_dynamic[loop_counter][1] += world_dynamic[loop_counter][10];
@@ -250,8 +240,6 @@ function logic(){
                         if(world_dynamic[loop_counter][7] != 0){
                             player_dx += world_dynamic[loop_counter][7];
                         }
-
-                        platform = loop_counter;
                     }
 
                 }else if(player_y + player_y_vel < temp_object_right_y + 20
@@ -261,22 +249,20 @@ function logic(){
             }
 
             // Handle collisions with platforms while moving left/right.
-            if(platform != loop_counter){
-                if(key_left
-                  && player_y + 20 > world_dynamic[loop_counter][1]
-                  && player_y - 20 < temp_object_right_y
-                  && player_x != world_dynamic[loop_counter][0] - 20
-                  && player_x > world_dynamic[loop_counter][0]){
-                    player_dx = temp_object_right_x - player_x + 20;
-                }
+            if(key_left
+              && player_y + 20 > world_dynamic[loop_counter][1]
+              && player_y - 20 < temp_object_right_y
+              && player_x != world_dynamic[loop_counter][0] - 20
+              && player_x > world_dynamic[loop_counter][0]){
+                player_dx = temp_object_right_x - player_x + 20;
+            }
 
-                if(key_right
-                  && player_y + 20 > world_dynamic[loop_counter][1]
-                  && player_y - 20 < temp_object_right_y
-                  && player_x != temp_object_right_x + 20
-                  && player_x < world_dynamic[loop_counter][0]){
-                    player_dx = world_dynamic[loop_counter][0] - player_x - 20;
-                }
+            if(key_right
+              && player_y + 20 > world_dynamic[loop_counter][1]
+              && player_y - 20 < temp_object_right_y
+              && player_x != temp_object_right_x + 20
+              && player_x < world_dynamic[loop_counter][0]){
+                player_dx = world_dynamic[loop_counter][0] - player_x - 20;
             }
 
         // Collided with booster.
@@ -316,7 +302,6 @@ function logic(){
         }while(loop_counter--);
     }
 
-    platform = -1;
     player_x += Math.round(player_dx);
     player_y += Math.round(player_dy + player_y_vel);
 
@@ -702,7 +687,6 @@ var key_left = false;
 var key_right = false;
 var key_jump = false;
 var mode = 0;
-var platform = -1;
 var player_x = 0;
 var player_y = 0;
 var player_y_vel = 0;
