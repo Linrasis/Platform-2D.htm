@@ -15,27 +15,27 @@ function draw(){
           0,
           0,
           width,
-          y - player_y + world_background[0]
+          y - player['y'] + world_background[0]
         );
 
         buffer.fillStyle = world_background[2];
         buffer.fillRect(
           0,
-          y - player_y + world_background[0],
+          y - player['y'] + world_background[0],
           width,
-          height + player_y
+          height + player['y']
         );
     }
 
     // Draw buffer_static.
     buffer.drawImage(
       document.getElementById('buffer-static'),
-      x - player_x + buffer_static_left,
-      y - player_y + buffer_static_top
+      x - player['x'] + buffer_static_left,
+      y - player['y'] + buffer_static_top
     );
 
-    x_offset = x - player_x;
-    y_offset = y - player_y;
+    x_offset = x - player['x'];
+    y_offset = y - player['y'];
 
     // Draw dynamic world objects that aren't in the buffer_static.
     var loop_counter = world_dynamic.length - 1;
@@ -206,7 +206,7 @@ function logic(){
         // If player and object aren't moving, no collision checks.
         if(player_dx == 0
           && player_dy == 0
-          && player_y_vel == 0
+          && player['y-velocity'] == 0
           && world_dynamic[loop_counter][7] == 0
           && world_dynamic[loop_counter][10] == 0){
             continue;
@@ -216,10 +216,10 @@ function logic(){
         var temp_object_right_y = world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3];
 
         // Check if player position + movement is within bounds of object.
-        if(player_x + player_dx - 20 > temp_object_right_x
-          || player_x + player_dx + 20 < world_dynamic[loop_counter][0]
-          || player_y + player_y_vel - 20 > temp_object_right_y
-          || player_y + player_y_vel + 20 < world_dynamic[loop_counter][1]){
+        if(player['x'] + player_dx - 20 > temp_object_right_x
+          || player['x'] + player_dx + 20 < world_dynamic[loop_counter][0]
+          || player['y'] + player['y-velocity'] - 20 > temp_object_right_y
+          || player['y'] + player['y-velocity'] + 20 < world_dynamic[loop_counter][1]){
             continue;
         }
 
@@ -227,14 +227,14 @@ function logic(){
         if(world_dynamic[loop_counter][4] === 1
           || world_dynamic[loop_counter][4] === 's'){
             // Handle collisions with platforms while jumping or falling.
-            if(player_y_vel != 0
-              && player_x != world_dynamic[loop_counter][0] - 20
-              && player_x != temp_object_right_x + 20){
-                if(player_y_vel > 0){
-                    if(player_y + player_y_vel <= world_dynamic[loop_counter][1] - 10
-                      && player_y + player_y_vel > world_dynamic[loop_counter][1] - 20){
+            if(player['y-velocity'] != 0
+              && player['x'] != world_dynamic[loop_counter][0] - 20
+              && player['x'] != temp_object_right_x + 20){
+                if(player['y-velocity'] > 0){
+                    if(player['y'] + player['y-velocity'] <= world_dynamic[loop_counter][1] - 10
+                      && player['y'] + player['y-velocity'] > world_dynamic[loop_counter][1] - 20){
                         can_jump = true;
-                        player_y_vel = world_dynamic[loop_counter][1] - player_y - 20;
+                        player['y-velocity'] = world_dynamic[loop_counter][1] - player['y'] - 20;
                         player_dy = 0;
 
                         if(world_dynamic[loop_counter][7] != 0){
@@ -242,32 +242,32 @@ function logic(){
                         }
                     }
 
-                }else if(player_y + player_y_vel < temp_object_right_y + 20
-                  && player_y + player_y_vel >= temp_object_right_y + 10){
-                    player_y_vel = temp_object_right_y - player_y + 20;
+                }else if(player['y'] + player['y-velocity'] < temp_object_right_y + 20
+                  && player['y'] + player['y-velocity'] >= temp_object_right_y + 10){
+                    player['y-velocity'] = temp_object_right_y - player['y'] + 20;
                 }
             }
 
             // Handle collisions with platforms while moving left/right.
             if(key_left
-              && player_y + 20 > world_dynamic[loop_counter][1]
-              && player_y - 20 < temp_object_right_y
-              && player_x != world_dynamic[loop_counter][0] - 20
-              && player_x > world_dynamic[loop_counter][0]){
-                player_dx = temp_object_right_x - player_x + 20;
+              && player['y'] + 20 > world_dynamic[loop_counter][1]
+              && player['y'] - 20 < temp_object_right_y
+              && player['x'] != world_dynamic[loop_counter][0] - 20
+              && player['x'] > world_dynamic[loop_counter][0]){
+                player_dx = temp_object_right_x - player['x'] + 20;
             }
 
             if(key_right
-              && player_y + 20 > world_dynamic[loop_counter][1]
-              && player_y - 20 < temp_object_right_y
-              && player_x != temp_object_right_x + 20
-              && player_x < world_dynamic[loop_counter][0]){
-                player_dx = world_dynamic[loop_counter][0] - player_x - 20;
+              && player['y'] + 20 > world_dynamic[loop_counter][1]
+              && player['y'] - 20 < temp_object_right_y
+              && player['x'] != temp_object_right_x + 20
+              && player['x'] < world_dynamic[loop_counter][0]){
+                player_dx = world_dynamic[loop_counter][0] - player['x'] - 20;
             }
 
         // Collided with booster.
         }else if(world_dynamic[loop_counter][4] === 4){
-            player_y_vel = world_dynamic[loop_counter][11];
+            player['y-velocity'] = world_dynamic[loop_counter][11];
 
         // Collided with green goal.
         }else if(world_dynamic[loop_counter][4] === 2){
@@ -302,22 +302,22 @@ function logic(){
         }while(loop_counter--);
     }
 
-    player_x += Math.round(player_dx);
-    player_y += Math.round(player_dy + player_y_vel);
+    player['x'] += Math.round(player_dx);
+    player['y'] += Math.round(player_dy + player['y-velocity']);
 
     if(can_jump){
         if(jump_permission
           && key_jump){
-            player_y_vel = settings['jump-speed'];
+            player['y-velocity'] = settings['jump-speed'];
             jump_permission = false;
 
         }else{
-            player_y_vel = 0;
+            player['y-velocity'] = 0;
         }
 
     }else{
-        player_y_vel = Math.min(
-          player_y_vel + settings['gravity'],
+        player['y-velocity'] = Math.min(
+          player['y-velocity'] + settings['gravity'],
           settings['terminal-velocity']
         );
     }
@@ -452,9 +452,11 @@ function setmode(newmode, newgame){
         key_right = false;
         key_jump = false;
 
-        player_x = 0;
-        player_y = 0;
-        player_y_vel = 0;
+        player = {
+          'x': 0,
+          'y': 0,
+          'y-velocity': 0,
+        },
 
         state = 0;
 
@@ -690,9 +692,7 @@ var key_left = false;
 var key_right = false;
 var key_jump = false;
 var mode = 0;
-var player_x = 0;
-var player_y = 0;
-var player_y_vel = 0;
+var player = {};
 var settings = {
   'audio-volume': window.localStorage.getItem('Platform-2D.htm-audio-volume') != null
     ? parseFloat(window.localStorage.getItem('Platform-2D.htm-audio-volume'))

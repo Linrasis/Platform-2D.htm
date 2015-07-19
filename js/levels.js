@@ -4,9 +4,9 @@ function level_logic(id){
     // Randomized lava corridor logic.
     if(id == -1){
         // Create next obstacle every 400px traveled.
-        if(player_x > 400){
+        if(player['x'] > 400){
             // Move the player back 400px.
-            player_x -= 400;
+            player['x'] -= 400;
 
             // Move the lava wall back 400px.
             world_dynamic[0][0] -= 400;
@@ -25,7 +25,7 @@ function level_logic(id){
             // Lava pit obstacle.
             if(obstacle == 0){
                 world_dynamic.push([
-                  player_x + x,
+                  player['x'] + x,
                   -25,
                   50,
                   75,
@@ -38,7 +38,7 @@ function level_logic(id){
                   0,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 50,
+                  player['x'] + x + 50,
                   0,
                   175,
                   50,
@@ -51,7 +51,7 @@ function level_logic(id){
                   0,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 50 + random_number(150),
+                  player['x'] + x + 50 + random_number(150),
                   25,
                   25,
                   25,
@@ -64,7 +64,7 @@ function level_logic(id){
                   2,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 225,
+                  player['x'] + x + 225,
                   -25,
                   50,
                   75,
@@ -80,7 +80,7 @@ function level_logic(id){
             // Booster obstacle.
             }else if(obstacle == 1){
                 world_dynamic.push([
-                  player_x + x,
+                  player['x'] + x,
                   -200,
                   25,
                   200,
@@ -93,7 +93,7 @@ function level_logic(id){
                   0,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 75,
+                  player['x'] + x + 75,
                   25,
                   25,
                   25,
@@ -107,7 +107,7 @@ function level_logic(id){
                   -14,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 100,
+                  player['x'] + x + 100,
                   -125,
                   25,
                   175,
@@ -123,7 +123,7 @@ function level_logic(id){
             // Wall backtrack obstacle.
             }else if(obstacle == 2){
                 world_dynamic.push([
-                  player_x + x + 25,
+                  player['x'] + x + 25,
                   -200,
                   25,
                   200,
@@ -136,7 +136,7 @@ function level_logic(id){
                   0,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 50,
+                  player['x'] + x + 50,
                   -25,
                   25,
                   25,
@@ -149,7 +149,7 @@ function level_logic(id){
                   0,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 175,
+                  player['x'] + x + 175,
                   -125,
                   25,
                   175,
@@ -165,7 +165,7 @@ function level_logic(id){
             // Lava pillars obstacle.
             }else{
                 world_dynamic.push([
-                  player_x + x,
+                  player['x'] + x,
                   0,
                   25,
                   50,
@@ -178,7 +178,7 @@ function level_logic(id){
                   0,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 100,
+                  player['x'] + x + 100,
                   -25,
                   25,
                   75,
@@ -191,7 +191,7 @@ function level_logic(id){
                   0,
                 ]);
                 world_dynamic.push([
-                  player_x + x + 200,
+                  player['x'] + x + 200,
                   0,
                   25,
                   50,
@@ -208,10 +208,10 @@ function level_logic(id){
         }
 
         // Set lava wall goal to player position to keep it moving.
-        world_dynamic[0][6] = player_x;
+        world_dynamic[0][6] = player['x'];
 
         // Reset floor X position to match player position.
-        world_dynamic[1][0] = player_x - 50;
+        world_dynamic[1][0] = player['x'] - 50;
 
         // Delete objects that are eaten by the lava wall.
         var loop_counter = world_dynamic.length - 1;
