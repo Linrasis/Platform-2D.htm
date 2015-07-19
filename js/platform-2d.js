@@ -120,12 +120,12 @@ function draw(){
         buffer.fillText(
           settings['restart-key'] + ' = Restart',
           5,
-          75
+          100
         );
         buffer.fillText(
           'ESC = Main Menu',
           5,
-          100
+          125
         );
 
         buffer.font = '42pt sans-serif';
@@ -137,7 +137,7 @@ function draw(){
             ? 'Level Complete! ☺'
             : 'You Failed! ☹',
           5,
-          170
+          75
         );
     }
 
