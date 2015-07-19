@@ -315,8 +315,11 @@ function logic(){
             player_y_vel = 0;
         }
 
-    }else if(player_y_vel < settings['terminal-velocity']){
-        player_y_vel += settings['gravity'];
+    }else{
+        player_y_vel = Math.min(
+          player_y_vel + settings['gravity'],
+          settings['terminal-velocity']
+        );
     }
 
     frame_counter += 1;
