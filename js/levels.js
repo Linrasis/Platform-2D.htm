@@ -2,7 +2,7 @@
 
 function level_logic(id){
     // Randomized lava corridor logic.
-    if(id == -1){
+    if(id === -1){
         // Create next obstacle every 400px traveled.
         if(player['x'] > 400){
             // Move the player back 400px.
@@ -23,7 +23,7 @@ function level_logic(id){
             var obstacle = random_number(4);
 
             // Lava pit obstacle.
-            if(obstacle == 0){
+            if(obstacle === 0){
                 world_dynamic.push([
                   player['x'] + x,
                   -25,
@@ -78,7 +78,7 @@ function level_logic(id){
                 ]);
 
             // Booster obstacle.
-            }else if(obstacle == 1){
+            }else if(obstacle === 1){
                 world_dynamic.push([
                   player['x'] + x,
                   -200,
@@ -121,7 +121,7 @@ function level_logic(id){
                 ]);
 
             // Wall backtrack obstacle.
-            }else if(obstacle == 2){
+            }else if(obstacle === 2){
                 world_dynamic.push([
                   player['x'] + x + 25,
                   -200,
@@ -235,7 +235,7 @@ function load_level(id){
     world_text.length = 0;
 
     // Randomized level.
-    if(id == -2){
+    if(id === -2){
         document.getElementById('canvas').style.backgroundColor = '#3c3c3c';
 
         world_background = [];
@@ -533,7 +533,7 @@ function load_level(id){
         ]);
 
     // Randomized lava corridor.
-    }else if(id == -1){
+    }else if(id === -1){
         document.getElementById('canvas').style.backgroundColor = '#3c3c3c';
 
         world_background = [];

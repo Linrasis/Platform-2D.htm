@@ -42,11 +42,11 @@ function draw(){
     do{
         // Only draw objects that are reds, keywalls, keys, or moving
         //   and are on the screen.
-        if(!(world_dynamic[loop_counter][4] == 3
-            || world_dynamic[loop_counter][4] == 5
-            || world_dynamic[loop_counter][4] == 's'
-            || world_dynamic[loop_counter][7] != 0
-            || world_dynamic[loop_counter][10] != 0)
+        if(!(world_dynamic[loop_counter][4] === 3
+            || world_dynamic[loop_counter][4] === 5
+            || world_dynamic[loop_counter][4] === 's'
+            || world_dynamic[loop_counter][7] !== 0
+            || world_dynamic[loop_counter][10] !== 0)
           && (world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] + x_offset <= 0
             || world_dynamic[loop_counter][0] + x_offset >= width
             || world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] + y_offset <= 0
@@ -178,7 +178,7 @@ function logic(){
     var loop_counter = world_dynamic.length - 1;
     do{
         // X movement.
-        if(world_dynamic[loop_counter][7] != 0){
+        if(world_dynamic[loop_counter][7] !== 0){
             if(world_dynamic[loop_counter][0] < world_dynamic[loop_counter][5]){
                 world_dynamic[loop_counter][7] = Math.abs(world_dynamic[loop_counter][7]);
 
@@ -191,7 +191,7 @@ function logic(){
         }
 
         // Y movement.
-        if(world_dynamic[loop_counter][10] != 0){
+        if(world_dynamic[loop_counter][10] !== 0){
             if(world_dynamic[loop_counter][1] < world_dynamic[loop_counter][8]){
                 world_dynamic[loop_counter][10] = Math.abs(world_dynamic[loop_counter][10]);
 
@@ -204,11 +204,11 @@ function logic(){
         }
 
         // If player and object aren't moving, no collision checks.
-        if(player_dx == 0
-          && player_dy == 0
-          && player['y-velocity'] == 0
-          && world_dynamic[loop_counter][7] == 0
-          && world_dynamic[loop_counter][10] == 0){
+        if(player_dx === 0
+          && player_dy === 0
+          && player['y-velocity'] === 0
+          && world_dynamic[loop_counter][7] === 0
+          && world_dynamic[loop_counter][10] === 0){
             continue;
         }
 
@@ -227,9 +227,9 @@ function logic(){
         if(world_dynamic[loop_counter][4] === 1
           || world_dynamic[loop_counter][4] === 's'){
             // Handle collisions with platforms while jumping or falling.
-            if(player['y-velocity'] != 0
-              && player['x'] != world_dynamic[loop_counter][0] - 20
-              && player['x'] != temp_object_right_x + 20){
+            if(player['y-velocity'] !== 0
+              && player['x'] !== world_dynamic[loop_counter][0] - 20
+              && player['x'] !== temp_object_right_x + 20){
                 if(player['y-velocity'] > 0){
                     if(player['y'] + player['y-velocity'] <= world_dynamic[loop_counter][1] - 10
                       && player['y'] + player['y-velocity'] > world_dynamic[loop_counter][1] - 20){
@@ -237,7 +237,7 @@ function logic(){
                         player['y-velocity'] = world_dynamic[loop_counter][1] - player['y'] - 20;
                         player_dy = 0;
 
-                        if(world_dynamic[loop_counter][7] != 0){
+                        if(world_dynamic[loop_counter][7] !== 0){
                             player_dx += world_dynamic[loop_counter][7];
                         }
                     }
@@ -252,7 +252,7 @@ function logic(){
             if(key_left
               && player['y'] + 20 > world_dynamic[loop_counter][1]
               && player['y'] - 20 < temp_object_right_y
-              && player['x'] != world_dynamic[loop_counter][0] - 20
+              && player['x'] !== world_dynamic[loop_counter][0] - 20
               && player['x'] > world_dynamic[loop_counter][0]){
                 player_dx = temp_object_right_x - player['x'] + 20;
             }
@@ -260,7 +260,7 @@ function logic(){
             if(key_right
               && player['y'] + 20 > world_dynamic[loop_counter][1]
               && player['y'] - 20 < temp_object_right_y
-              && player['x'] != temp_object_right_x + 20
+              && player['x'] !== temp_object_right_x + 20
               && player['x'] < world_dynamic[loop_counter][0]){
                 player_dx = world_dynamic[loop_counter][0] - player['x'] - 20;
             }
@@ -516,11 +516,11 @@ function update_static_buffer(){
     // Determine limits required to hold certain dynamic objects.
     for(var object in world_dynamic){
         // Only check objects that aren't reds, keywalls, keys, or moving.
-        if(world_dynamic[object][4] == 3
-          || world_dynamic[object][4] == 5
-          || world_dynamic[object][4] == 's'
-          || world_dynamic[object][7] != 0
-          || world_dynamic[object][10] != 0){
+        if(world_dynamic[object][4] === 3
+          || world_dynamic[object][4] === 5
+          || world_dynamic[object][4] === 's'
+          || world_dynamic[object][7] !== 0
+          || world_dynamic[object][10] !== 0){
             continue;
         }
 
@@ -609,11 +609,11 @@ function update_static_buffer(){
     loop_counter = world_dynamic.length - 1;
     do{
         // Only check objects that aren't reds, keywalls, keys, or moving.
-        if(world_dynamic[loop_counter][4] == 3
-          || world_dynamic[loop_counter][4] == 5
-          || world_dynamic[loop_counter][4] == 's'
-          || world_dynamic[loop_counter][7] != 0
-          || world_dynamic[loop_counter][10] != 0){
+        if(world_dynamic[loop_counter][4] === 3
+          || world_dynamic[loop_counter][4] === 5
+          || world_dynamic[loop_counter][4] === 's'
+          || world_dynamic[loop_counter][7] !== 0
+          || world_dynamic[loop_counter][10] !== 0){
             continue;
         }
 
