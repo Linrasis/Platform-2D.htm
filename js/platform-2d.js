@@ -325,6 +325,12 @@ function logic(){
     frame_counter += 1;
 }
 
+function new_image(path){
+    var image = new Image();
+    image.src = path;
+    return image;
+}
+
 function play_audio(id){
     if(settings['audio-volume'] <= 0){
         return;
@@ -669,15 +675,11 @@ function update_static_buffer(){
 
 var animationFrame = 0;
 var assets_images = [
-  new Image(),
-  new Image(),
-  new Image(),
-  new Image(),
+  new_image('assets/goal.png'),
+  new_image('assets/red.png'),
+  new_image('assets/boost.png'),
+  new_image('assets/key.png'),
 ];
-assets_images[0].src = 'assets/goal.png';
-assets_images[1].src = 'assets/red.png';
-assets_images[2].src = 'assets/boost.png';
-assets_images[3].src = 'assets/key.png';
 var buffer = 0;
 var buffer_static = 0;
 var buffer_static_left = 0;
