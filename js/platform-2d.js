@@ -468,13 +468,20 @@ function setmode(newmode, newgame){
 
         if(newgame){
             save();
-            document.getElementById('page').innerHTML = '<canvas id=canvas></canvas><canvas id=buffer></canvas><canvas id=buffer-static></canvas>';
+            document.getElementById('page').innerHTML =
+              '<canvas id=canvas></canvas><canvas id=buffer></canvas><canvas id=buffer-static></canvas>';
 
             var contextAttributes = {
               'alpha': false,
             };
-            buffer = document.getElementById('buffer').getContext('2d', contextAttributes);
-            buffer_static = document.getElementById('buffer-static').getContext('2d', contextAttributes);
+            buffer = document.getElementById('buffer').getContext(
+              '2d',
+              contextAttributes
+            );
+            buffer_static = document.getElementById('buffer-static').getContext(
+              '2d',
+              contextAttributes
+            );
             canvas = document.getElementById('canvas').getContext('2d');
 
             resize();
