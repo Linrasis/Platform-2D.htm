@@ -509,10 +509,10 @@ function setmode(newmode, newgame){
     world_static.length = 0;
     world_text.length = 0;
 
-    document.getElementById('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div class=c><a onclick="setmode(3, true)">Generate Random Level</a><br><a onclick="setmode(4, true)">Randomized Lava Corridor</a></div><hr><div class=c><a onclick="setmode(5, true)">A Pit of Your Design</a><br><a onclick="setmode(6, true)">Booster Towers</a><br><a onclick="setmode(7, true)">Keys of a Father</a><br><a onclick="setmode(8, true)">Tutorial Island</a><br><a onclick="setmode(9, true)">Village of the Wolves</a></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div class=c><input id=jump-key maxlength=1 value='
+    document.getElementById('page').innerHTML = '<div style=display:inline-block;text-align:left;vertical-align:top><div><a onclick="setmode(3, true)">Generate Random Level</a><br><a onclick="setmode(4, true)">Randomized Lava Corridor</a></div><hr><div><a onclick="setmode(5, true)">A Pit of Your Design</a><br><a onclick="setmode(6, true)">Booster Towers</a><br><a onclick="setmode(7, true)">Keys of a Father</a><br><a onclick="setmode(8, true)">Tutorial Island</a><br><a onclick="setmode(9, true)">Village of the Wolves</a></div></div><div style="border-left:8px solid #222;display:inline-block;text-align:left"><div><input id=jump-key maxlength=1 value='
       + settings['jump-key'] + '>Jump<br><input disabled value=ESC>Main Menu<br><input id=movement-keys maxlength=2 value='
       + settings['movement-keys'] + '>Move ←→<br><input id=restart-key maxlength=1 value='
-      + settings['restart-key'] + '>Restart</div><hr><div class=c><input id=audio-volume max=1 min=0 step=.01 type=range value='
+      + settings['restart-key'] + '>Restart</div><hr><div><input id=audio-volume max=1 min=0 step=.01 type=range value='
       + settings['audio-volume'] + '>Audio<br><input id=color type=color value='
       + settings['color'] + '>Color<br><input id=gravity value='
       + settings['gravity'] + '>Gravity<br><input id=jump-speed value='

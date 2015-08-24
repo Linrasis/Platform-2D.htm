@@ -17,9 +17,6 @@ body{
 #buffer-static{
     display: none;
 }
-.c{
-    padding: 4px
-}
 canvas{
     left: 0;
     position: absolute;
@@ -43,4 +40,7 @@ input[type=checkbox],
 input[type=color],
 input[type=range]{
     cursor: pointer;
+}
+#page > div > div{
+    padding: 4px;
 }
