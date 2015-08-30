@@ -8,6 +8,9 @@ function draw(){
       height
     );
 
+    x_offset = x - player['x'];
+    y_offset = y - player['y'];
+
     // Draw background colors if level asks for it.
     if(world_background.length > 0){
         buffer.fillStyle = world_background[1];
@@ -15,13 +18,13 @@ function draw(){
           0,
           0,
           width,
-          y - player['y'] + world_background[0]
+          y_offset + world_background[0]
         );
 
         buffer.fillStyle = world_background[2];
         buffer.fillRect(
           0,
-          y - player['y'] + world_background[0],
+          y_offset + world_background[0],
           width,
           height + player['y']
         );
@@ -30,12 +33,9 @@ function draw(){
     // Draw buffer_static.
     buffer.drawImage(
       document.getElementById('buffer-static'),
-      x - player['x'] + buffer_static_left,
-      y - player['y'] + buffer_static_top
+      x_offset + buffer_static_left,
+      y_offset + buffer_static_top
     );
-
-    x_offset = x - player['x'];
-    y_offset = y - player['y'];
 
     // Draw dynamic world objects that aren't in the buffer_static.
     var loop_counter = world_dynamic.length - 1;
