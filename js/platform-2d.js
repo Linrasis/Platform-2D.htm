@@ -676,9 +676,9 @@ function update_static_buffer(){
 
     for(var text in world_text){
         buffer_static.fillText(
-          world_text[text][0],
-          world_text[text][1],
-          world_text[text][2]
+          world_text[text]['text'],
+          world_text[text]['x'],
+          world_text[text]['y']
         );
     }
 }

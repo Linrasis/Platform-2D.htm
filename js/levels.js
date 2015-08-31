@@ -119,7 +119,7 @@ function load_level(id){
         ];
 
         world_dynamic.push(
-          [-100, 50, 200, 75, 1, 0, 0,, 0, 0, 0, 0,]
+          [-100, 50, 200, 75, 1, 0, 0, 0, 0, 0, 0,]
         );
 
         do{
@@ -486,28 +486,28 @@ function load_level(id){
 
         world_text = [
           [
-            ['Trust No Mass', 99, -75,],
+            {'text': 'Trust No Mass', 'x': 99, 'y': -75,},
           ],
           [
-            ['☺', -15, -1090,],
-            ['Booster', 0, -210,],
-            ['Towers', 0, -170,],
-            ['INC', 0, -130,],
+            {'text': '☺', 'x': -15, 'y': -1090,},
+            {'text': 'Booster', 'x': 0, 'y': -210,},
+            {'text': 'Towers', 'x': 0, 'y': -170,},
+            {'text': 'INC', 'x': 0, 'y': -130,},
           ],
           [
-            ['Yellow keys guide', 100, -90,],
-            ['you through life...', 100, -55,],
-            ['...but not often on the', 899, -90,],
-            ['most logical of paths.', 899, -55,],
+            {'text': 'Yellow keys guide', 'x': 100, 'y': -90,},
+            {'text': 'you through life...', 'x': 100, 'y': -55,},
+            {'text': '...but not often on the', 'x': 899, 'y': -90,},
+            {'text': 'most logical of paths.', 'x': 899, 'y': -55,},
           ],
           [
-            [settings['movement-keys'][0] + ' = ←←←←←', -250, -89,],
-            [settings['movement-keys'][1] + ' = →→→→→', -250, 111,],
-            ['!!!!!', -50, 430,],
-            [settings['jump-key'] + ' = ↑↑↑↑↑', 90, 111,],
+            {'text': settings['movement-keys'][0] + ' = ←←←←←', 'x': -250, 'y': -89,},
+            {'text': settings['movement-keys'][1] + ' = →→→→→', 'x': -250, 'y': 111,},
+            {'text': '!!!!!', 'x': -50, 'y': 430,},
+            {'text': settings['jump-key'] + ' = ↑↑↑↑↑', 'x': 90, 'y': 111,},
           ],
           [
-            ['Village of the Wolves', -660, 100,],
+            {'text': 'Village of the Wolves', 'x': -660, 'y': 100,},
           ],
         ][id];
     }
