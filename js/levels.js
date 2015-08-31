@@ -36,8 +36,8 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                ]);
-                world_dynamic.push([
+                ],
+                [
                   player['x'] + x + 50,
                   0,
                   175,
@@ -49,8 +49,8 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                ]);
-                world_dynamic.push([
+                ],
+                [
                   player['x'] + x + 50 + random_number(150),
                   25,
                   25,
@@ -62,8 +62,8 @@ function level_logic(id){
                   -200,
                   25,
                   2,
-                ]);
-                world_dynamic.push([
+                ],
+                [
                   player['x'] + x + 225,
                   -25,
                   50,
@@ -91,8 +91,8 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                ]);
-                world_dynamic.push([
+                ],
+                [
                   player['x'] + x + 75,
                   25,
                   25,
@@ -105,8 +105,8 @@ function level_logic(id){
                   0,
                   0,
                   -14,
-                ]);
-                world_dynamic.push([
+                ],
+                [
                   player['x'] + x + 100,
                   -125,
                   25,
@@ -134,8 +134,8 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                ]);
-                world_dynamic.push([
+                ],
+                [
                   player['x'] + x + 50,
                   -25,
                   25,
@@ -147,8 +147,8 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                ]);
-                world_dynamic.push([
+                ],
+                [
                   player['x'] + x + 175,
                   -125,
                   25,
@@ -176,8 +176,8 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                ]);
-                world_dynamic.push([
+                ],
+                [
                   player['x'] + x + 100,
                   -25,
                   25,
@@ -189,8 +189,8 @@ function level_logic(id){
                   0,
                   0,
                   0,
-                ]);
-                world_dynamic.push([
+                ],
+                [
                   player['x'] + x + 200,
                   0,
                   25,
