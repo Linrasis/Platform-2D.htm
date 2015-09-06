@@ -114,8 +114,24 @@ function load_level(id){
         ][side];
 
         world_static = [
-          [-100, -100, 75, 75, random_number(256), random_number(256), random_number(256),],
-          [-75, -50, 25, 100, 190, 100, 0,],
+          {
+            'blue': random_number(256),
+            'green': random_number(256),
+            'height': 75,
+            'red': random_number(256),
+            'width': 75,
+            'x': -100,
+            'y': -100,
+          },
+          {
+            'blue': 0,
+            'green': 100,
+            'height': 25,
+            'red': 190,
+            'width': 100,
+            'x': -75,
+            'y': -50,
+          },
         ];
 
         world_dynamic.push(
@@ -221,10 +237,24 @@ function load_level(id){
                   [tile_middle_x, 50, 200, 25, 1, 0, 0, 0, 0, 0, 0,]
                 );
                 var tre = random_number(175);
-                world_static.push(
-                  [tile_middle_x + tre - 25, -100, 75, 75, random_number(256), random_number(256), random_number(256),],
-                  [tile_middle_x + tre, -50, 25, 100, 190, 100, 0,]
-                );
+                world_static.push({
+                  'blue': random_number(256),
+                  'green': random_number(256),
+                  'red': random_number(256),
+                  'height': 75,
+                  'width': 75,
+                  'x': tile_middle_x + tre - 25,
+                  'y': -100,
+                });
+                world_static.push({
+                  'blue': 190,
+                  'green': 100,
+                  'red': 0,
+                  'height': 25,
+                  'width': 100,
+                  'x': tile_middle_x + tre,
+                  'y': -50,
+                });
 
             }else if(tile_type === 8){
                 world_dynamic.push(
@@ -314,15 +344,15 @@ function load_level(id){
               [key_x, key_y, 50, 40, 5, 0, 0, 0, 0, 0, 0,]
             );
         }
-        world_static.push([
-          (-total_tiles * 200) / 2 - 200,
-          -175,
-          total_tiles * 200 + 400,
-          250,
-          0,
-          0,
-          0,
-        ]);
+        world_static.push({
+          'blue': 0,
+          'green': 0,
+          'height': 250,
+          'red': 0,
+          'width': total_tiles * 200 + 400,
+          'x': (-total_tiles * 200) / 2 - 200,
+          'y': -175,
+        });
 
     // Randomized lava corridor.
     }else if(id === -1){
@@ -336,7 +366,15 @@ function load_level(id){
         ];
 
         world_static = [
-          [-x, -200, width + 400, 250, 0, 0, 0,],
+          {
+            'blue': 0,
+            'green': 0,
+            'height': 250,
+            'red': 0,
+            'width': width + 400,
+            'x': -x,
+            'y': -200,
+          },
         ];
 
         interval_logic = window.setInterval(
@@ -357,7 +395,7 @@ function load_level(id){
         world_dynamic = [
           [
             [-45, -150, 25, 200, 1, 0, 0, 0, 0, 0, 0,],
-            [-20, 50, 220, 500, 1, 0, 0, 0, 0, 0, 0,],
+            [-45, 50, 245, 500, 1, 0, 0, 0, 0, 0, 0,],
             [350, -150, 25, 565, 1, 0, 0, 0, 0, 0, 0,],
             [375, 250, 100, 25, 1, 0, 0, 0, 0, 0, 0,],
             [375, 390, 100, 25, 1, 0, 0, 0, 0, 0, 0,],
@@ -424,12 +462,12 @@ function load_level(id){
             [445, 75, 25, 400, 1, 0, 0, 0, 0, 0, 0,],
             [-405, 325, 25, 25, 2, 0, 0, 0, 0, 0, 0,],
             [-405, 275, 800, 25, 3, 0, 0, 0, 0, 0, 0,],
-            [-305, 420, 25, 25, 3, 0, 0, 0, 325, 450, -3,],
-            [-205, 420, 25, 25, 3, 0, 0, 0, 325, 450, 1,],
-            [-105, 420, 25, 25, 3, 0, 0, 0, 325, 450, 2,],
-            [-5, 365, 25, 25, 3, 0, 0, 0, 325, 450, -1,],
-            [95, 399, 25, 25, 3, 0, 0, 0, 325, 450, -2,],
-            [195, 411, 25, 25, 3, 0, 0, 0, 325, 450, 4,],
+            [-305, 420, 25, 25, 3, 0, 0, 0, 300, 450, -3,],
+            [-205, 420, 25, 25, 3, 0, 0, 0, 300, 450, 1,],
+            [-105, 420, 25, 25, 3, 0, 0, 0, 300, 450, 2,],
+            [-5, 365, 25, 25, 3, 0, 0, 0, 300, 450, -1,],
+            [95, 399, 25, 25, 3, 0, 0, 0, 300, 450, -2,],
+            [195, 411, 25, 25, 3, 0, 0, 0, 300, 450, 4,],
             [370, 200, 25, 75, 3, 0, 0, 0, 0, 0, 0,],
           ],
           [
@@ -453,61 +491,220 @@ function load_level(id){
 
         world_static = [
           [
-            [400, 75, 75, 75, random_number(256), random_number(256), random_number(256),],
-            [425, 125, 25, 125, 190, 100, 0,],
-            [-45, 50, 225, 500, 60, 60, 60,],
-            [-20, -155, 620, 205, 0, 0, 0,],
-            [200, 50, 400, 450, 0, 0, 0,],
+            {
+              'blue': random_number(256),
+              'green': random_number(256),
+              'height': 75,
+              'red': random_number(256),
+              'width': 75,
+              'x': 400,
+              'y': 75,
+            },
+            {
+              'blue': 0,
+              'green': 100,
+              'height': 125,
+              'red': 190,
+              'width': 25,
+              'x': 425,
+              'y': 125,
+            },
           ],
           [
-            [-37, -1200, 75, 75, random_number(256), random_number(256), random_number(256),],
-            [-12, -1125, 25, 75, 190, 100, 0,],
+            {
+              'blue': random_number(256),
+              'green': random_number(256),
+              'height': 75,
+              'red': random_number(256),
+              'width': 75,
+              'x': -37,
+              'y': -1200,
+            },
+            {
+              'blue': 0,
+              'green': 100,
+              'height': 75,
+              'red': 190,
+              'width': 25,
+              'x': -12,
+              'y': -1125,
+            },
           ],
           [
-            [525, -100, 75, 75, random_number(256), random_number(256), random_number(256),],
-            [550, -50, 25, 100, 190, 100, 0,],
-            [850, 100, 50, 35, 60, 60, 60,],
-            [890, 0, 75, 50, random_number(256), random_number(256), random_number(256),],
-            [915, 50, 25, 25, 190, 100, 0,],
-            [280, 185, 950, 25, 60, 60, 60,],
+            {
+              'blue': random_number(256),
+              'green': random_number(256),
+              'height': 75,
+              'red': random_number(256),
+              'width': 75,
+              'x': 525,
+              'y': -100,
+            },
+            {
+              'blue': 0,
+              'green': 100,
+              'height': 100,
+              'red': 190,
+              'width': 25,
+              'x': 550,
+              'y': -50,
+            },
+            {
+              'blue': 60,
+              'green': 60,
+              'height': 35,
+              'red': 60,
+              'width': 50,
+              'x': 850,
+              'y': 100,
+            },
+            {
+              'blue': random_number(256),
+              'green': random_number(256),
+              'height': 50,
+              'red': random_number(256),
+              'width': 75,
+              'x': 890,
+              'y': 0,
+            },
+            {
+              'blue': 0,
+              'green': 100,
+              'height': 25,
+              'red': 190,
+              'width': 25,
+              'x': 915,
+              'y': 50,
+            },
+            {
+              'blue': 60,
+              'green': 60,
+              'height': 25,
+              'red': 60,
+              'width': 950,
+              'x': 280,
+              'y': 185,
+            },
           ],
           [
-            [-405, 300, 800, 25, 60, 60, 60,],
-            [20, 75, 25, 175, 25, 25, 25,],
-            [260, 100, 75, 75, random_number(256), random_number(256), random_number(256),],
-            [285, 150, 25, 100, 190, 100, 0,],
-            [-405, 245, 850, 255, 0, 0, 0,],
+            {
+              'blue': 25,
+              'green': 25,
+              'height': 175,
+              'red': 25,
+              'width': 25,
+              'x': 20,
+              'y': 75,
+            },
+            {
+              'blue': random_number(256),
+              'green': random_number(256),
+              'height': 75,
+              'red': random_number(256),
+              'width': 75,
+              'x': 260,
+              'y': 100,
+            },
+            {
+              'blue': 0,
+              'green': 0,
+              'height': 100,
+              'red': 190,
+              'width': 25,
+              'x': 285,
+              'y': 150,
+            },
           ],
           [
-            [-730, -300, 15, 575, 60, 60, 60,],
-            [-360, 120, 481, 130, 0, 0, 0,],
+            {
+              'blue': 60,
+              'green': 60,
+              'height': 575,
+              'red': 60,
+              'width': 15,
+              'x': -730,
+              'y': -300,
+            },
           ],
         ][id];
 
         world_text = [
           [
-            {'text': 'Trust No Mass', 'x': 99, 'y': -75,},
+            {
+              'text': 'Trust No Mass',
+              'x': 99,
+              'y': -75,
+            },
           ],
           [
-            {'text': '☺', 'x': -15, 'y': -1090,},
-            {'text': 'Booster', 'x': 0, 'y': -210,},
-            {'text': 'Towers', 'x': 0, 'y': -170,},
-            {'text': 'INC', 'x': 0, 'y': -130,},
+            {
+              'text': '☺',
+              'x': -15,
+              'y': -1090,
+            },
+            {
+              'text': 'Booster',
+              'x': 0,
+              'y': -210,
+            },
+            {
+              'text': 'Towers',
+              'x': 0,
+              'y': -170,
+            },
+            {
+              'text': 'INC',
+              'x': 0,
+              'y': -130,
+            },
           ],
           [
-            {'text': 'Yellow keys guide', 'x': 100, 'y': -90,},
-            {'text': 'you through life...', 'x': 100, 'y': -55,},
-            {'text': '...but not often on the', 'x': 899, 'y': -90,},
-            {'text': 'most logical of paths.', 'x': 899, 'y': -55,},
+            {
+              'text': 'Yellow keys guide',
+              'x': 100,
+              'y': -90,
+            },
+            {
+              'text': 'you through life...',
+              'x': 100,
+              'y': -55,
+            },
+            {
+              'text': '...but not often on the',
+              'x': 899,
+              'y': -90,
+            },
+            {
+              'text': 'most logical of paths.',
+              'x': 899,
+              'y': -55,
+            },
           ],
           [
-            {'text': settings['movement-keys'][0] + ' = ←←←←←', 'x': -250, 'y': -89,},
-            {'text': settings['movement-keys'][1] + ' = →→→→→', 'x': -250, 'y': 111,},
-            {'text': '!!!!!', 'x': -50, 'y': 430,},
-            {'text': settings['jump-key'] + ' = ↑↑↑↑↑', 'x': 90, 'y': 111,},
+            {
+              'text': settings['movement-keys'][0] + ' = ←←←←←',
+              'x': -250,
+              'y': -89,
+            },
+            {
+              'text': settings['movement-keys'][1] + ' = →→→→→',
+              'x': -250,
+              'y': 111,
+            },
+            {
+              'text': '!!!!!',
+              'x': -50,
+              'y': 430,
+            },
+            {
+              'text': settings['jump-key'] + ' = ↑↑↑↑↑',
+              'x': 90,
+              'y': 111,
+            },
           ],
           [
-            {'text': 'Village of the Wolves', 'x': -660, 'y': 100,},
+            {
+              'text': 'Village of the Wolves', 'x': -660, 'y': 100,},
           ],
         ][id];
     }

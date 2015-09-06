@@ -564,23 +564,23 @@ function update_static_buffer(){
     // Determine limits required to hold static objects.
     for(object in world_static){
         // Check if object is leftmost object so far.
-        if(world_static[object][0] < buffer_static_left){
-            buffer_static_left = world_static[object][0];
+        if(world_static[object]['x'] < buffer_static_left){
+            buffer_static_left = world_static[object]['x'];
         }
 
         // Check if object is rightmost object so far.
-        if(world_static[object][0] + world_static[object][2] > temp_right){
-            temp_right = world_static[object][0] + world_static[object][2];
+        if(world_static[object]['x'] + world_static[object]['width'] > temp_right){
+            temp_right = world_static[object]['x'] + world_static[object]['width'];
         }
 
         // Check if object is topmost object so far.
-        if(world_static[object][1] < buffer_static_top){
-            buffer_static_top = world_static[object][1];
+        if(world_static[object]['y'] < buffer_static_top){
+            buffer_static_top = world_static[object]['y'];
         }
 
         // Check if object is bottommost object so far.
-        if(world_static[object][1] + world_static[object][3] > temp_bottom){
-            temp_bottom = world_static[object][1] + world_static[object][3];
+        if(world_static[object]['y'] + world_static[object]['height'] > temp_bottom){
+            temp_bottom = world_static[object]['y'] + world_static[object]['height'];
         }
     }
 
@@ -609,14 +609,14 @@ function update_static_buffer(){
     if(loop_counter >= 0){
         do{
             buffer_static.fillStyle = 'rgb('
-              + world_static[loop_counter][4] + ', '
-              + world_static[loop_counter][5] + ', '
-              + world_static[loop_counter][6] + ')';
+              + world_static[loop_counter]['red'] + ', '
+              + world_static[loop_counter]['green'] + ', '
+              + world_static[loop_counter]['blue'] + ')';
             buffer_static.fillRect(
-              world_static[loop_counter][0],
-              world_static[loop_counter][1],
-              world_static[loop_counter][2],
-              world_static[loop_counter][3]
+              world_static[loop_counter]['x'],
+              world_static[loop_counter]['y'],
+              world_static[loop_counter]['width'],
+              world_static[loop_counter]['height']
             );
         }while(loop_counter--);
     }
