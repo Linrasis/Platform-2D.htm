@@ -89,7 +89,7 @@ function load_level(id){
     if(id === -2){
         document.getElementById('canvas').style.backgroundColor = '#3c3c3c';
 
-        world_background = [];
+        world_background = {};
 
         var tile_count = random_number(9) + 1;
         if(tile_count % 2 === 0){
@@ -358,7 +358,7 @@ function load_level(id){
     }else if(id === -1){
         document.getElementById('canvas').style.backgroundColor = '#3c3c3c';
 
-        world_background = [];
+        world_background = {};
 
         world_dynamic = [
           [-250, -200, 50, 250, 3, -250, 200, 3, 0, 0, 0,],
@@ -385,11 +385,27 @@ function load_level(id){
     // Premade levels.
     }else{
         world_background = [
-          [-150, '#000', '#3c3c3c',],
-          [60, '#000', '#3c3c3c',],
-          [],
-          [250, '#000', '#3c3c3c',],
-          [125, '#000', '#3c3c3c',],
+          {
+            'color-bottom': '#3c3c3c',
+            'color-top': '#000',
+            'y': -150,
+          },
+          {
+            'color-bottom': '#3c3c3c',
+            'color-top': '#000',
+            'y': 60,
+          },
+          {},
+          {
+            'color-bottom': '#3c3c3c',
+            'color-top': '#000',
+            'y': 250,
+          },
+          {
+            'color-bottom': '#3c3c3c',
+            'color-top': '#000',
+            'y': 125,
+          },
         ][id];
 
         world_dynamic = [

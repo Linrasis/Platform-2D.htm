@@ -12,19 +12,19 @@ function draw(){
     y_offset = y - player['y'];
 
     // Draw background colors if level asks for it.
-    if(world_background.length > 0){
-        buffer.fillStyle = world_background[1];
+    if(world_background['y'] !== void 0){
+        buffer.fillStyle = world_background['color-top'];
         buffer.fillRect(
           0,
           0,
           width,
-          y_offset + world_background[0]
+          y_offset + world_background['y']
         );
 
-        buffer.fillStyle = world_background[2];
+        buffer.fillStyle = world_background['color-bottom'];
         buffer.fillRect(
           0,
-          y_offset + world_background[0],
+          y_offset + world_background['y'],
           width,
           height + player['y']
         );
