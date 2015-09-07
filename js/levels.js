@@ -126,11 +126,11 @@ function load_level(id){
           {
             'blue': 0,
             'green': 100,
-            'height': 25,
+            'height': 75,
             'red': 190,
-            'width': 100,
+            'width': 25,
             'x': -75,
-            'y': -50,
+            'y': -25,
           },
         ];
 
@@ -247,13 +247,13 @@ function load_level(id){
                   'y': -100,
                 });
                 world_static.push({
-                  'blue': 190,
+                  'blue': 0,
                   'green': 100,
-                  'red': 0,
-                  'height': 25,
-                  'width': 100,
+                  'red': 190,
+                  'height': 75,
+                  'width': 25,
                   'x': tile_middle_x + tre,
-                  'y': -50,
+                  'y': -25,
                 });
 
             }else if(tile_type === 8){
@@ -525,8 +525,26 @@ function load_level(id){
               'x': 425,
               'y': 125,
             },
+            {
+              'blue': 0,
+              'green': 0,
+              'height': 675,
+              'red': 0,
+              'width': 625,
+              'x': -25,
+              'y': -150,
+            },
           ],
           [
+            {
+              'blue': 40,
+              'green': 40,
+              'height': 1185,
+              'red': 40,
+              'width': 400,
+              'x': -600,
+              'y': -1125,
+            },
             {
               'blue': random_number(256),
               'green': random_number(256),
@@ -543,6 +561,15 @@ function load_level(id){
               'red': 190,
               'width': 25,
               'x': -12,
+              'y': -1125,
+            },
+            {
+              'blue': 40,
+              'green': 40,
+              'height': 1185,
+              'red': 40,
+              'width': 400,
+              'x': 700,
               'y': -1125,
             },
           ],
@@ -604,6 +631,15 @@ function load_level(id){
           ],
           [
             {
+              'blue': 0,
+              'green': 0,
+              'height': 225,
+              'red': 0,
+              'width': 850,
+              'x': -405,
+              'y': 250,
+            },
+            {
               'blue': 25,
               'green': 25,
               'height': 175,
@@ -640,6 +676,15 @@ function load_level(id){
               'width': 15,
               'x': -730,
               'y': -300,
+            },
+            {
+              'blue': 0,
+              'green': 0,
+              'height': 125,
+              'red': 0,
+              'width': 450,
+              'x': -343,
+              'y': 125,
             },
           ],
         ][id];
@@ -720,7 +765,10 @@ function load_level(id){
           ],
           [
             {
-              'text': 'Village of the Wolves', 'x': -660, 'y': 100,},
+              'text': 'Village of the Wolves',
+              'x': -660,
+              'y': 100,
+            },
           ],
         ][id];
     }

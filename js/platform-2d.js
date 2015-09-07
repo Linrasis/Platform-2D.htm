@@ -471,17 +471,13 @@ function setmode(newmode, newgame){
             document.body.innerHTML =
               '<canvas id=canvas></canvas><canvas id=buffer></canvas><canvas id=buffer-static></canvas>';
 
-            var contextAttributes = {
-              'alpha': false,
-            };
             buffer = document.getElementById('buffer').getContext(
               '2d',
-              contextAttributes
+              {
+                'alpha': false,
+              }
             );
-            buffer_static = document.getElementById('buffer-static').getContext(
-              '2d',
-              contextAttributes
-            );
+            buffer_static = document.getElementById('buffer-static').getContext('2d');
             canvas = document.getElementById('canvas').getContext('2d');
 
             resize();
@@ -509,7 +505,7 @@ function setmode(newmode, newgame){
     world_static.length = 0;
     world_text.length = 0;
 
-    document.body.innerHTML = '<div><div><a onclick="setmode(3, true)">Generate Random Level</a><br><a onclick="setmode(4, true)">Randomized Lava Corridor</a></div><hr><div><a onclick="setmode(5, true)">A Pit of Your Design</a><br><a onclick="setmode(6, true)">Booster Towers</a><br><a onclick="setmode(7, true)">Keys of a Father</a><br><a onclick="setmode(8, true)">Tutorial Island</a><br><a onclick="setmode(9, true)">Village of the Wolves</a></div></div><div class=right><div><input id=jump-key maxlength=1 value='
+    document.body.innerHTML = '<div><div><a onclick="setmode(3, true)">Generate Random Level</a><br><a onclick="setmode(4, true)">Randomized Lava Corridor</a></div><hr><div><a onclick="setmode(5, true)">A Pit of Your Design</a><br><a onclick="setmode(6, true)">Booster Towers</a><br><a onclick="setmode(8, true)">Tutorial Island</a><br><a onclick="setmode(9, true)">Village of the Wolves</a><br><a onclick="setmode(7, true)">Yellow Keys</a></div></div><div class=right><div><input id=jump-key maxlength=1 value='
       + settings['jump-key'] + '>Jump<br><input disabled value=ESC>Main Menu<br><input id=movement-keys maxlength=2 value='
       + settings['movement-keys'] + '>Move ←→<br><input id=restart-key maxlength=1 value='
       + settings['restart-key'] + '>Restart</div><hr><div><input id=audio-volume max=1 min=0 step=.01 type=range value='
