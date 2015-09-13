@@ -231,6 +231,7 @@ function load_level(id){
           ],
         ][side];
 
+        var tree_y = random_number(100);
         world_static = [
           {
             'blue': random_number(256),
@@ -239,16 +240,16 @@ function load_level(id){
             'red': random_number(256),
             'width': 75,
             'x': -100,
-            'y': -100,
+            'y': -50 - tree_y,
           },
           {
             'blue': 0,
             'green': 100,
-            'height': 75,
+            'height': -50 - tree_y,
             'red': 190,
             'width': 25,
             'x': -75,
-            'y': -25,
+            'y': 50,
           },
         ];
 
@@ -575,24 +576,25 @@ function load_level(id){
                   'x': tile_middle_x,
                   'y': 50,
                 });
-                var tre = random_number(175);
+                var tree_x = random_number(175);
+                tree_y = random_number(100);
                 world_static.push({
                   'blue': random_number(256),
                   'green': random_number(256),
                   'red': random_number(256),
                   'height': 75,
                   'width': 75,
-                  'x': tile_middle_x + tre - 25,
-                  'y': -100,
+                  'x': tile_middle_x + tree_x - 25,
+                  'y': -50 - tree_y,
                 });
                 world_static.push({
                   'blue': 0,
                   'green': 100,
                   'red': 190,
-                  'height': 75,
+                  'height': -50 - tree_y,
                   'width': 25,
-                  'x': tile_middle_x + tre,
-                  'y': -25,
+                  'x': tile_middle_x + tree_x,
+                  'y': 50,
                 });
 
             }else if(tile_type === 8){
