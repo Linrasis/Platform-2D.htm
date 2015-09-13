@@ -9,13 +9,13 @@ function level_logic(id){
             player['x'] -= 400;
 
             // Move the lava wall back 400px.
-            world_dynamic[0][0] -= 400;
+            world_dynamic[0]['x'] -= 400;
 
             // Move all world objects back 400px, except for lava wall and floor/ceiling.
             var loop_counter = world_dynamic.length - 1;
             do{
                 if(loop_counter > 1){
-                    world_dynamic[loop_counter][0] -= 400;
+                    world_dynamic[loop_counter]['x'] -= 400;
                 }
             }while(loop_counter--);
 
@@ -25,50 +25,132 @@ function level_logic(id){
             // Lava pit obstacle.
             if(obstacle === 0){
                 world_dynamic.push(
-                  [player['x'] + x, -25, 50, 75, 1, 0, 0, 0, 0, 0, 0,],
-                  [player['x'] + x + 50, 0, 175, 50, 3, 0, 0, 0, 0, 0, 0,],
-                  [player['x'] + x + 50 + random_number(150), 25, 25, 25, 3, 0, 0, 0, -200, 25, 2,],
-                  [player['x'] + x + 225, -25, 50, 75, 1, 0, 0, 0, 0, 0, 0,]
+                  {
+                    'height': 75,
+                    'type': 1,
+                    'width': 50,
+                    'x': player['x'] + x,
+                    'y': -25,
+                  },
+                  {
+                    'height': 50,
+                    'type': 3,
+                    'width': 175,
+                    'x': player['x'] + x + 50,
+                    'y': 0,
+                  },
+                  {
+                    'height': 25,
+                    'type': 3,
+                    'width': 25,
+                    'x': player['x'] + x + 50 + random_number(150),
+                    'y': 25,
+                    'y-speed': 2,
+                    'y-target-max': 25,
+                    'y-target-min': -200,
+                  },
+                  {
+                    'height': 75,
+                    'type': 1,
+                    'width': 50,
+                    'x': player['x'] + x + 225,
+                    'y': -25,
+                  }
                 );
 
             // Booster obstacle.
             }else if(obstacle === 1){
                 world_dynamic.push(
-                  [player['x'] + x, -200, 25, 200, 3, 0, 0, 0, 0, 0, 0,],
-                  [player['x'] + x + 75, 25, 25, 25, 4, 0, 0, 0, 0, 0, 0, -14,],
-                  [player['x'] + x + 100, -125, 25, 175, 3, 0, 0, 0, 0, 0, 0,]
+                  {
+                    'height': 200,
+                    'type': 3,
+                    'width': 25,
+                    'x': player['x'] + x,
+                    'y': -200,
+                  },
+                  {
+                    'boost': -14,
+                    'height': 25,
+                    'type': 4,
+                    'width': 25,
+                    'x': player['x'] + x + 75,
+                    'y': 25,
+                  },
+                  {
+                    'height': 175,
+                    'type': 3,
+                    'width': 25,
+                    'x': player['x'] + x + 100,
+                    'y': -125,
+                  }
                 );
 
             // Wall backtrack obstacle.
             }else if(obstacle === 2){
                 world_dynamic.push(
-                  [player['x'] + x + 25, -200, 25, 200, 1, 0, 0, 0, 0, 0, 0,],
-                  [player['x'] + x + 50, -25, 25, 25, 1, 0, 0, 0, 0, 0, 0,],
-                  [player['x'] + x + 175, -125, 25, 175, 1, 0, 0, 0, 0, 0, 0,]
+                  {
+                    'height': 200,
+                    'type': 1,
+                    'width': 25,
+                    'x': player['x'] + x + 25,
+                    'y': -200,
+                  },
+                  {
+                    'height': 25,
+                    'type': 1,
+                    'width': 25,
+                    'x': player['x'] + x + 50,
+                    'y': -25,
+                  },
+                  {
+                    'height': 175,
+                    'type': 1,
+                    'width': 25,
+                    'x': player['x'] + x + 175,
+                    'y': -125,
+                  }
                 );
 
             // Lava pillars obstacle.
             }else{
                 world_dynamic.push(
-                  [player['x'] + x, 0, 25, 50, 3, 0, 0, 0, 0, 0, 0,],
-                  [player['x'] + x + 100, -25, 25, 75, 3, 0, 0, 0, 0, 0, 0,],
-                  [player['x'] + x + 200, 0, 25, 50, 3, 0, 0, 0, 0, 0, 0,]
+                  {
+                    'height': 50,
+                    'type': 3,
+                    'width': 25,
+                    'x': player['x'] + x,
+                    'y': 0,
+                  },
+                  {
+                    'height': 75,
+                    'type': 3,
+                    'width': 25,
+                    'x': player['x'] + x + 100,
+                    'y': -25,
+                  },
+                  {
+                    'height': 50,
+                    'type': 3,
+                    'width': 25,
+                    'x': player['x'] + x + 200,
+                    'y': 0,
+                  }
                 );
             }
             update_static_buffer();
         }
 
         // Set lava wall goal to player position to keep it moving.
-        world_dynamic[0][6] = player['x'];
+        world_dynamic[0]['x-target-max'] = player['x'];
 
         // Reset floor X position to match player position.
-        world_dynamic[1][0] = player['x'] - 50;
+        world_dynamic[1]['x'] = player['x'] - 50;
 
         // Delete objects that are eaten by the lava wall.
         var loop_counter = world_dynamic.length - 1;
         do{
             if(loop_counter > 1
-              && world_dynamic[loop_counter][0] < world_dynamic[0][0]){
+              && world_dynamic[loop_counter]['x'] < world_dynamic[0]['x']){
                 world_dynamic.splice(
                   loop_counter,
                   1
@@ -102,14 +184,50 @@ function load_level(id){
 
         world_dynamic = [
           [
-            [(total_tiles * 200) / 2 + 200, -200, 25, 325, 1, 0, 0, 0, 0, 0, 0,],
-            [(-total_tiles * 200) / 2 - 200, -175, 25, 300, 's', 0, 0, 0, 0, 0, 0,],
-            [(-total_tiles * 200) / 2 - 225, -175, 25, 300, 2, 0, 0, 0, 0, 0, 0,],
+            {
+              'height': 325,
+              'type': 1,
+              'width': 25,
+              'x': (total_tiles * 200) / 2 + 200,
+              'y': -200,
+            },
+            {
+              'height': 300,
+              'type': 's',
+              'width': 25,
+              'x': (-total_tiles * 200) / 2 - 200,
+              'y': -175,
+            },
+            {
+              'height': 300,
+              'type': 2,
+              'width': 25,
+              'x': (-total_tiles * 200) / 2 - 225,
+              'y': -175,
+            },
           ],
           [
-            [(-total_tiles * 200) / 2 - 225, -200, 25, 325, 1, 0, 0, 0, 0, 0, 0,],
-            [(total_tiles * 200) / 2 + 175, -175, 25, 300, 's', 0, 0, 0, 0, 0, 0,],
-            [(total_tiles * 200) / 2 + 200, -175, 25, 300, 2, 0, 0, 0, 0, 0, 0,],
+            {
+              'height': 325,
+              'type': 1,
+              'width': 25,
+              'x': (-total_tiles * 200) / 2 - 225,
+              'y': -200,
+            },
+            {
+              'height': 300,
+              'type': 's',
+              'width': 25,
+              'x': (total_tiles * 200) / 2 + 175,
+              'y': -175,
+            },
+            {
+              'height': 300,
+              'type': 2,
+              'width': 25,
+              'x': (total_tiles * 200) / 2 + 200,
+              'y': -175,
+            },
           ],
         ][side];
 
@@ -134,9 +252,13 @@ function load_level(id){
           },
         ];
 
-        world_dynamic.push(
-          [-100, 50, 200, 75, 1, 0, 0, 0, 0, 0, 0,]
-        );
+        world_dynamic.push({
+          'height': 75,
+          'type': 1,
+          'width': 200,
+          'x': -100,
+          'y': 50,
+        });
 
         do{
             var tile_type = random_number(9);
@@ -149,37 +271,153 @@ function load_level(id){
                 endtile_right = tile_type;
             }
 
-            world_dynamic.push(
-              [tile_middle_x, 75, 200, 50, 3, 0, 0, 0, 0, 0, 0,]
-            );
+            world_dynamic.push({
+              'height': 50,
+              'type': 3,
+              'width': 200,
+              'x': tile_middle_x,
+              'y': 75,
+            });
 
             if(tile_type === 1){
                 world_dynamic.push(
-                  [tile_middle_x + 85, -100, 25, 175, 3, 0, 0, 0, 0, 0, 0,],
+                  {
+                    'height': 175,
+                    'type': 3,
+                    'width': 25,
+                    'x': tile_middle_x + 85,
+                    'y': -100,
+                  },
                   Math.random() > .5
-                    ? [tile_middle_x + 70, -25, 55, 25, 1, tile_middle_x + 30, tile_middle_x + 110, Math.random()>.5 ? 1 : -1, 0, 0, 0,]
-                    : [tile_middle_x + 65, 0, 65, 25, 1, 0, 0, 0, -25, 75, Math.random() > .5 ? 1 : -1,]
+                    ? {
+                        'height': 25,
+                        'type': 1,
+                        'width': 55,
+                        'x': tile_middle_x + 70,
+                        'x-speed': Math.random() > .5
+                          ? 1
+                          : -1,
+                        'x-target-max': tile_middle_x + 110,
+                        'x-target-min': tile_middle_x + 30,
+                        'y': -25,
+                      }
+                    : {
+                        'height': 25,
+                        'type': 1,
+                        'width': 65,
+                        'x': tile_middle_x + 65,
+                        'y': 0,
+                        'y-speed': Math.random() > .5
+                          ? 1
+                          : -1,
+                        'y-target-max': 75,
+                        'y-target-min': -25,
+                      }
                 );
 
             }else if(tile_type === 0
               || tile_type === 3){
                 if(Math.random() < .25){
                     world_dynamic.push(
-                      [tile_middle_x + 45, -25, 25, 100, 3, 0, 0, 0, -175, -25, Math.random() < .2 ? 1 : 0,],
-                      [tile_middle_x + 130, -25, 25, 100, 3, 0, 0, 0, -175, -25, Math.random() < .2 ? 1 : 0,],
-                      [tile_middle_x, 50, 200, 25, 1, 0, 0, 0, 0, 0, 0,]
+                      {
+                        'height': 100,
+                        'type': 3,
+                        'width': 25,
+                        'x': tile_middle_x + 45,
+                        'y': -25,
+                        'y-speed': Math.random() < .2
+                          ? 1
+                          : 0,
+                        'y-target-max': -25,
+                        'y-target-min': -175,
+                      },
+                      {
+                        'height': 100,
+                        'type': 3,
+                        'width': 25,
+                        'x': tile_middle_x + 130,
+                        'y': -25,
+                        'y-speed': Math.random() < .2
+                          ? 1
+                          : 0,
+                        'y-target-max': -25,
+                        'y-target-min': -175,
+                      },
+                      {
+                        'height': 25,
+                        'type': 1,
+                        'width': 200,
+                        'x': tile_middle_x,
+                        'y': 50,
+                      }
                     );
                 }else if(Math.random() < .5){
                     world_dynamic.push(
-                      [tile_middle_x, 0, 25, 75, 3, 0, 0, 0, -175, 0, Math.random() < .2 ? 1 : 0,],
-                      [tile_middle_x + 87.5, -25, 25, 100, 3, 0, 0, 0, -175, -25, Math.random() < .2 ? 1 : 0,],
-                      [tile_middle_x + 175, 0, 25, 75, 3, 0, 0, 0, -175, 0, Math.random() < .2 ? 1 : 0,],
-                      [tile_middle_x, 50, 200, 25, 1, 0, 0, 0, 0, 0, 0,]
+                      {
+                        'height': 75,
+                        'type': 3,
+                        'width': 25,
+                        'x': tile_middle_x,
+                        'y': 0,
+                        'y-speed': Math.random() < .2
+                          ? 1
+                          : 0,
+                        'y-target-max': 0,
+                        'y-target-min': -175,
+                      },
+                      {
+                        'height': 100,
+                        'type': 3,
+                        'width': 25,
+                        'x': tile_middle_x + 87.5,
+                        'y': -25,
+                        'y-speed': Math.random() < .2
+                          ? 1
+                          : 0,
+                        'y-target-max': -25,
+                        'y-target-min': -175,
+                      },
+                      {
+                        'height': 75,
+                        'type': 3,
+                        'width': 25,
+                        'x': tile_middle_x + 175,
+                        'y': 0,
+                        'y-speed': Math.random() < .2
+                          ? 1
+                          : 0,
+                        'y-target-max': 0,
+                        'y-target-min': -175,
+                      },
+                      {
+                        'height': 25,
+                        'type': 1,
+                        'width': 200,
+                        'x': tile_middle_x,
+                        'y': 50,
+                      }
                     );
                 }else{
                     world_dynamic.push(
-                      [tile_middle_x + random_number(175), -25, 25, 100, 3, tile_middle_x, tile_middle_x + 175, Math.random() < .4 ? 1 : 0, 0, 0, 0,],
-                      [tile_middle_x, 50, 200, 25, 1, 0, 0, 0, 0, 0, 0,]
+                      {
+                        'height': 100,
+                        'type': 3,
+                        'width': 25,
+                        'x': tile_middle_x + random_number(175),
+                        'x-speed': Math.random() < .4
+                          ? 1
+                          : 0,
+                        'x-target-max': tile_middle_x,
+                        'x-target-min': tile_middle_x + 175,
+                        'y': -25,
+                      },
+                      {
+                        'height': 25,
+                        'type': 1,
+                        'width': 200,
+                        'x': tile_middle_x,
+                        'y': 50,
+                      }
                     );
                 }
 
@@ -187,55 +425,156 @@ function load_level(id){
               || tile_type === 4){
                 if(Math.random() < .4){
                     world_dynamic.push(
-                      [tile_middle_x + 40, 100 - random_number(275), 25, 25, 3, 0, 0, 0, -175, 100, 2,]
+                      {
+                        'height': 25,
+                        'type': 3,
+                        'width': 25,
+                        'x': tile_middle_x + 40,
+                        'y': 100 - random_number(275),
+                        'y-speed': 2,
+                        'y-target-max': 100,
+                        'y-target-min': -175,
+                      }
                     );
                 }
                 if(Math.random() < .4){
                     world_dynamic.push(
-                      [tile_middle_x + 135, 100 - random_number(275), 25, 25, 3, 0, 0, 0, -175, 100, 2,]
+                      {
+                        'height': 25,
+                        'type': 3,
+                        'width': 25,
+                        'x': tile_middle_x + 135,
+                        'y': 100 - random_number(275),
+                        'y-speed': 2,
+                        'y-target-max': 100,
+                        'y-target-min': -175,
+                      }
                     );
                 }
-                world_dynamic.push(
-                  [tile_middle_x + 85, 50, 25, 25, 1, 0, 0, 0, 0, 0, 0]
-                );
+                world_dynamic.push({
+                  'height': 25,
+                  'type': 1,
+                  'width': 25,
+                  'x': tile_middle_x + 85,
+                  'y': 50,
+                });
 
             }else if(tile_type === 5){
                 if(Math.random() < .2){
                     world_dynamic.push(
-                      [tile_middle_x + random_number(175), -65, 25, 25,4, tile_middle_x, tile_middle_x + 175, Math.random() < .5 ? 2 : -2, 0, 0, 0, -12,],
-                      [tile_middle_x, -200, 200, 25, 3, 0, 0, 0, 0, 0, 0,]
+                      {
+                        'boost': -12,
+                        'height': 25,
+                        'type': 4,
+                        'width': 25,
+                        'x': tile_middle_x + random_number(175),
+                        'x-speed': Math.random() < .5
+                          ? 2
+                          : -2,
+                        'x-target-max': tile_middle_x + 175,
+                        'x-target-min': tile_middle_x,
+                        'y': -65,
+                      },
+                      {
+                        'height': 25,
+                        'type': 3,
+                        'width': 200,
+                        'x': tile_middle_x,
+                        'y': -200,
+                      }
                     );
                 }else{
                     world_dynamic.push(
-                      [tile_middle_x + random_number(175), -65, 25, 25, 3, tile_middle_x, tile_middle_x + 175, Math.random() < .5 ? 2 : -2, 0, 0, 0,]
+                      {
+                        'height': 25,
+                        'type': 3,
+                        'width': 25,
+                        'x': tile_middle_x + random_number(175),
+                        'x-speed': Math.random() < .5
+                          ? 2
+                          : -2,
+                        'x-target-max': tile_middle_x + 175,
+                        'x-target-min': tile_middle_x,
+                        'y': -65,
+                      }
                     );
                 }
-                world_dynamic.push(
-                  [tile_middle_x, 60, 200, 25,4, 0, 0, 0, 0, 0, 0, -12]
-                );
+                world_dynamic.push({
+                  'boost': -12,
+                  'height': 25,
+                  'type': 4,
+                  'width': 200,
+                  'x': tile_middle_x,
+                  'y': 60,
+                });
 
             }else if(tile_type === 6){
                 if(Math.random() < .6){
                     if(Math.random() < .5){
                         world_dynamic.push(
-                          [tile_middle_x + 50, 100 - random_number(275), 25, 25, 3, 0, 0, 0, -175, 100, Math.random() > .5 ? 2 : -2,],
-                          [tile_middle_x + 125, 100 - random_number(275), 25, 25, 3, 0, 0, 0, -175, 100, Math.random() > .5 ? 2 : -2,]
+                          {
+                            'height': 25,
+                            'type': 3,
+                            'width': 25,
+                            'x': tile_middle_x + 50,
+                            'y': 100 - random_number(275),
+                            'y-speed': Math.random() < .5
+                              ? 2
+                              : -2,
+                            'y-target-max': 100,
+                            'y-target-min': -175,
+                          },
+                          {
+                            'height': 25,
+                            'type': 3,
+                            'width': 25,
+                            'x': tile_middle_x + 125,
+                            'y': 100 - random_number(275),
+                            'y-speed': Math.random() < .5
+                              ? 2
+                              : -2,
+                            'y-target-max': 100,
+                            'y-target-min': -175,
+                          }
                         );
                     }else{
-                        world_dynamic.push(
-                          [tile_middle_x + (Math.random() * 125) + 25, 100 - random_number(275), 25, 25, 3, 0, 0, 0, -175, 100, 2,]
-                        );
+                        world_dynamic.push({
+                          'height': 25,
+                          'type': 3,
+                          'width': 25,
+                          'x': tile_middle_x + (Math.random() * 125) + 25,
+                          'y': 100 - random_number(275),
+                          'y-speed': 2,
+                          'y-target-max': 100,
+                          'y-target-min': -175,
+                        });
                     }
                 }
                 world_dynamic.push(
-                  [tile_middle_x, 0, 25, 75, 1, 0, 0, 0, 0, 0, 0,],
-                  [tile_middle_x + 175, 0, 25, 75, 1, 0, 0, 0, 0, 0, 0,]
+                  {
+                    'height': 75,
+                    'type': 1,
+                    'width': 25,
+                    'x': tile_middle_x,
+                    'y': 0,
+                  },
+                  {
+                    'height': 75,
+                    'type': 1,
+                    'width': 25,
+                    'x': tile_middle_x + 175,
+                    'y': 0,
+                  }
                 );
 
             }else if(tile_type === 7){
-                world_dynamic.push(
-                  [tile_middle_x, 50, 200, 25, 1, 0, 0, 0, 0, 0, 0,]
-                );
+                world_dynamic.push({
+                  'height': 75,
+                  'type': 1,
+                  'width': 200,
+                  'x': tile_middle_x,
+                  'y': 50,
+                });
                 var tre = random_number(175);
                 world_static.push({
                   'blue': random_number(256),
@@ -258,30 +597,57 @@ function load_level(id){
 
             }else if(tile_type === 8){
                 world_dynamic.push(
-                  [tile_middle_x, 0, 50, 75, 1, 0, 0, 0, 0, 0, 0,],
-                  [tile_middle_x + 150, 0, 50, 75, 1, 0, 0, 0, 0, 0, 0,],
-                  [tile_middle_x + 50, 50, 100, 25, 1, 0, 0, 0, 0, 0, 0,],
-                  [tile_middle_x, -random_number(150) - 25, 200, 50, 3, 0, 0, 0, -175, -50, Math.random() > .5 ? 1.5 : -1.5,]
+                  {
+                    'height': 75,
+                    'type': 1,
+                    'width': 50,
+                    'x': tile_middle_x,
+                    'y': 0,
+                  },
+                  {
+                    'height': 75,
+                    'type': 1,
+                    'width': 50,
+                    'x': tile_middle_x + 150,
+                    'y': 0,
+                  },
+                  {
+                    'height': 25,
+                    'type': 1,
+                    'width': 100,
+                    'x': tile_middle_x + 50,
+                    'y': 50,
+                  },
+                  {
+                    'height': 50,
+                    'type': 3,
+                    'width': 200,
+                    'x': tile_middle_x,
+                    'y': -random_number(150) - 25,
+                    'y-speed': Math.random() < .5
+                      ? 1.5
+                      : -1.5,
+                    'y-target-max': -50,
+                    'y-target-min': -175,
+                  }
                 );
             }
-            world_dynamic.push(
-              [tile_middle_x + (tile_count > total_tiles / 2 ? 0 : 200), -190, 200, 15, 1, 0, 0, 0, 0, 0, 0,]
-            );
+            world_dynamic.push({
+              'height': 15,
+              'type': 1,
+              'width': 200,
+              'x': tile_middle_x + (tile_count > total_tiles / 2 ? 0 : 200),
+              'y': -190,
+            });
         }while(tile_count--);
 
-        world_dynamic.push([
-          tile_middle_x,
-          -190,
-          200,
-          15,
-          1,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-        ]);
+        world_dynamic.push({
+          'height': 15,
+          'type': 1,
+          'width': 200,
+          'x': tile_middle_x,
+          'y': -190,
+        });
 
         var key_y = 10;
         if(side){
@@ -310,9 +676,13 @@ function load_level(id){
                 key_y = 0;
             }
 
-            world_dynamic.push(
-              [key_x, key_y, 50, 40, 5, 0, 0, 0, 0, 0, 0,]
-            );
+            world_dynamic.push({
+              'height': 40,
+              'type': 5,
+              'width': 50,
+              'x': key_x,
+              'y': key_y,
+            });
 
         }else{
             if(endtile_right === 1){
@@ -340,9 +710,13 @@ function load_level(id){
                 key_y = 0;
             }
 
-            world_dynamic.push(
-              [key_x, key_y, 50, 40, 5, 0, 0, 0, 0, 0, 0,]
-            );
+            world_dynamic.push({
+              'height': 40,
+              'type': 5,
+              'width': 50,
+              'x': key_x,
+              'y': key_y,
+            });
         }
         world_static.push({
           'blue': 0,
@@ -361,8 +735,23 @@ function load_level(id){
         world_background = {};
 
         world_dynamic = [
-          [-250, -200, 50, 250, 3, -250, 200, 3, 0, 0, 0,],
-          [-50, 50, 100, 25, 1, 0, 0, 0, 0, 0, 0,],
+          {
+            'height': 250,
+            'type': 3,
+            'width': 50,
+            'x': -250,
+            'x-speed': 3,
+            'x-target-max': 200,
+            'x-target-min': -250,
+            'y': -200,
+          },
+          {
+            'height': 25,
+            'type': 1,
+            'width': 100,
+            'x': -50,
+            'y': 50,
+          }
         ];
 
         world_static = [
@@ -410,98 +799,648 @@ function load_level(id){
 
         world_dynamic = [
           [
-            [-45, -150, 25, 200, 1, 0, 0, 0, 0, 0, 0,],
-            [-45, 50, 245, 500, 1, 0, 0, 0, 0, 0, 0,],
-            [350, -150, 25, 565, 1, 0, 0, 0, 0, 0, 0,],
-            [375, 250, 100, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [375, 390, 100, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [400, 475, 175, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [575, 325, 50, 175, 1, 0, 0, 0, 0, 0, 0,],
-            [575, 160, 25, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [600, -150, 25, 500, 1, 0, 0, 0, 0, 0, 0,],
-            [575, -125, 25, 25, 2, 0, 0, 0, 0, 0, 0,],
-            [200, 525, 425, 25, 3, 0, 0, 0, 0, 0, 0,],
-            [500, -150, 25, 25, 3, 0, 0, 0, -125, 450, 5,],
-            [525, 450, 25, 25, 3, 0, 0, 0, -125, 450, 4,],
-            [375, -50, 25, 25, 3, 375, 575, 5, 0, 0, 0,],
-            [575, 275, 25, 25, 3, 375, 575, 5, 0, 0, 0,],
-            [400, 75, 25, 25, 4, 0, 0, 0, 0, 0, 0, -13,],
-            [200, 75, 50, 50, 5, 0, 0, 0, 0, 0, 0,],
-            [300, 215, 50, 50, 5, 0, 0, 0, 0, 0, 0,],
-            [200, 350, 50, 50, 5, 0, 0, 0, 0, 0, 0,],
-            [200, 475, 200, 25, 's', 0, 0, 0, 0, 0, 0,],
+            {
+              'height': 200,
+              'type': 1,
+              'width': 25,
+              'x': -45,
+              'y': -150,
+            },
+            {
+              'height': 500,
+              'type': 1,
+              'width': 245,
+              'x': -45,
+              'y': 50,
+            },
+            {
+              'height': 565,
+              'type': 1,
+              'width': 25,
+              'x': 350,
+              'y': -150,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 100,
+              'x': 375,
+              'y': 250,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 100,
+              'x': 375,
+              'y': 390,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 175,
+              'x': 400,
+              'y': 475,
+            },
+            {
+              'height': 175,
+              'type': 1,
+              'width': 50,
+              'x': 575,
+              'y': 325,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 25,
+              'x': 160,
+              'y': 575,
+            },
+            {
+              'height': 500,
+              'type': 1,
+              'width': 25,
+              'x': 600,
+              'y': -150,
+            },
+            {
+              'height': 25,
+              'type': 2,
+              'width': 25,
+              'x': 575,
+              'y': -125,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 400,
+              'x': 200,
+              'y': 525,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': 500,
+              'y': -150,
+              'y-speed': 5,
+              'y-target-max': 450,
+              'y-target-min': -125,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': 525,
+              'y': 450,
+              'y-speed': 4,
+              'y-target-max': 450,
+              'y-target-min': -125,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': 375,
+              'x-speed': 5,
+              'x-target-max': 575,
+              'x-target-min': 375,
+              'y': -50,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': 575,
+              'x-speed': 5,
+              'x-target-max': 575,
+              'x-target-min': 375,
+              'y': 275,
+            },
+            {
+              'boost': -13,
+              'height': 25,
+              'type': 4,
+              'width': 25,
+              'x': 400,
+              'y': 75,
+            },
+            {
+              'height': 50,
+              'type': 5,
+              'width': 50,
+              'x': 200,
+              'y': 75,
+            },
+            {
+              'height': 50,
+              'type': 5,
+              'width': 50,
+              'x': 300,
+              'y': 215,
+            },
+            {
+              'height': 50,
+              'type': 5,
+              'width': 50,
+              'x': 200,
+              'y': 350,
+            },
+            {
+              'height': 25,
+              'type': 's',
+              'width': 200,
+              'x': 200,
+              'y': 475,
+            },
           ],
           [
-            [-45, -1050, 595, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [-45, -1025, 25, 1160, 1, 0, 0, 0, 0, 0, 0,],
-            [-20, 50, 295, 85, 1, 0, 0, 0, 0, 0, 0,],
-            [525, -1025, 25, 1160, 1, 0, 0, 0, 0, 0, 0,],
-            [275, -400, 25, 25, 2, 0, 0, 0, 0, 0, 0,],
-            [150, -725, 25, 75, 3, 0, 0, 0, 0, 0, 0,],
-            [-20, -375, 345, 25, 3, 0, 0, 0, 0, 0, 0,],
-            [225, -700, 75, 25, 3, 0, 0, 0, 0, 0, 0,],
-            [275, 85, 250, 50, 3, 0, 0, 0, 0, 0, 0,],
-            [300, -925, 25, 550, 3, 0, 0, 0, 0, 0, 0,],
-            [325, -800, 75, 25, 3, 0, 0, 0, 0, 0, 0,],
-            [375, -290, 25, 375, 3, 0, 0, 0, 0, 0, 0,],
-            [400, -540, 125, 25, 3, 0, 0, 0, 0, 0, 0,],
-            [500, -515, 25, 600, 3, 0, 0, 0, 0, 0, 0,],
-            [275, 60, 100, 25, 4, 0, 0, 0, 0, 0, 0, -20,],
-            [400, -565, 125, 25, 4, 0, 0, 0, 0, 0, 0, -20,],
-            [400, 60, 100, 25, 4, 0, 0, 0, 0, 0, 0, -26,],
+            {
+              'height': 25,
+              'type': 1,
+              'width': 595,
+              'x': -45,
+              'y': -1050,
+            },
+            {
+              'height': 1160,
+              'type': 1,
+              'width': 25,
+              'x': -45,
+              'y': -1025,
+            },
+            {
+              'height': 85,
+              'type': 1,
+              'width': 295,
+              'x': -20,
+              'y': 50,
+            },
+            {
+              'height': 1160,
+              'type': 1,
+              'width': 25,
+              'x': 525,
+              'y': -1025,
+            },
+            {
+              'height': 25,
+              'type': 2,
+              'width': 25,
+              'x': 275,
+              'y': -400,
+            },
+            {
+              'height': 75,
+              'type': 3,
+              'width': 25,
+              'x': 150,
+              'y': -725,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 345,
+              'x': -20,
+              'y': -375,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 75,
+              'x': 225,
+              'y': -700,
+            },
+            {
+              'height': 50,
+              'type': 3,
+              'width': 250,
+              'x': 275,
+              'y': 85,
+            },
+            {
+              'height': 550,
+              'type': 3,
+              'width': 25,
+              'x': 300,
+              'y': -925,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 75,
+              'x': 325,
+              'y': -800,
+            },
+            {
+              'height': 375,
+              'type': 3,
+              'width': 25,
+              'x': 375,
+              'y': -290,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 125,
+              'x': 400,
+              'y': -540,
+            },
+            {
+              'height': 600,
+              'type': 3,
+              'width': 25,
+              'x': 500,
+              'y': -515,
+            },
+            {
+              'boost': -20,
+              'height': 25,
+              'type': 4,
+              'width': 100,
+              'x': 275,
+              'y': 60,
+            },
+            {
+              'boost': -20,
+              'height': 25,
+              'type': 4,
+              'width': 125,
+              'x': 400,
+              'y': -565,
+            },
+            {
+              'boost': -26,
+              'height': 25,
+              'type': 4,
+              'width': 100,
+              'x': 400,
+              'y': 60,
+            },
           ],
           [
-            [-45, -150, 1300, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [-45, -125, 25, 335, 1, 0, 0, 0, 0, 0, 0,],
-            [-20, 50, 210, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [-20, 125, 300, 85, 1, 0, 0, 0, 0, 0, 0,],
-            [280, 135, 950, 50, 3, 0, 0, 0, 0, 0, 0,],
-            [425, 50, 205, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [500, 75, 50, 60, 1, 0, 0, 0, 0, 0, 0,],
-            [775, 75, 223, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [1230, -125, 25, 335, 1, 0, 0, 0, 0, 0, 0,],
-            [1205, 110, 25, 25, 2, 0, 0, 0, 0, 0, 0,],
-            [320, 142, 25, 25, 3, 0, 0, 0, -64, 150, -3,],
-            [675, -60, 25, 25, 3, 0, 0, 0, -75, 150, -3,],
-            [700, -60, 25, 25, 3, 0, 0, 0, -75, 150, -2,],
-            [-20, 75, 50, 50, 5, 0, 0, 0, 0, 0, 0,],
-            [400, -125, 25, 200, 's', 0, 0, 0, 0, 0, 0,],
+            {
+              'height': 25,
+              'type': 1,
+              'width': 1300,
+              'x': -45,
+              'y': -150,
+            },
+            {
+              'height': 335,
+              'type': 1,
+              'width': 25,
+              'x': -45,
+              'y': -125,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 210,
+              'x': -20,
+              'y': 50,
+            },
+            {
+              'height': 85,
+              'type': 1,
+              'width': 300,
+              'x': -20,
+              'y': 125,
+            },
+            {
+              'height': 50,
+              'type': 3,
+              'width': 950,
+              'x': 280,
+              'y': 135,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 205,
+              'x': 425,
+              'y': 50,
+            },
+            {
+              'height': 60,
+              'type': 1,
+              'width': 50,
+              'x': 500,
+              'y': 75,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 223,
+              'x': 775,
+              'y': 75,
+            },
+            {
+              'height': 335,
+              'type': 1,
+              'width': 25,
+              'x': 1230,
+              'y': -125,
+            },
+            {
+              'height': 25,
+              'type': 2,
+              'width': 25,
+              'x': 1205,
+              'y': 110,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': 320,
+              'y': 142,
+              'y-speed': -3,
+              'y-target-max': 150,
+              'y-target-min': -64,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': 675,
+              'y': -60,
+              'y-speed': -3,
+              'y-target-max': 150,
+              'y-target-min': -75,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': 700,
+              'y': -60,
+              'y-speed': -2,
+              'y-target-max': 150,
+              'y-target-min': -75,
+            },
+            {
+              'height': 50,
+              'type': 5,
+              'width': 50,
+              'x': -20,
+              'y': 75,
+            },
+            {
+              'height': 200,
+              'type': 's',
+              'width': 25,
+              'x': 400,
+              'y': -125,
+            },
           ],
           [
-            [-430, -150, 475, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [-430, -125, 25, 600, 1, 0, 0, 0, 0, 0, 0,],
-            [-430, 475, 900, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [-405, 250, 500, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [-355, 50, 400, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [20, -125, 25, 200, 1, 0, 0, 0, 0, 0, 0,],
-            [245, 250, 125, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [445, 75, 25, 400, 1, 0, 0, 0, 0, 0, 0,],
-            [-405, 325, 25, 25, 2, 0, 0, 0, 0, 0, 0,],
-            [-405, 275, 800, 25, 3, 0, 0, 0, 0, 0, 0,],
-            [-305, 420, 25, 25, 3, 0, 0, 0, 300, 450, -3,],
-            [-205, 420, 25, 25, 3, 0, 0, 0, 300, 450, 1,],
-            [-105, 420, 25, 25, 3, 0, 0, 0, 300, 450, 2,],
-            [-5, 365, 25, 25, 3, 0, 0, 0, 300, 450, -1,],
-            [95, 399, 25, 25, 3, 0, 0, 0, 300, 450, -2,],
-            [195, 411, 25, 25, 3, 0, 0, 0, 300, 450, 4,],
-            [370, 200, 25, 75, 3, 0, 0, 0, 0, 0, 0,],
+            {
+              'height': 25,
+              'type': 1,
+              'width': 475,
+              'x': -430,
+              'y': -150,
+            },
+            {
+              'height': 600,
+              'type': 1,
+              'width': 25,
+              'x': -430,
+              'y': -125,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 900,
+              'x': -430,
+              'y': 475,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 500,
+              'x': -405,
+              'y': 250,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 400,
+              'x': -355,
+              'y': 50,
+            },
+            {
+              'height': 200,
+              'type': 1,
+              'width': 25,
+              'x': 20,
+              'y': -125,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 125,
+              'x': 245,
+              'y': 250,
+            },
+            {
+              'height': 400,
+              'type': 1,
+              'width': 25,
+              'x': 445,
+              'y': -75,
+            },
+            {
+              'height': 25,
+              'type': 2,
+              'width': 25,
+              'x': -405,
+              'y': 325,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 800,
+              'x': -405,
+              'y': 275,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': -305,
+              'y': 420,
+              'y-speed': -3,
+              'y-target-max': 450,
+              'y-target-min': 300,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': -205,
+              'y': 420,
+              'y-speed': 1,
+              'y-target-max': 450,
+              'y-target-min': 300,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': -105,
+              'y': 420,
+              'y-speed': 2,
+              'y-target-max': 450,
+              'y-target-min': 300,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': -5,
+              'y': 365,
+              'y-speed': -1,
+              'y-target-max': 450,
+              'y-target-min': 300,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': 95,
+              'y': 399,
+              'y-speed': -2,
+              'y-target-max': 450,
+              'y-target-min': 300,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 25,
+              'x': 195,
+              'y': 411,
+              'y-speed': 4,
+              'y-target-max': 450,
+              'y-target-min': 300,
+            },
+            {
+              'height': 75,
+              'type': 3,
+              'width': 25,
+              'x': 370,
+              'y': 200,
+            },
           ],
           [
-            [-715, 36, 35, 239, 1, 0, 0, 0, 0, 0, 0,],
-            [-715, -175, 135, 15, 1, 0, 0, 0, 0, 0, 0,],
-            [-680, 124, 320, 151, 1, 0, 0, 0, 0, 0, 0,],
-            [-600, -50, 50, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [-428, -120, 28, 170, 1, 0, 0, 0, 0, 0, 0,],
-            [-360, 0, 16, 275, 1, 0, 0, 0, 0, 0, 0,],
-            [-296, 124, 196, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [-160, 0, 60, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [-40, 48, 80, 25, 1, 0, 0, 0, 0, 0, 0,],
-            [105, -120, 16, 395, 1, 0, 0, 0, 0, 0, 0,],
-            [-715, -300, 25, 125, 2, 0, 0, 0, 0, 0, 0,],
-            [-715, -160, 25, 196, 3, 0, 0, 0, 0, 0, 0,],
-            [-690, -160, 140, 25, 3, 0, 0, 0, 0, 0, 0,],
-            [-550, 74, 50, 50, 3, -680, -410, -1, 0, 0, 0,],
-            [-345, 250, 450, 25, 3, 0, 0, 0, 0, 0, 0,],
+            {
+              'height': 239,
+              'type': 1,
+              'width': 35,
+              'x': -715,
+              'y': 36,
+            },
+            {
+              'height': 15,
+              'type': 1,
+              'width': 135,
+              'x': -715,
+              'y': -175,
+            },
+            {
+              'height': 151,
+              'type': 1,
+              'width': 320,
+              'x': -680,
+              'y': 124,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 50,
+              'x': -600,
+              'y': -50,
+            },
+            {
+              'height': 170,
+              'type': 1,
+              'width': 28,
+              'x': -428,
+              'y': -120,
+            },
+            {
+              'height': 275,
+              'type': 1,
+              'width': 16,
+              'x': -360,
+              'y': 0,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 196,
+              'x': -296,
+              'y': 124,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 60,
+              'x': -160,
+              'y': 0,
+            },
+            {
+              'height': 25,
+              'type': 1,
+              'width': 80,
+              'x': -40,
+              'y': 48,
+            },
+            {
+              'height': 395,
+              'type': 1,
+              'width': 16,
+              'x': 105,
+              'y': -120,
+            },
+            {
+              'height': 125,
+              'type': 2,
+              'width': 25,
+              'x': -715,
+              'y': -300,
+            },
+            {
+              'height': 196,
+              'type': 3,
+              'width': 25,
+              'x': -715,
+              'y': -160,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 140,
+              'x': -690,
+              'y': -160,
+            },
+            {
+              'height': 50,
+              'type': 3,
+              'width': 50,
+              'x': -550,
+              'x-speed': -1,
+              'x-target-max': -410,
+              'x-target-min': -680,
+              'y': 74,
+            },
+            {
+              'height': 25,
+              'type': 3,
+              'width': 450,
+              'x': -345,
+              'y': 250,
+            },
           ],
         ][id];
 

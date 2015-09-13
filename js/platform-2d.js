@@ -42,23 +42,23 @@ function draw(){
     do{
         // Only draw objects that are reds, keywalls, keys, or moving
         //   and are on the screen.
-        if(!(world_dynamic[loop_counter][4] === 3
-            || world_dynamic[loop_counter][4] === 5
-            || world_dynamic[loop_counter][4] === 's'
-            || world_dynamic[loop_counter][7] !== 0
-            || world_dynamic[loop_counter][10] !== 0)
-          && (world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2] + x_offset <= 0
-            || world_dynamic[loop_counter][0] + x_offset >= width
-            || world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3] + y_offset <= 0
-            || world_dynamic[loop_counter][1] + y_offset >= height)){
+        if(!(world_dynamic[loop_counter]['type'] === 3
+            || world_dynamic[loop_counter]['type'] === 5
+            || world_dynamic[loop_counter]['type'] === 's'
+            || world_dynamic[loop_counter]['x-speed'] !== void 0
+            || world_dynamic[loop_counter]['y-speed'] !== void 0)
+          && (world_dynamic[loop_counter]['x'] + world_dynamic[loop_counter]['width'] + x_offset <= 0
+            || world_dynamic[loop_counter]['x'] + x_offset >= width
+            || world_dynamic[loop_counter]['y'] + world_dynamic[loop_counter]['height'] + y_offset <= 0
+            || world_dynamic[loop_counter]['y'] + y_offset >= height)){
             continue;
         }
 
         // If object has a texture, draw texture. else draw rect.
-        if(world_dynamic[loop_counter][4] > 1
-          && world_dynamic[loop_counter][4] < 6){
-            var temp_x = world_dynamic[loop_counter][0] + x_offset;
-            var temp_y = world_dynamic[loop_counter][1] + y_offset;
+        if(world_dynamic[loop_counter]['type'] > 1
+          && world_dynamic[loop_counter]['type'] < 6){
+            var temp_x = world_dynamic[loop_counter]['x'] + x_offset;
+            var temp_y = world_dynamic[loop_counter]['y'] + y_offset;
 
             // Save current buffer state.
             buffer.save();
@@ -70,14 +70,14 @@ function draw(){
             );
 
             buffer.fillStyle = buffer.createPattern(
-              assets_images[world_dynamic[loop_counter][4] - 2],
+              assets_images[world_dynamic[loop_counter]['type'] - 2],
               'repeat'
             );
             buffer.fillRect(
               0,
               0,
-              world_dynamic[loop_counter][2],
-              world_dynamic[loop_counter][3]
+              world_dynamic[loop_counter]['width'],
+              world_dynamic[loop_counter]['height']
             );
 
             // Restore buffer state.
@@ -86,10 +86,10 @@ function draw(){
         }else{
             buffer.fillStyle = '#3c3c3c';
             buffer.fillRect(
-              world_dynamic[loop_counter][0] + x_offset,
-              world_dynamic[loop_counter][1] + y_offset,
-              world_dynamic[loop_counter][2],
-              world_dynamic[loop_counter][3]
+              world_dynamic[loop_counter]['x'] + x_offset,
+              world_dynamic[loop_counter]['y'] + y_offset,
+              world_dynamic[loop_counter]['width'],
+              world_dynamic[loop_counter]['height']
             );
         }
     }while(loop_counter--);
@@ -178,67 +178,67 @@ function logic(){
     var loop_counter = world_dynamic.length - 1;
     do{
         // X movement.
-        if(world_dynamic[loop_counter][7] !== 0){
-            if(world_dynamic[loop_counter][0] < world_dynamic[loop_counter][5]){
-                world_dynamic[loop_counter][7] = Math.abs(world_dynamic[loop_counter][7]);
+        if(world_dynamic[loop_counter]['x-speed'] !== void 0){
+            if(world_dynamic[loop_counter]['x'] < world_dynamic[loop_counter]['x-target-min']){
+                world_dynamic[loop_counter]['x-speed'] = Math.abs(world_dynamic[loop_counter]['x-speed']);
 
-            }else if(world_dynamic[loop_counter][0] > world_dynamic[loop_counter][6]
-              && world_dynamic[loop_counter][7] > 0){
-                world_dynamic[loop_counter][7] = -world_dynamic[loop_counter][7];
+            }else if(world_dynamic[loop_counter]['x'] > world_dynamic[loop_counter]['x-target-max']
+              && world_dynamic[loop_counter]['x-speed'] > 0){
+                world_dynamic[loop_counter]['x-speed'] = -world_dynamic[loop_counter]['x-speed'];
             }
 
-            world_dynamic[loop_counter][0] += world_dynamic[loop_counter][7];
+            world_dynamic[loop_counter]['x'] += world_dynamic[loop_counter]['x-speed'];
         }
 
         // Y movement.
-        if(world_dynamic[loop_counter][10] !== 0){
-            if(world_dynamic[loop_counter][1] < world_dynamic[loop_counter][8]){
-                world_dynamic[loop_counter][10] = Math.abs(world_dynamic[loop_counter][10]);
+        if(world_dynamic[loop_counter]['y-speed'] !== void 0){
+            if(world_dynamic[loop_counter]['y'] < world_dynamic[loop_counter]['y-target-min']){
+                world_dynamic[loop_counter]['y-speed'] = Math.abs(world_dynamic[loop_counter]['y-speed']);
 
-            }else if(world_dynamic[loop_counter][1] > world_dynamic[loop_counter][9]
-              && world_dynamic[loop_counter][10] > 0){
-                world_dynamic[loop_counter][10] = -world_dynamic[loop_counter][10];
+            }else if(world_dynamic[loop_counter]['y'] > world_dynamic[loop_counter]['y-target-max']
+              && world_dynamic[loop_counter]['y-speed'] > 0){
+                world_dynamic[loop_counter]['y-speed'] = -world_dynamic[loop_counter]['y-speed'];
             }
 
-            world_dynamic[loop_counter][1] += world_dynamic[loop_counter][10];
+            world_dynamic[loop_counter]['y'] += world_dynamic[loop_counter]['y-speed'];
         }
 
         // If player and object aren't moving, no collision checks.
         if(player_dx === 0
           && player_dy === 0
           && player['y-velocity'] === 0
-          && world_dynamic[loop_counter][7] === 0
-          && world_dynamic[loop_counter][10] === 0){
+          && world_dynamic[loop_counter]['x-speed'] === void 0
+          && world_dynamic[loop_counter]['y-speed'] === void 0){
             continue;
         }
 
-        var temp_object_right_x = world_dynamic[loop_counter][0] + world_dynamic[loop_counter][2];
-        var temp_object_right_y = world_dynamic[loop_counter][1] + world_dynamic[loop_counter][3];
+        var temp_object_right_x = world_dynamic[loop_counter]['x'] + world_dynamic[loop_counter]['width'];
+        var temp_object_right_y = world_dynamic[loop_counter]['y'] + world_dynamic[loop_counter]['height'];
 
         // Check if player position + movement is within bounds of object.
         if(player['x'] + player_dx - 20 > temp_object_right_x
-          || player['x'] + player_dx + 20 < world_dynamic[loop_counter][0]
+          || player['x'] + player_dx + 20 < world_dynamic[loop_counter]['x']
           || player['y'] + player['y-velocity'] - 20 > temp_object_right_y
-          || player['y'] + player['y-velocity'] + 20 < world_dynamic[loop_counter][1]){
+          || player['y'] + player['y-velocity'] + 20 < world_dynamic[loop_counter]['y']){
             continue;
         }
 
         // Collide with platform or key-locked wall.
-        if(world_dynamic[loop_counter][4] === 1
-          || world_dynamic[loop_counter][4] === 's'){
+        if(world_dynamic[loop_counter]['type'] === 1
+          || world_dynamic[loop_counter]['type'] === 's'){
             // Handle collisions with platforms while jumping or falling.
             if(player['y-velocity'] !== 0
-              && player['x'] !== world_dynamic[loop_counter][0] - 20
+              && player['x'] !== world_dynamic[loop_counter]['x'] - 20
               && player['x'] !== temp_object_right_x + 20){
                 if(player['y-velocity'] > 0){
-                    if(player['y'] + player['y-velocity'] <= world_dynamic[loop_counter][1] - 10
-                      && player['y'] + player['y-velocity'] > world_dynamic[loop_counter][1] - 20){
+                    if(player['y'] + player['y-velocity'] <= world_dynamic[loop_counter]['y'] - 10
+                      && player['y'] + player['y-velocity'] > world_dynamic[loop_counter]['y'] - 20){
                         can_jump = true;
-                        player['y-velocity'] = world_dynamic[loop_counter][1] - player['y'] - 20;
+                        player['y-velocity'] = world_dynamic[loop_counter]['y'] - player['y'] - 20;
                         player_dy = 0;
 
-                        if(world_dynamic[loop_counter][7] !== 0){
-                            player_dx += world_dynamic[loop_counter][7];
+                        if(world_dynamic[loop_counter]['x-speed'] !== void 0){
+                            player_dx += world_dynamic[loop_counter]['x-speed'];
                         }
                     }
 
@@ -250,39 +250,39 @@ function logic(){
 
             // Handle collisions with platforms while moving left/right.
             if(key_left
-              && player['y'] + 20 > world_dynamic[loop_counter][1]
+              && player['y'] + 20 > world_dynamic[loop_counter]['y']
               && player['y'] - 20 < temp_object_right_y
-              && player['x'] !== world_dynamic[loop_counter][0] - 20
-              && player['x'] > world_dynamic[loop_counter][0]){
+              && player['x'] !== world_dynamic[loop_counter]['x'] - 20
+              && player['x'] > world_dynamic[loop_counter]['x']){
                 player_dx = temp_object_right_x - player['x'] + 20;
             }
 
             if(key_right
-              && player['y'] + 20 > world_dynamic[loop_counter][1]
+              && player['y'] + 20 > world_dynamic[loop_counter]['y']
               && player['y'] - 20 < temp_object_right_y
               && player['x'] !== temp_object_right_x + 20
-              && player['x'] < world_dynamic[loop_counter][0]){
-                player_dx = world_dynamic[loop_counter][0] - player['x'] - 20;
+              && player['x'] < world_dynamic[loop_counter]['x']){
+                player_dx = world_dynamic[loop_counter]['x'] - player['x'] - 20;
             }
 
         // Collided with booster.
-        }else if(world_dynamic[loop_counter][4] === 4){
-            player['y-velocity'] = world_dynamic[loop_counter][11];
+        }else if(world_dynamic[loop_counter]['type'] === 4){
+            player['y-velocity'] = world_dynamic[loop_counter]['boost'];
 
         // Collided with green goal.
-        }else if(world_dynamic[loop_counter][4] === 2){
+        }else if(world_dynamic[loop_counter]['type'] === 2){
             window.clearInterval(interval);
             window.clearInterval(interval_logic);
             state = 2;
 
         // Collided with red rectangles.
-        }else if(world_dynamic[loop_counter][4] === 3){
+        }else if(world_dynamic[loop_counter]['type'] === 3){
             window.clearInterval(interval);
             window.clearInterval(interval_logic);
             state = 3;
 
         // Collided with a key.
-        }else if(world_dynamic[loop_counter][4] === 5){
+        }else if(world_dynamic[loop_counter]['type'] === 5){
             temp_key = loop_counter;
         }
     }while(loop_counter--);
@@ -293,7 +293,7 @@ function logic(){
 
         loop_counter = world_dynamic.length - 1;
         do{
-            if(world_dynamic[loop_counter][4] === 's'){
+            if(world_dynamic[loop_counter]['type'] === 's'){
                 world_dynamic.splice(
                   loop_counter,
                   1
@@ -454,9 +454,9 @@ function setmode(newmode, newgame){
     if(mode > 0){
         frame_counter = 0;
 
+        key_jump = false;
         key_left = false;
         key_right = false;
-        key_jump = false;
 
         player = {
           'x': 0,
@@ -528,32 +528,32 @@ function update_static_buffer(){
     // Determine limits required to hold certain dynamic objects.
     for(var object in world_dynamic){
         // Only check objects that aren't reds, keywalls, keys, or moving.
-        if(world_dynamic[object][4] === 3
-          || world_dynamic[object][4] === 5
-          || world_dynamic[object][4] === 's'
-          || world_dynamic[object][7] !== 0
-          || world_dynamic[object][10] !== 0){
+        if(world_dynamic[object]['type'] === 3
+          || world_dynamic[object]['type'] === 5
+          || world_dynamic[object]['type'] === 's'
+          || world_dynamic[object]['x-speed'] !== void 0
+          || world_dynamic[object]['y-speed'] !== void 0){
             continue;
         }
 
         // Check if object is leftmost object so far.
-        if(world_dynamic[object][0] < buffer_static_left){
-            buffer_static_left = world_dynamic[object][0];
+        if(world_dynamic[object]['x'] < buffer_static_left){
+            buffer_static_left = world_dynamic[object]['x'];
         }
 
         // Check if object is rightmost object so far.
-        if(world_dynamic[object][0] + world_dynamic[object][2] > temp_right){
-            temp_right = world_dynamic[object][0] + world_dynamic[object][2];
+        if(world_dynamic[object]['x'] + world_dynamic[object]['width'] > temp_right){
+            temp_right = world_dynamic[object]['x'] + world_dynamic[object]['width'];
         }
 
         // Check if object is topmost object so far.
-        if(world_dynamic[object][1] < buffer_static_top){
-            buffer_static_top = world_dynamic[object][1];
+        if(world_dynamic[object]['y'] < buffer_static_top){
+            buffer_static_top = world_dynamic[object]['y'];
         }
 
         // Check if object is bottommost object so far.
-        if(world_dynamic[object][1] + world_dynamic[object][3] > temp_bottom){
-            temp_bottom = world_dynamic[object][1] + world_dynamic[object][3];
+        if(world_dynamic[object]['y'] + world_dynamic[object]['height'] > temp_bottom){
+            temp_bottom = world_dynamic[object]['y'] + world_dynamic[object]['height'];
         }
     }
 
@@ -621,35 +621,35 @@ function update_static_buffer(){
     loop_counter = world_dynamic.length - 1;
     do{
         // Only check objects that aren't reds, keywalls, keys, or moving.
-        if(world_dynamic[loop_counter][4] === 3
-          || world_dynamic[loop_counter][4] === 5
-          || world_dynamic[loop_counter][4] === 's'
-          || world_dynamic[loop_counter][7] !== 0
-          || world_dynamic[loop_counter][10] !== 0){
+        if(world_dynamic[loop_counter]['type'] === 3
+          || world_dynamic[loop_counter]['type'] === 5
+          || world_dynamic[loop_counter]['type'] === 's'
+          || world_dynamic[loop_counter]['x-speed'] !== void 0
+          || world_dynamic[loop_counter]['y-speed'] !== void 0){
             continue;
         }
 
         // If object has a texture, draw texture. else draw rect.
-        if(world_dynamic[loop_counter][4] > 1
-         && world_dynamic[loop_counter][4] < 6){
+        if(world_dynamic[loop_counter]['type'] > 1
+         && world_dynamic[loop_counter]['type'] < 6){
             // Save current buffer_static state.
             buffer_static.save();
 
             // Translate to object location.
             buffer_static.translate(
-              world_dynamic[loop_counter][0],
-              world_dynamic[loop_counter][1]
+              world_dynamic[loop_counter]['x'],
+              world_dynamic[loop_counter]['y']
             );
 
             buffer_static.fillStyle = buffer_static.createPattern(
-              assets_images[world_dynamic[loop_counter][4] - 2],
+              assets_images[world_dynamic[loop_counter]['type'] - 2],
               'repeat'
             );
             buffer_static.fillRect(
               0,
               0,
-              world_dynamic[loop_counter][2],
-              world_dynamic[loop_counter][3]
+              world_dynamic[loop_counter]['width'],
+              world_dynamic[loop_counter]['height']
             );
 
             // Restore buffer_static state.
@@ -658,10 +658,10 @@ function update_static_buffer(){
         }else{
             buffer_static.fillStyle = '#3c3c3c';
             buffer_static.fillRect(
-              world_dynamic[loop_counter][0],
-              world_dynamic[loop_counter][1],
-              world_dynamic[loop_counter][2],
-              world_dynamic[loop_counter][3]
+              world_dynamic[loop_counter]['x'],
+              world_dynamic[loop_counter]['y'],
+              world_dynamic[loop_counter]['width'],
+              world_dynamic[loop_counter]['height']
             );
         }
     }while(loop_counter--);
