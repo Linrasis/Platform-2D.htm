@@ -185,11 +185,11 @@ function load_level(id){
         world_dynamic = [
           [
             {
-              'height': 325,
+              'height': 300,
               'type': 1,
               'width': 25,
               'x': (total_tiles * 200) / 2 + 200,
-              'y': -200,
+              'y': -175,
             },
             {
               'height': 300,
@@ -208,11 +208,11 @@ function load_level(id){
           ],
           [
             {
-              'height': 325,
+              'height': 300,
               'type': 1,
               'width': 25,
               'x': (-total_tiles * 200) / 2 - 225,
-              'y': -200,
+              'y': -175,
             },
             {
               'height': 300,
