@@ -1684,14 +1684,14 @@ function load_level(id){
           ],
           [
             {
-              'text': settings['movement-keys'][0] + ' = ←←←←←',
-              'x': -250,
-              'y': -89,
+              'text': '←' + settings['movement-keys'][0],
+              'x': -100,
+              'y': -25,
             },
             {
-              'text': settings['movement-keys'][1] + ' = →→→→→',
-              'x': -250,
-              'y': 111,
+              'text': settings['movement-keys'][1] + '→',
+              'x': -300,
+              'y': 175,
             },
             {
               'text': '!!!!!',
@@ -1699,9 +1699,9 @@ function load_level(id){
               'y': 430,
             },
             {
-              'text': settings['jump-key'] + ' = ↑↑↑↑↑',
-              'x': 90,
-              'y': 111,
+              'text': settings['jump-key'] + '↑',
+              'x': 275,
+              'y': 150,
             },
           ],
           [
