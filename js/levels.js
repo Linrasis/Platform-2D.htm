@@ -776,23 +776,23 @@ function load_level(id){
     // Premade levels.
     }else{
         world_background = [
-          {
+          {// A Pit of Your Design
             'color-bottom': '#3c3c3c',
             'color-top': '#000',
             'y': -150,
           },
-          {
+          {// Booster Towers
             'color-bottom': '#3c3c3c',
             'color-top': '#000',
             'y': 60,
           },
-          {},
-          {
+          {},// Yellow Keys
+          {// Tutorial Island
             'color-bottom': '#3c3c3c',
             'color-top': '#000',
             'y': 250,
           },
-          {
+          {// Village of the Wolves
             'color-bottom': '#3c3c3c',
             'color-top': '#000',
             'y': 125,
@@ -800,7 +800,7 @@ function load_level(id){
         ][id];
 
         world_dynamic = [
-          [
+          [// A Pit of Your Design
             {
               'height': 200,
               'type': 1,
@@ -844,9 +844,16 @@ function load_level(id){
               'y': 475,
             },
             {
+              'height': 25,
+              'type': 1,
+              'width': 25,
+              'x': 575,
+              'y': 200,
+            },
+            {
               'height': 175,
               'type': 1,
-              'width': 50,
+              'width': 25,
               'x': 575,
               'y': 325,
             },
@@ -955,7 +962,7 @@ function load_level(id){
               'y': 475,
             },
           ],
-          [
+          [// Booster Towers
             {
               'height': 25,
               'type': 1,
@@ -1079,7 +1086,7 @@ function load_level(id){
               'y': 60,
             },
           ],
-          [
+          [// Yellow Keys
             {
               'height': 25,
               'type': 1,
@@ -1195,7 +1202,7 @@ function load_level(id){
               'y': -125,
             },
           ],
-          [
+          [// Tutorial Island
             {
               'height': 25,
               'type': 1,
@@ -1334,7 +1341,7 @@ function load_level(id){
               'y': 200,
             },
           ],
-          [
+          [// Village of the Wolves
             {
               'height': 239,
               'type': 1,
@@ -1447,7 +1454,7 @@ function load_level(id){
         ][id];
 
         world_static = [
-          [
+          [// A Pit of Your Design
             {
               'blue': random_number(256),
               'green': random_number(256),
@@ -1476,7 +1483,7 @@ function load_level(id){
               'y': -150,
             },
           ],
-          [
+          [// Booster Towers
             {
               'blue': 40,
               'green': 40,
@@ -1514,7 +1521,7 @@ function load_level(id){
               'y': -1125,
             },
           ],
-          [
+          [// Yellow Keys
             {
               'blue': random_number(256),
               'green': random_number(256),
@@ -1570,7 +1577,7 @@ function load_level(id){
               'y': 185,
             },
           ],
-          [
+          [// Tutorial Island
             {
               'blue': 0,
               'green': 0,
@@ -1600,7 +1607,7 @@ function load_level(id){
             },
             {
               'blue': 0,
-              'green': 0,
+              'green': 100,
               'height': 100,
               'red': 190,
               'width': 25,
@@ -1608,7 +1615,7 @@ function load_level(id){
               'y': 150,
             },
           ],
-          [
+          [// Village of the Wolves
             {
               'blue': 60,
               'green': 60,
@@ -1631,14 +1638,14 @@ function load_level(id){
         ][id];
 
         world_text = [
-          [
+          [// A Pit of Your Design
             {
               'text': 'Trust No Mass',
               'x': 99,
               'y': -75,
             },
           ],
-          [
+          [// Booster Towers
             {
               'text': '☺',
               'x': -15,
@@ -1660,7 +1667,7 @@ function load_level(id){
               'y': -130,
             },
           ],
-          [
+          [// Yellow Keys
             {
               'text': 'Yellow keys guide',
               'x': 100,
@@ -1682,7 +1689,7 @@ function load_level(id){
               'y': -55,
             },
           ],
-          [
+          [// Tutorial Island
             {
               'text': '←' + settings['movement-keys'][0],
               'x': -100,
@@ -1704,7 +1711,7 @@ function load_level(id){
               'y': 150,
             },
           ],
-          [
+          [// Village of the Wolves
             {
               'text': 'Village of the Wolves',
               'x': -660,
