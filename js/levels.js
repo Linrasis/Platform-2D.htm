@@ -239,7 +239,7 @@ function load_level(id){
             'height': 75,
             'red': random_number(256),
             'width': 75,
-            'x': -100,
+            'x': -100 + 125 * side,
             'y': -50 - tree_y,
           },
           {
@@ -248,7 +248,7 @@ function load_level(id){
             'height': -50 - tree_y,
             'red': 190,
             'width': 25,
-            'x': -75,
+            'x': -75 + 125 * side,
             'y': 50,
           },
         ];
