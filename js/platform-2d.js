@@ -349,16 +349,21 @@ function reset(){
         return;
     }
 
-    document.getElementById('audio-volume').value = 1;
-    document.getElementById('color').value = '#009900';
-    document.getElementById('gravity').value = .5;
-    document.getElementById('jump-key').value = 'W';
-    document.getElementById('jump-speed').value = -10;
-    document.getElementById('movement-keys').value = 'AD';
-    document.getElementById('ms-per-frame').value = 25;
-    document.getElementById('restart-key').value = 'H';
-    document.getElementById('speed').value = 4;
-    document.getElementById('terminal-velocity').value = 9;
+    var ids = {
+      'audio-volume': 1,
+      'color': '#009900',
+      'gravity': .5,
+      'jump-key': 'W',
+      'jump-speed': -10,
+      'movement-keys': 'AD',
+      'ms-per-frame': 25,
+      'restart-key': 'H',
+      'speed': 4,
+      'terminal-velocity': 9,
+    };
+    for(var id in ids){
+        document.getElementById(id).value = ids[id];
+    }
     document.getElementById('time-display').checked = true;
 
     save();
