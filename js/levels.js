@@ -769,7 +769,9 @@ function load_level(id){
         ];
 
         interval_logic = window.setInterval(
-          'level_logic(-1)',
+          function(){
+              level_logic(-1);
+          },
           100
         );
 
