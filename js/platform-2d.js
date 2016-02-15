@@ -40,13 +40,9 @@ function draw(){
     // Draw dynamic world objects that aren't in the buffer_static.
     var loop_counter = world_dynamic.length - 1;
     do{
-        // Only draw objects that are reds, keywalls, keys, or moving
+        // Only draw objects that aren't on the buffer
         //   and are on the screen.
-        if(!(world_dynamic[loop_counter]['type'] === 3
-            || world_dynamic[loop_counter]['type'] === 5
-            || world_dynamic[loop_counter]['type'] === 's'
-            || world_dynamic[loop_counter]['x-speed'] !== void 0
-            || world_dynamic[loop_counter]['y-speed'] !== void 0)
+        if(!world_dynamic[loop_counter]['buffer'] !== null
           && (world_dynamic[loop_counter]['x'] + world_dynamic[loop_counter]['width'] + x_offset <= 0
             || world_dynamic[loop_counter]['x'] + x_offset >= width
             || world_dynamic[loop_counter]['y'] + world_dynamic[loop_counter]['height'] + y_offset <= 0
@@ -532,12 +528,7 @@ function update_static_buffer(){
 
     // Determine limits required to hold certain dynamic objects.
     for(var object in world_dynamic){
-        // Only check objects that aren't reds, keywalls, keys, or moving.
-        if(world_dynamic[object]['type'] === 3
-          || world_dynamic[object]['type'] === 5
-          || world_dynamic[object]['type'] === 's'
-          || world_dynamic[object]['x-speed'] !== void 0
-          || world_dynamic[object]['y-speed'] !== void 0){
+        if(world_dynamic[object]['buffer'] === null){
             continue;
         }
 
@@ -625,12 +616,8 @@ function update_static_buffer(){
     // Add certain dynamic world objects to the buffer_static.
     loop_counter = world_dynamic.length - 1;
     do{
-        // Only check objects that aren't reds, keywalls, keys, or moving.
-        if(world_dynamic[loop_counter]['type'] === 3
-          || world_dynamic[loop_counter]['type'] === 5
-          || world_dynamic[loop_counter]['type'] === 's'
-          || world_dynamic[loop_counter]['x-speed'] !== void 0
-          || world_dynamic[loop_counter]['y-speed'] !== void 0){
+        // Only check objects that aren't on the buffer.
+        if(world_dynamic[loop_counter]['buffer'] !== null){
             continue;
         }
 
