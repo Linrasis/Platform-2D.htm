@@ -698,7 +698,7 @@ var settings = {
     ? parseFloat(window.localStorage.getItem('Platform-2D.htm-jump-speed'))
     : -10,
   'movement-keys': window.localStorage.getItem('Platform-2D.htm-movement-keys') || 'AD',
-  'ms-per-frame': parseInt(window.localStorage.getItem('Platform-2D.htm-ms-per-frame')) || 25,
+  'ms-per-frame': parseInt(window.localStorage.getItem('Platform-2D.htm-ms-per-frame'), 10) || 25,
   'speed': window.localStorage.getItem('Platform-2D.htm-speed') !== null
     ? parseFloat(window.localStorage.getItem('Platform-2D.htm-speed'))
     : 4,
