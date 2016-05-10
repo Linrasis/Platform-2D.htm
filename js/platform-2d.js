@@ -331,31 +331,6 @@ function random_number(i){
     return Math.floor(Math.random() * i);
 }
 
-function reset(){
-    if(!window.confirm('Reset settings?')){
-        return;
-    }
-
-    var ids = {
-      'audio-volume': 1,
-      'color': '#009900',
-      'gravity': .5,
-      'jump-key': 'W',
-      'jump-speed': -10,
-      'movement-keys': 'AD',
-      'ms-per-frame': 25,
-      'restart-key': 'H',
-      'speed': 4,
-      'terminal-velocity': 9,
-    };
-    for(var id in ids){
-        document.getElementById(id).value = ids[id];
-    }
-    document.getElementById('time-display').checked = true;
-
-    save();
-}
-
 function resize(){
     if(mode <= 0){
         return;
@@ -374,64 +349,6 @@ function resize(){
     // If game is over, draw if resized.
     if(state > 0){
         draw();
-    }
-}
-
-// Save settings into window.localStorage if they differ from default.
-function save(){
-    var ids = {
-      'audio-volume': 1,
-      'gravity': .5,
-      'jump-speed': -10,
-      'ms-per-frame': 25,
-      'speed': 4,
-      'terminal-velocity': 9,
-      'time-display': 1,
-    };
-    for(var id in ids){
-        settings[id] = parseFloat(document.getElementById(id).value);
-
-        if(settings[id] == ids[id]
-          || isNaN(settings[id])){
-            window.localStorage.removeItem('Platform-2D.htm-' + id);
-
-        }else{
-            window.localStorage.setItem(
-              'Platform-2D.htm-' + id,
-              settings[id]
-            );
-        }
-    }
-
-    settings['time-display'] = document.getElementById('time-display').checked;
-    if(settings['time-display']){
-        window.localStorage.removeItem('Platform-2D.htm-time-display');
-
-    }else{
-        window.localStorage.setItem(
-          'Platform-2D.htm-time-display',
-          1
-        );
-    }
-
-    ids = {
-      'color': '#009900',
-      'jump-key': 'W',
-      'movement-keys': 'AD',
-      'restart-key': 'H',
-    };
-    for(id in ids){
-        settings[id] = document.getElementById(id).value;
-
-        if(settings[id] === ids[id]){
-            window.localStorage.removeItem('Platform-2D.htm-' + id);
-
-        }else{
-            window.localStorage.setItem(
-              'Platform-2D.htm-' + id,
-              settings[id]
-            );
-        }
     }
 }
 
@@ -685,29 +602,6 @@ var key_right = false;
 var key_jump = false;
 var mode = 0;
 var player = {};
-var settings = {
-  'audio-volume': window.localStorage.getItem('Platform-2D.htm-audio-volume') !== null
-    ? parseFloat(window.localStorage.getItem('Platform-2D.htm-audio-volume'))
-    : 1,
-  'color': window.localStorage.getItem('Platform-2D.htm-color') || '#009900',
-  'gravity': window.localStorage.getItem('Platform-2D.htm-gravity') !== null
-    ? parseFloat(window.localStorage.getItem('Platform-2D.htm-gravity'))
-    : .5,
-  'jump-key': window.localStorage.getItem('Platform-2D.htm-jump-key') || 'W',
-  'jump-speed': window.localStorage.getItem('Platform-2D.htm-jump-speed') !== null
-    ? parseFloat(window.localStorage.getItem('Platform-2D.htm-jump-speed'))
-    : -10,
-  'movement-keys': window.localStorage.getItem('Platform-2D.htm-movement-keys') || 'AD',
-  'ms-per-frame': parseInt(window.localStorage.getItem('Platform-2D.htm-ms-per-frame'), 10) || 25,
-  'speed': window.localStorage.getItem('Platform-2D.htm-speed') !== null
-    ? parseFloat(window.localStorage.getItem('Platform-2D.htm-speed'))
-    : 4,
-  'restart-key': window.localStorage.getItem('Platform-2D.htm-restart-key') || 'H',
-  'terminal-velocity': window.localStorage.getItem('Platform-2D.htm-terminal-velocity') !== null
-    ? parseFloat(window.localStorage.getItem('Platform-2D.htm-terminal-velocity'))
-    : 9,
-  'time-display': window.localStorage.getItem('Platform-2D.htm-time-display') === null,
-};
 var state = 0;
 var width = 0;
 var world_background = [];
@@ -770,6 +664,22 @@ window.onkeyup = function(e){
 };
 
 window.onload = function(e){
+    init_settings(
+      'Platform-2D.htm-',
+      {
+        'audio-volume': 1,
+        'color': '#009900',
+        'gravity': .5,
+        'jump-key': 'W',
+        'jump-speed': -10,
+        'movement-keys': 'AD',
+        'ms-per-frame': 25,
+        'speed': 4,
+        'restart-key': 'H',
+        'terminal-velocity': 9,
+        'time-display': true,
+      }
+    );
     setmode(
       0,
       true
