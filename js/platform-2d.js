@@ -414,18 +414,27 @@ function setmode(newmode, newgame){
     world_static.length = 0;
     world_text.length = 0;
 
-    document.body.innerHTML = '<div><div><a onclick="setmode(3, true)">Generate Random Level</a><br><a onclick="setmode(4, true)">Randomized Lava Corridor</a></div><hr><div><a onclick="setmode(5, true)">A Pit of Your Design</a><br><a onclick="setmode(6, true)">Booster Towers</a><br><a onclick="setmode(7, true)">Tutorial Island</a><br><a onclick="setmode(8, true)">Village of the Wolves</a><br><a onclick="setmode(9, true)">Yellow Keys</a></div></div><div class=right><div><input id=jump-key maxlength=1 value='
-      + settings['jump-key'] + '>Jump<br><input disabled value=ESC>Main Menu<br><input id=movement-keys maxlength=2 value='
-      + settings['movement-keys'] + '>Move ←→<br><input id=restart-key maxlength=1 value='
-      + settings['restart-key'] + '>Restart</div><hr><div><input id=audio-volume max=1 min=0 step=0.01 type=range value='
-      + settings['audio-volume'] + '>Audio<br><input id=color type=color value='
-      + settings['color'] + '>Color<br><input id=gravity value='
-      + settings['gravity'] + '>Gravity<br><input id=jump-speed value='
-      + settings['jump-speed'] + '>Jump Speed<br><input id=ms-per-frame value='
-      + settings['ms-per-frame'] + '>ms/Frame<br><input id=speed value='
-      + settings['speed'] + '>Speed<br><input id=terminal-velocity value='
-      + settings['terminal-velocity'] + '>Terminal Velocity<br><label><input'
-      + (settings['time-display'] ? ' checked' : '') + ' id=time-display type=checkbox>Time</label><br><a onclick=reset()>Reset Settings</a></div></div>';
+    document.body.innerHTML = '<div><div><a onclick="setmode(3, true)">Generate Random Level</a><br>'
+      + '<a onclick="setmode(4, true)">Randomized Lava Corridor</a></div><hr>'
+      + '<div><a onclick="setmode(5, true)">A Pit of Your Design</a><br>'
+      + '<a onclick="setmode(6, true)">Booster Towers</a><br>'
+      + '<a onclick="setmode(7, true)">Tutorial Island</a><br>'
+      + '<a onclick="setmode(8, true)">Village of the Wolves</a><br>'
+      + '<a onclick="setmode(9, true)">Yellow Keys</a></div></div>'
+      + '<div class=right><div><input id=jump-key maxlength=1>Jump<br>'
+      + '<input disabled value=ESC>Main Menu<br>'
+      + '<input id=movement-keys maxlength=2>Move ←→<br>'
+      + '<input id=restart-key maxlength=1>Restart</div><hr>'
+      + '<div><input id=audio-volume max=1 min=0 step=0.01 type=range>Audio<br>'
+      + '<input id=color type=color>Color<br>'
+      + '<input id=gravity>Gravity<br>'
+      + '<input id=jump-speed>Jump Speed<br>'
+      + '<input id=ms-per-frame>ms/Frame<br>'
+      + '<input id=speed>Speed<br>'
+      + '<input id=terminal-velocity>Terminal Velocity<br>'
+      + '<label><input id=time-display type=checkbox>Time</label><br>'
+      + '<a onclick=reset()>Reset Settings</a></div></div>';
+    update_settings();
 }
 
 function update_static_buffer(){
