@@ -789,7 +789,7 @@ function load_level(id){
                 'y': -150,
               },
               {
-                'height': 500,
+                'height': 550,
                 'type': 1,
                 'width': 245,
                 'x': -45,
@@ -838,14 +838,7 @@ function load_level(id){
                 'y': 325,
               },
               {
-                'height': 25,
-                'type': 1,
-                'width': 25,
-                'x': 160,
-                'y': 575,
-              },
-              {
-                'height': 500,
+                'height': 750,
                 'type': 1,
                 'width': 25,
                 'x': 600,
@@ -943,6 +936,15 @@ function load_level(id){
               },
             ],
             'world-static': [
+              {
+                'blue': 60,
+                'green': 60,
+                'height': 25,
+                'red': 60,
+                'width': 400,
+                'x': 200,
+                'y': 575,
+              },
               {
                 'blue': random_number(256),
                 'green': random_number(256),
