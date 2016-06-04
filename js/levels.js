@@ -26,7 +26,6 @@ function level_logic(id){
             if(obstacle === 0){
                 world_dynamic.push(
                   {
-                    'buffer': true,
                     'height': 75,
                     'type': 1,
                     'width': 50,
@@ -51,7 +50,6 @@ function level_logic(id){
                     'y-target-min': -200,
                   },
                   {
-                    'buffer': true,
                     'height': 75,
                     'type': 1,
                     'width': 50,
@@ -72,7 +70,6 @@ function level_logic(id){
                   },
                   {
                     'boost': -14,
-                    'buffer': true,
                     'height': 25,
                     'type': 4,
                     'width': 25,
@@ -92,7 +89,6 @@ function level_logic(id){
             }else if(obstacle === 2){
                 world_dynamic.push(
                   {
-                    'buffer': true,
                     'height': 200,
                     'type': 1,
                     'width': 25,
@@ -100,7 +96,6 @@ function level_logic(id){
                     'y': -200,
                   },
                   {
-                    'buffer': true,
                     'height': 25,
                     'type': 1,
                     'width': 25,
@@ -108,7 +103,6 @@ function level_logic(id){
                     'y': -25,
                   },
                   {
-                    'buffer': true,
                     'height': 175,
                     'type': 1,
                     'width': 25,
@@ -143,7 +137,6 @@ function level_logic(id){
                   }
                 );
             }
-            update_static_buffer();
         }
 
         // Set lava wall goal to player position to keep it moving.
@@ -161,16 +154,13 @@ function level_logic(id){
                   loop_counter,
                   1
                 );
-
-                // Might have to move this for performance reasons.
-                update_static_buffer();
-                break;
             }
         }while(loop_counter--);
     }
 }
 
 function load_level(id){
+    id = id - 5;
     world_text.length = 0;
 
     // Randomized level.
@@ -191,7 +181,6 @@ function load_level(id){
         world_dynamic = [
           [
             {
-              'buffer': true,
               'height': 300,
               'type': 1,
               'width': 25,
@@ -206,7 +195,6 @@ function load_level(id){
               'y': -175,
             },
             {
-              'buffer': true,
               'height': 300,
               'type': 2,
               'width': 25,
@@ -216,7 +204,6 @@ function load_level(id){
           ],
           [
             {
-              'buffer': true,
               'height': 300,
               'type': 1,
               'width': 25,
@@ -231,7 +218,6 @@ function load_level(id){
               'y': -175,
             },
             {
-              'buffer': true,
               'height': 300,
               'type': 2,
               'width': 25,
@@ -264,7 +250,6 @@ function load_level(id){
         ];
 
         world_dynamic.push({
-          'buffer': true,
           'height': 75,
           'type': 1,
           'width': 200,
@@ -302,7 +287,6 @@ function load_level(id){
                   },
                   Math.random() > .5
                     ? {
-                       'buffer': true,
                         'height': 25,
                         'type': 1,
                         'width': 55,
@@ -315,7 +299,6 @@ function load_level(id){
                         'y': -25,
                       }
                     : {
-                        'buffer': true,
                         'height': 25,
                         'type': 1,
                         'width': 65,
@@ -358,7 +341,6 @@ function load_level(id){
                         'y-target-min': -175,
                       },
                       {
-                       'buffer': true,
                         'height': 25,
                         'type': 1,
                         'width': 200,
@@ -405,7 +387,6 @@ function load_level(id){
                         'y-target-min': -175,
                       },
                       {
-                       'buffer': true,
                         'height': 25,
                         'type': 1,
                         'width': 200,
@@ -428,7 +409,6 @@ function load_level(id){
                         'y': -25,
                       },
                       {
-                        'buffer': true,
                         'height': 25,
                         'type': 1,
                         'width': 200,
@@ -469,7 +449,6 @@ function load_level(id){
                     );
                 }
                 world_dynamic.push({
-                  'buffer': true,
                   'height': 25,
                   'type': 1,
                   'width': 25,
@@ -482,7 +461,6 @@ function load_level(id){
                     world_dynamic.push(
                       {
                         'boost': -12,
-                        'buffer': true,
                         'height': 25,
                         'type': 4,
                         'width': 25,
@@ -520,7 +498,6 @@ function load_level(id){
                 }
                 world_dynamic.push({
                   'boost': -12,
-                  'buffer': true,
                   'height': 25,
                   'type': 4,
                   'width': 200,
@@ -572,7 +549,6 @@ function load_level(id){
                 }
                 world_dynamic.push(
                   {
-                    'buffer': true,
                     'height': 75,
                     'type': 1,
                     'width': 25,
@@ -580,7 +556,6 @@ function load_level(id){
                     'y': 0,
                   },
                   {
-                    'buffer': true,
                     'height': 75,
                     'type': 1,
                     'width': 25,
@@ -591,7 +566,6 @@ function load_level(id){
 
             }else if(tile_type === 7){
                 world_dynamic.push({
-                  'buffer': true,
                   'height': 75,
                   'type': 1,
                   'width': 200,
@@ -622,7 +596,6 @@ function load_level(id){
             }else if(tile_type === 8){
                 world_dynamic.push(
                   {
-                   'buffer': true,
                     'height': 75,
                     'type': 1,
                     'width': 50,
@@ -630,7 +603,6 @@ function load_level(id){
                     'y': 0,
                   },
                   {
-                   'buffer': true,
                     'height': 75,
                     'type': 1,
                     'width': 50,
@@ -638,7 +610,6 @@ function load_level(id){
                     'y': 0,
                   },
                   {
-                    'buffer': true,
                     'height': 25,
                     'type': 1,
                     'width': 100,
@@ -660,7 +631,6 @@ function load_level(id){
                 );
             }
             world_dynamic.push({
-              'buffer': true,
               'height': 15,
               'type': 1,
               'width': 200,
@@ -670,7 +640,6 @@ function load_level(id){
         }while(tile_count--);
 
         world_dynamic.push({
-          'buffer': true,
           'height': 15,
           'type': 1,
           'width': 200,
@@ -775,7 +744,6 @@ function load_level(id){
             'y': -200,
           },
           {
-            'buffer': true,
             'height': 25,
             'type': 1,
             'width': 100,
@@ -814,7 +782,6 @@ function load_level(id){
             },
             'world-dynamic': [
               {
-                'buffer': true,
                 'height': 200,
                 'type': 1,
                 'width': 25,
@@ -822,7 +789,6 @@ function load_level(id){
                 'y': -150,
               },
               {
-                'buffer': true,
                 'height': 500,
                 'type': 1,
                 'width': 245,
@@ -830,7 +796,6 @@ function load_level(id){
                 'y': 50,
               },
               {
-                'buffer': true,
                 'height': 565,
                 'type': 1,
                 'width': 25,
@@ -838,7 +803,6 @@ function load_level(id){
                 'y': -150,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 100,
@@ -846,7 +810,6 @@ function load_level(id){
                 'y': 250,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 100,
@@ -854,7 +817,6 @@ function load_level(id){
                 'y': 390,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 175,
@@ -862,7 +824,6 @@ function load_level(id){
                 'y': 475,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 25,
@@ -870,7 +831,6 @@ function load_level(id){
                 'y': 200,
               },
               {
-                'buffer': true,
                 'height': 175,
                 'type': 1,
                 'width': 25,
@@ -878,7 +838,6 @@ function load_level(id){
                 'y': 325,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 25,
@@ -886,7 +845,6 @@ function load_level(id){
                 'y': 575,
               },
               {
-                'buffer': true,
                 'height': 500,
                 'type': 1,
                 'width': 25,
@@ -894,7 +852,6 @@ function load_level(id){
                 'y': -150,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 2,
                 'width': 25,
@@ -950,7 +907,6 @@ function load_level(id){
               },
               {
                 'boost': -13,
-                'buffer': true,
                 'height': 25,
                 'type': 4,
                 'width': 25,
@@ -1031,7 +987,6 @@ function load_level(id){
             },
             'world-dynamic': [
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 595,
@@ -1039,7 +994,6 @@ function load_level(id){
                 'y': -1050,
               },
               {
-                'buffer': true,
                 'height': 1160,
                 'type': 1,
                 'width': 25,
@@ -1047,7 +1001,6 @@ function load_level(id){
                 'y': -1025,
               },
               {
-                'buffer': true,
                 'height': 85,
                 'type': 1,
                 'width': 295,
@@ -1055,7 +1008,6 @@ function load_level(id){
                 'y': 50,
               },
               {
-                'buffer': true,
                 'height': 1160,
                 'type': 1,
                 'width': 25,
@@ -1063,7 +1015,6 @@ function load_level(id){
                 'y': -1025,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 2,
                 'width': 25,
@@ -1135,7 +1086,6 @@ function load_level(id){
               },
               {
                 'boost': -20,
-                'buffer': true,
                 'height': 25,
                 'type': 4,
                 'width': 100,
@@ -1144,7 +1094,6 @@ function load_level(id){
               },
               {
                 'boost': -20,
-                'buffer': true,
                 'height': 25,
                 'type': 4,
                 'width': 125,
@@ -1153,7 +1102,6 @@ function load_level(id){
               },
               {
                 'boost': -26,
-                'buffer': true,
                 'height': 25,
                 'type': 4,
                 'width': 100,
@@ -1230,7 +1178,6 @@ function load_level(id){
             },
             'world-dynamic': [
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 475,
@@ -1238,7 +1185,6 @@ function load_level(id){
                 'y': -150,
               },
               {
-                'buffer': true,
                 'height': 600,
                 'type': 1,
                 'width': 25,
@@ -1246,7 +1192,6 @@ function load_level(id){
                 'y': -125,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 900,
@@ -1254,7 +1199,6 @@ function load_level(id){
                 'y': 475,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 500,
@@ -1262,7 +1206,6 @@ function load_level(id){
                 'y': 250,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 400,
@@ -1270,7 +1213,6 @@ function load_level(id){
                 'y': 50,
               },
               {
-                'buffer': true,
                 'height': 200,
                 'type': 1,
                 'width': 25,
@@ -1278,7 +1220,6 @@ function load_level(id){
                 'y': -125,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 125,
@@ -1286,7 +1227,6 @@ function load_level(id){
                 'y': 250,
               },
               {
-                'buffer': true,
                 'height': 400,
                 'type': 1,
                 'width': 25,
@@ -1294,7 +1234,6 @@ function load_level(id){
                 'y': -75,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 2,
                 'width': 25,
@@ -1445,7 +1384,6 @@ function load_level(id){
             },
             'world-dynamic': [
               {
-                'buffer': true,
                 'height': 239,
                 'type': 1,
                 'width': 35,
@@ -1453,7 +1391,6 @@ function load_level(id){
                 'y': 36,
               },
               {
-                'buffer': true,
                 'height': 15,
                 'type': 1,
                 'width': 135,
@@ -1461,7 +1398,6 @@ function load_level(id){
                 'y': -175,
               },
               {
-                'buffer': true,
                 'height': 151,
                 'type': 1,
                 'width': 320,
@@ -1469,7 +1405,6 @@ function load_level(id){
                 'y': 124,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 50,
@@ -1477,7 +1412,6 @@ function load_level(id){
                 'y': -50,
               },
               {
-                'buffer': true,
                 'height': 170,
                 'type': 1,
                 'width': 28,
@@ -1485,7 +1419,6 @@ function load_level(id){
                 'y': -120,
               },
               {
-                'buffer': true,
                 'height': 275,
                 'type': 1,
                 'width': 16,
@@ -1493,7 +1426,6 @@ function load_level(id){
                 'y': 0,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 196,
@@ -1501,7 +1433,6 @@ function load_level(id){
                 'y': 124,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 60,
@@ -1509,7 +1440,6 @@ function load_level(id){
                 'y': 0,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 80,
@@ -1517,7 +1447,6 @@ function load_level(id){
                 'y': 48,
               },
               {
-                'buffer': true,
                 'height': 395,
                 'type': 1,
                 'width': 16,
@@ -1525,7 +1454,6 @@ function load_level(id){
                 'y': -120,
               },
               {
-                'buffer': true,
                 'height': 125,
                 'type': 2,
                 'width': 25,
@@ -1596,7 +1524,6 @@ function load_level(id){
             'world-background': {},
             'world-dynamic': [
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 1300,
@@ -1604,7 +1531,6 @@ function load_level(id){
                 'y': -150,
               },
               {
-                'buffer': true,
                 'height': 335,
                 'type': 1,
                 'width': 25,
@@ -1612,7 +1538,6 @@ function load_level(id){
                 'y': -125,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 210,
@@ -1620,7 +1545,6 @@ function load_level(id){
                 'y': 50,
               },
               {
-                'buffer': true,
                 'height': 85,
                 'type': 1,
                 'width': 300,
@@ -1635,7 +1559,6 @@ function load_level(id){
                 'y': 135,
               },
               {
-                'buffer': true,
                 'height': 60,
                 'type': 1,
                 'width': 25,
@@ -1643,7 +1566,6 @@ function load_level(id){
                 'y': -125,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 205,
@@ -1651,7 +1573,6 @@ function load_level(id){
                 'y': 50,
               },
               {
-                'buffer': true,
                 'height': 60,
                 'type': 1,
                 'width': 50,
@@ -1659,7 +1580,6 @@ function load_level(id){
                 'y': 75,
               },
               {
-                'buffer': true,
                 'height': 50,
                 'type': 1,
                 'width': 50,
@@ -1667,7 +1587,6 @@ function load_level(id){
                 'y': -125,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 1,
                 'width': 223,
@@ -1675,7 +1594,6 @@ function load_level(id){
                 'y': 75,
               },
               {
-                'buffer': true,
                 'height': 335,
                 'type': 1,
                 'width': 25,
@@ -1683,7 +1601,6 @@ function load_level(id){
                 'y': -125,
               },
               {
-                'buffer': true,
                 'height': 25,
                 'type': 2,
                 'width': 25,
