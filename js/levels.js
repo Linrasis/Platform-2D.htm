@@ -1229,7 +1229,7 @@ function load_level(id){
                 'y': 250,
               },
               {
-                'height': 400,
+                'height': 550,
                 'type': 1,
                 'width': 25,
                 'x': 445,
@@ -1386,7 +1386,7 @@ function load_level(id){
             },
             'world-dynamic': [
               {
-                'height': 239,
+                'height': 264,
                 'type': 1,
                 'width': 35,
                 'x': -715,
@@ -1400,7 +1400,7 @@ function load_level(id){
                 'y': -175,
               },
               {
-                'height': 151,
+                'height': 176,
                 'type': 1,
                 'width': 320,
                 'x': -680,
@@ -1421,7 +1421,7 @@ function load_level(id){
                 'y': -120,
               },
               {
-                'height': 275,
+                'height': 300,
                 'type': 1,
                 'width': 16,
                 'x': -360,
@@ -1449,7 +1449,7 @@ function load_level(id){
                 'y': 48,
               },
               {
-                'height': 395,
+                'height': 420,
                 'type': 1,
                 'width': 16,
                 'x': 105,
@@ -1498,11 +1498,20 @@ function load_level(id){
               {
                 'blue': 60,
                 'green': 60,
-                'height': 575,
+                'height': 600,
                 'red': 60,
                 'width': 15,
                 'x': -730,
                 'y': -300,
+              },
+              {
+                'blue': 60,
+                'green': 60,
+                'height': 25,
+                'red': 60,
+                'width': 449,
+                'x': -344,
+                'y': 275,
               },
               {
                 'blue': 0,
