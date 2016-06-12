@@ -347,6 +347,8 @@ function resize_logic(){
 }
 
 function setmode_logic(newgame){
+    window.clearInterval(interval_logic);
+
     world_dynamic.length = 0;
     world_static.length = 0;
     world_text.length = 0;
