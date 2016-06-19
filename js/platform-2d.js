@@ -329,12 +329,6 @@ function logic(){
     frame_counter += 1;
 }
 
-function new_image(path){
-    var image = new Image();
-    image.src = path;
-    return image;
-}
-
 function random_number(i){
     return Math.floor(Math.random() * i);
 }
