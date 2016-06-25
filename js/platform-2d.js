@@ -124,6 +124,9 @@ function draw_logic(){
       40
     );
 
+    // Reset text align.
+    buffer.textAlign = 'left';
+
     // If tracking frames, draw number of frames.
     if(settings['time-display']){
         buffer.fillText(
