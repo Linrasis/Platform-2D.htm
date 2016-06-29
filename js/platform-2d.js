@@ -53,7 +53,7 @@ function draw_logic(){
 
     // Add world text to buffer.
     buffer.fillStyle = '#fff';
-    buffer.font = '23pt sans-serif';
+    buffer.font = font;
 
     for(var text in world_text){
         buffer.textAlign = world_text[text]['textAlign'] || 'left';
@@ -149,7 +149,7 @@ function draw_logic(){
           125
         );
 
-        buffer.font = '42pt sans-serif';
+        buffer.font = '42pt monospace';
         buffer.fillStyle = state === 2
           ? '#2d8930'
           : '#e02d30';
