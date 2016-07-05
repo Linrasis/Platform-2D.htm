@@ -51,7 +51,7 @@ function draw_logic(){
         }while(loop_counter--);
     }
 
-    // Add world text to buffer.
+    // Draw world text.
     buffer.fillStyle = '#fff';
     buffer.font = fonts['medium'];
 
@@ -124,7 +124,8 @@ function draw_logic(){
       40
     );
 
-    // Reset text align.
+    // Draw UI text.
+    buffer.fillStyle = '#fff';
     buffer.textAlign = 'left';
 
     // If tracking frames, draw number of frames.
