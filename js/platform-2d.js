@@ -116,7 +116,7 @@ function draw_logic(){
     }while(loop_counter--);
 
     // Draw player.
-    buffer.fillStyle = settings['color'];
+    buffer.fillStyle = settings_settings['color'];
     buffer.fillRect(
       x - 20,
       y - 20,
@@ -129,7 +129,7 @@ function draw_logic(){
     buffer.textAlign = 'left';
 
     // If tracking frames, draw number of frames.
-    if(settings['time-display']){
+    if(settings_settings['time-display']){
         buffer.fillText(
           frame_counter,
           5,
@@ -140,7 +140,7 @@ function draw_logic(){
     // If game is over, draw game over text.
     if(state > 0){
         buffer.fillText(
-          settings['restart-key'] + ' = Restart',
+          settings_settings['restart-key'] + ' = Restart',
           5,
           100
         );
@@ -173,11 +173,11 @@ function logic(){
     var player_dy = 0;
 
     if(key_left){
-        player_dx -= settings['speed'];
+        player_dx -= settings_settings['speed'];
     }
 
     if(key_right){
-        player_dx += settings['speed'];
+        player_dx += settings_settings['speed'];
     }
 
     var can_jump = false;
@@ -316,7 +316,7 @@ function logic(){
     if(can_jump){
         if(jump_permission
           && key_jump){
-            player['y-velocity'] = settings['jump-speed'];
+            player['y-velocity'] = settings_settings['jump-speed'];
             jump_permission = false;
 
         }else{
@@ -325,8 +325,8 @@ function logic(){
 
     }else{
         player['y-velocity'] = Math.min(
-          player['y-velocity'] + settings['gravity'],
-          settings['terminal-velocity']
+          player['y-velocity'] + settings_settings['gravity'],
+          settings_settings['terminal-velocity']
         );
     }
 
@@ -372,8 +372,8 @@ function setmode_logic(newgame){
           + '<input id=speed>Speed<br>'
           + '<input id=terminal-velocity>Terminal Velocity<br>'
           + '<label><input id=time-display type=checkbox>Time</label><br>'
-          + '<a onclick=reset()>Reset Settings</a></div></div>';
-        update_settings();
+          + '<a onclick=settings_reset()>Reset Settings</a></div></div>';
+        settings_update();
 
     // New game mode.
     }else{
@@ -392,7 +392,7 @@ function setmode_logic(newgame){
         state = 0;
 
         if(newgame){
-            save();
+            settings_save();
         }
     }
 }
@@ -436,16 +436,16 @@ window.onkeydown = function(e){
 
     key = String.fromCharCode(key);
 
-    if(key === settings['movement-keys'][0]){
+    if(key === settings_settings['movement-keys'][0]){
         key_left = true;
 
-    }else if(key === settings['movement-keys'][1]){
+    }else if(key === settings_settings['movement-keys'][1]){
         key_right = true;
 
-    }else if(key === settings['jump-key']){
+    }else if(key === settings_settings['jump-key']){
         key_jump = true;
 
-    }else if(key === settings['restart-key']){
+    }else if(key === settings_settings['restart-key']){
         setmode(
           mode,
           false
@@ -456,20 +456,20 @@ window.onkeydown = function(e){
 window.onkeyup = function(e){
     var key = String.fromCharCode(e.keyCode || e.which);
 
-    if(key === settings['movement-keys'][0]){
+    if(key === settings_settings['movement-keys'][0]){
         key_left = false;
 
-    }else if(key === settings['movement-keys'][1]){
+    }else if(key === settings_settings['movement-keys'][1]){
         key_right = false;
 
-    }else if(key === settings['jump-key']){
+    }else if(key === settings_settings['jump-key']){
         key_jump = false;
         jump_permission = true;
     }
 };
 
 window.onload = function(e){
-    init_settings(
+    settings_init(
       'Platform-2D.htm-',
       {
         'audio-volume': 1,
