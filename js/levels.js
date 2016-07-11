@@ -758,8 +758,8 @@ function load_level(id){
             'green': 0,
             'height': 250,
             'red': 0,
-            'width': width + 400,
-            'x': -x,
+            'width': canvas_width + 400,
+            'x': -canvas_x,
             'y': -200,
           },
         ];

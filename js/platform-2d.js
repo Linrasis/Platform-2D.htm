@@ -1,26 +1,26 @@
 'use strict';
 
 function draw_logic(){
-    x_offset = x - player['x'];
-    y_offset = y - player['y'];
+    x_offset = canvas_x - player['x'];
+    y_offset = canvas_y - player['y'];
 
     /*
     // Draw background colors if level asks for it.
     if(world_background['y'] !== void 0){
-        buffer.fillStyle = world_background['color-top'];
-        buffer.fillRect(
+        canvas_buffer.fillStyle = world_background['color-top'];
+        canvas_buffer.fillRect(
           0,
           0,
-          width,
+          canvas_width,
           y_offset + world_background['y']
         );
 
-        buffer.fillStyle = world_background['color-bottom'];
-        buffer.fillRect(
+        canvas_buffer.fillStyle = world_background['color-bottom'];
+        canvas_buffer.fillRect(
           0,
           y_offset + world_background['y'],
-          width,
-          height + player['y']
+          canvas_width,
+          canvas_height + player['y']
         );
     }
     */
@@ -32,17 +32,17 @@ function draw_logic(){
             // Only draw objects that aren't on the buffer
             //   and are on the screen.
             if(world_static[loop_counter]['x'] + world_static[loop_counter]['width'] + x_offset <= 0
-              || world_static[loop_counter]['x'] + x_offset >= width
+              || world_static[loop_counter]['x'] + x_offset >= canvas_width
               || world_static[loop_counter]['y'] + world_static[loop_counter]['height'] + y_offset <= 0
-              || world_static[loop_counter]['y'] + y_offset >= height){
+              || world_static[loop_counter]['y'] + y_offset >= canvas_height){
                 continue;
             }
 
-            buffer.fillStyle = 'rgb('
+            canvas_buffer.fillStyle = 'rgb('
               + world_static[loop_counter]['red'] + ', '
               + world_static[loop_counter]['green'] + ', '
               + world_static[loop_counter]['blue'] + ')';
-            buffer.fillRect(
+            canvas_buffer.fillRect(
               world_static[loop_counter]['x'] + x_offset,
               world_static[loop_counter]['y'] + y_offset,
               world_static[loop_counter]['width'],
@@ -52,12 +52,12 @@ function draw_logic(){
     }
 
     // Draw world text.
-    buffer.fillStyle = '#fff';
-    buffer.font = fonts['medium'];
+    canvas_buffer.fillStyle = '#fff';
+    canvas_buffer.font = canvas_fonts['medium'];
 
     for(var text in world_text){
-        buffer.textAlign = world_text[text]['textAlign'] || 'left';
-        buffer.fillText(
+        canvas_buffer.textAlign = world_text[text]['textAlign'] || 'left';
+        canvas_buffer.fillText(
           world_text[text]['text'],
           world_text[text]['x'] + x_offset,
           world_text[text]['y'] + y_offset
@@ -69,9 +69,9 @@ function draw_logic(){
         // Only draw objects that aren't on the buffer
         //   and are on the screen.
         if(world_dynamic[loop_counter]['x'] + world_dynamic[loop_counter]['width'] + x_offset <= 0
-          || world_dynamic[loop_counter]['x'] + x_offset >= width
+          || world_dynamic[loop_counter]['x'] + x_offset >= canvas_width
           || world_dynamic[loop_counter]['y'] + world_dynamic[loop_counter]['height'] + y_offset <= 0
-          || world_dynamic[loop_counter]['y'] + y_offset >= height){
+          || world_dynamic[loop_counter]['y'] + y_offset >= canvas_height){
             continue;
         }
 
@@ -82,19 +82,19 @@ function draw_logic(){
             var temp_y = world_dynamic[loop_counter]['y'] + y_offset;
 
             // Save current buffer state.
-            buffer.save();
+            canvas_buffer.save();
 
             // Translate to object location.
-            buffer.translate(
+            canvas_buffer.translate(
               temp_x,
               temp_y
             );
 
-            buffer.fillStyle = buffer.createPattern(
+            canvas_buffer.fillStyle = canvas_buffer.createPattern(
               assets_images[world_dynamic[loop_counter]['type'] - 2],
               'repeat'
             );
-            buffer.fillRect(
+            canvas_buffer.fillRect(
               0,
               0,
               world_dynamic[loop_counter]['width'],
@@ -102,11 +102,11 @@ function draw_logic(){
             );
 
             // Restore buffer state.
-            buffer.restore();
+            canvas_buffer.restore();
 
         }else{
-            buffer.fillStyle = '#3c3c3c';
-            buffer.fillRect(
+            canvas_buffer.fillStyle = '#3c3c3c';
+            canvas_buffer.fillRect(
               world_dynamic[loop_counter]['x'] + x_offset,
               world_dynamic[loop_counter]['y'] + y_offset,
               world_dynamic[loop_counter]['width'],
@@ -116,21 +116,21 @@ function draw_logic(){
     }while(loop_counter--);
 
     // Draw player.
-    buffer.fillStyle = settings_settings['color'];
-    buffer.fillRect(
-      x - 20,
-      y - 20,
+    canvas_buffer.fillStyle = settings_settings['color'];
+    canvas_buffer.fillRect(
+      canvas_x - 20,
+      canvas_y - 20,
       40,
       40
     );
 
     // Draw UI text.
-    buffer.fillStyle = '#fff';
-    buffer.textAlign = 'left';
+    canvas_buffer.fillStyle = '#fff';
+    canvas_buffer.textAlign = 'left';
 
     // If tracking frames, draw number of frames.
     if(settings_settings['time-display']){
-        buffer.fillText(
+        canvas_buffer.fillText(
           frame_counter,
           5,
           25
@@ -139,22 +139,22 @@ function draw_logic(){
 
     // If game is over, draw game over text.
     if(state > 0){
-        buffer.fillText(
+        canvas_buffer.fillText(
           settings_settings['restart-key'] + ' = Restart',
           5,
           100
         );
-        buffer.fillText(
+        canvas_buffer.fillText(
           'ESC = Main Menu',
           5,
           125
         );
 
-        buffer.font = fonts['big'];
-        buffer.fillStyle = state === 2
+        canvas_buffer.font = canvas_fonts['big'];
+        canvas_buffer.fillStyle = state === 2
           ? '#2d8930'
           : '#e02d30';
-        buffer.fillText(
+        canvas_buffer.fillText(
           state === 2
             ? 'Level Complete! ☺'
             : 'You Failed! ☹',
@@ -285,7 +285,7 @@ function logic(){
 
         // Collided with red rectangles.
         }else if(world_dynamic[loop_counter]['type'] === 3){
-            window.clearInterval(interval);
+            window.clearInterval(canvas_interval);
             window.clearInterval(interval_logic);
             state = 3;
 
@@ -340,7 +340,7 @@ function random_number(i){
 function resize_logic(){
     // If game is over, draw if resized.
     if(state > 0){
-        draw();
+        canvas_draw();
     }
 }
 
@@ -352,14 +352,14 @@ function setmode_logic(newgame){
     world_text.length = 0;
 
     // Main menu mode.
-    if(mode === 0){
-        document.body.innerHTML = '<div><div><a onclick=setmode(3,true)>Generate Random Level</a><br>'
-          + '<a onclick=setmode(4,true)>Randomized Lava Corridor</a></div><hr>'
-          + '<div><a onclick="setmode(5, true)">A Pit of Your Design</a><br>'
-          + '<a onclick=setmode(6,true)>Booster Towers</a><br>'
-          + '<a onclick=setmode(7,true)>Tutorial Island</a><br>'
-          + '<a onclick=setmode(8,true)>Village of the Wolves</a><br>'
-          + '<a onclick=setmode(9,true)>Yellow Keys</a></div></div>'
+    if(canvas_mode === 0){
+        document.body.innerHTML = '<div><div><a onclick=canvas_setmode(3,true)>Generate Random Level</a><br>'
+          + '<a onclick=canvas_setmode(4,true)>Randomized Lava Corridor</a></div><hr>'
+          + '<div><a onclick=canvas_setmode(5,true)>A Pit of Your Design</a><br>'
+          + '<a onclick=canvas_setmode(6,true)>Booster Towers</a><br>'
+          + '<a onclick=canvas_setmode(7,true)>Tutorial Island</a><br>'
+          + '<a onclick=canvas_setmode(8,true)>Village of the Wolves</a><br>'
+          + '<a onclick=canvas_setmode(9,true)>Yellow Keys</a></div></div>'
           + '<div class=right><div><input id=jump-key maxlength=1>Jump<br>'
           + '<input disabled value=ESC>Main Menu<br>'
           + '<input id=movement-keys maxlength=2>Move ←→<br>'
@@ -377,6 +377,10 @@ function setmode_logic(newgame){
 
     // New game mode.
     }else{
+        if(newgame){
+            settings_save();
+        }
+
         frame_counter = 0;
 
         key_jump = false;
@@ -390,18 +394,14 @@ function setmode_logic(newgame){
         },
 
         state = 0;
-
-        if(newgame){
-            settings_save();
-        }
     }
 }
 
 var assets_images = [
-  new_image('../common/images/goal.png'),
-  new_image('../common/images/red.png'),
-  new_image('../common/images/boost.png'),
-  new_image('../common/images/key.png'),
+  canvas_image_new('../common/images/goal.png'),
+  canvas_image_new('../common/images/red.png'),
+  canvas_image_new('../common/images/boost.png'),
+  canvas_image_new('../common/images/key.png'),
 ];
 var frame_counter = 0;
 var interval_logic = 0;
@@ -419,7 +419,7 @@ var x_offset = 0;
 var y_offset = 0;
 
 window.onkeydown = function(e){
-    if(mode <= 0){
+    if(canvas_mode <= 0){
         return;
     }
 
@@ -427,7 +427,7 @@ window.onkeydown = function(e){
 
     // ESC: return to main menu.
     if(key === 27){
-        setmode(
+        canvas_setmode(
           0,
           true
         );
@@ -446,8 +446,8 @@ window.onkeydown = function(e){
         key_jump = true;
 
     }else if(key === settings_settings['restart-key']){
-        setmode(
-          mode,
+        canvas_setmode(
+          canvas_mode,
           false
         );
     }
@@ -485,5 +485,5 @@ window.onload = function(e){
         'time-display': true,
       }
     );
-    init_canvas();
+    canvas_init();
 };
