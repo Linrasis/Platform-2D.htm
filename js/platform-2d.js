@@ -91,7 +91,7 @@ function draw_logic(){
             );
 
             canvas_buffer.fillStyle = canvas_buffer.createPattern(
-              assets_images[world_dynamic[loop_counter]['type'] - 2],
+              images_images[world_dynamic[loop_counter]['type'] - 2],
               'repeat'
             );
             canvas_buffer.fillRect(
@@ -397,12 +397,6 @@ function setmode_logic(newgame){
     }
 }
 
-var assets_images = [
-  canvas_image_new('../common/images/goal.png'),
-  canvas_image_new('../common/images/red.png'),
-  canvas_image_new('../common/images/boost.png'),
-  canvas_image_new('../common/images/key.png'),
-];
 var frame_counter = 0;
 var interval_logic = 0;
 var jump_permission = true;
@@ -485,5 +479,23 @@ window.onload = function(e){
         'time-display': true,
       }
     );
+
+    images_new(
+      0,
+      '../common/images/goal.png'
+    );
+    images_new(
+      1,
+      '../common/images/red.png'
+    );
+    images_new(
+      2,
+      '../common/images/boost.png'
+    );
+    images_new(
+      3,
+      '../common/images/key.png'
+    );
+
     canvas_init();
 };
