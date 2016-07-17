@@ -333,10 +333,6 @@ function logic(){
     frame_counter += 1;
 }
 
-function random_number(i){
-    return Math.floor(Math.random() * i);
-}
-
 function resize_logic(){
     // If game is over, draw if resized.
     if(state > 0){
