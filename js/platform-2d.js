@@ -81,7 +81,7 @@ function draw_logic(){
             var temp_x = world_dynamic[loop_counter]['x'] + x_offset;
             var temp_y = world_dynamic[loop_counter]['y'] + y_offset;
 
-            // Save current buffer state.
+            // Save current buffer.
             canvas_buffer.save();
 
             // Translate to object location.
@@ -101,7 +101,7 @@ function draw_logic(){
               world_dynamic[loop_counter]['height']
             );
 
-            // Restore buffer state.
+            // Restore buffer.
             canvas_buffer.restore();
 
         }else{
@@ -137,8 +137,9 @@ function draw_logic(){
         );
     }
 
-    // If game is over, draw game over text.
-    if(state > 0){
+    // If out of lives, draw game over text.
+    if(won
+      || player['lives'] < 1){
         canvas_buffer.fillText(
           settings_settings['restart-key'] + ' = Restart',
           5,
@@ -151,11 +152,11 @@ function draw_logic(){
         );
 
         canvas_buffer.font = canvas_fonts['big'];
-        canvas_buffer.fillStyle = state === 2
+        canvas_buffer.fillStyle = player['lives'] > 0
           ? '#2d8930'
           : '#e02d30';
         canvas_buffer.fillText(
-          state === 2
+          player['lives'] > 0
             ? 'Level Complete! ☺'
             : 'You Failed! ☹',
           5,
@@ -165,7 +166,7 @@ function draw_logic(){
 }
 
 function logic(){
-    if(state >= 1){
+    if(player['lives'] < 1){
         return;
     }
 
@@ -281,13 +282,13 @@ function logic(){
         }else if(world_dynamic[loop_counter]['type'] === 2){
             window.clearInterval(interval);
             window.clearInterval(interval_logic);
-            state = 2;
+            won = true;
 
         // Collided with red rectangles.
         }else if(world_dynamic[loop_counter]['type'] === 3){
             window.clearInterval(canvas_interval);
             window.clearInterval(interval_logic);
-            state = 3;
+            player['lives'] -= 1;
 
         // Collided with a key.
         }else if(world_dynamic[loop_counter]['type'] === 5){
@@ -334,8 +335,7 @@ function logic(){
 }
 
 function resize_logic(){
-    // If game is over, draw if resized.
-    if(state > 0){
+    if(player['lives'] < 1){
         canvas_draw();
     }
 }
@@ -384,12 +384,13 @@ function setmode_logic(newgame){
         key_right = false;
 
         player = {
+          'lives': 1,
           'x': 0,
           'y': 0,
           'y-velocity': 0,
-        },
+        };
 
-        state = 0;
+        won = false;
     }
 }
 
@@ -400,13 +401,13 @@ var key_left = false;
 var key_right = false;
 var key_jump = false;
 var player = {};
-var state = 0;
 var world_background = [];
 var world_dynamic = [];
 var world_static = [];
 var world_text = [];
 var x_offset = 0;
 var y_offset = 0;
+var won = false;
 
 window.onkeydown = function(e){
     if(canvas_mode <= 0){
