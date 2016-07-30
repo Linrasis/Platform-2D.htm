@@ -166,7 +166,8 @@ function draw_logic(){
 }
 
 function logic(){
-    if(player['lives'] < 1){
+    if(player['lives'] < 1
+      || canvas_menu){
         return;
     }
 
@@ -357,7 +358,7 @@ function setmode_logic(newgame){
           + '<a onclick=canvas_setmode(8,true)>Village of the Wolves</a><br>'
           + '<a onclick=canvas_setmode(9,true)>Yellow Keys</a></div></div>'
           + '<div class=right><div><input id=jump-key maxlength=1>Jump<br>'
-          + '<input disabled value=ESC>Main Menu<br>'
+          + '<input disabled value=ESC>Menu<br>'
           + '<input id=movement-keys maxlength=2>Move ←→<br>'
           + '<input id=restart-key maxlength=1>Restart</div><hr>'
           + '<div><input id=audio-volume max=1 min=0 step=0.01 type=range>Audio<br>'
@@ -416,12 +417,9 @@ window.onkeydown = function(e){
 
     var key = e.keyCode || e.which;
 
-    // ESC: return to main menu.
+    // ESC: menu.
     if(key === 27){
-        canvas_setmode(
-          0,
-          true
-        );
+        canvas_menu_toggle();
         return;
     }
 
@@ -441,6 +439,9 @@ window.onkeydown = function(e){
           canvas_mode,
           false
         );
+
+    }else if(key === 'Q'){
+        canvas_menu_quit();
     }
 };
 
