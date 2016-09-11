@@ -281,7 +281,7 @@ function logic(){
 
         // Collided with green goal.
         }else if(world_dynamic[loop_counter]['type'] === 2){
-            window.clearInterval(interval);
+            window.clearInterval(canvas_interval);
             window.clearInterval(interval_logic);
             won = true;
 
