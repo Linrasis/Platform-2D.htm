@@ -4,26 +4,34 @@ function draw_logic(){
     x_offset = canvas_x - player['x'];
     y_offset = canvas_y - player['y'];
 
-    /*
     // Draw background colors if level asks for it.
-    if(world_background['y'] !== void 0){
+    if(world_background.length !== 0){
         canvas_buffer.fillStyle = world_background['color-top'];
-        canvas_buffer.fillRect(
-          0,
-          0,
-          canvas_width,
-          y_offset + world_background['y']
-        );
 
-        canvas_buffer.fillStyle = world_background['color-bottom'];
-        canvas_buffer.fillRect(
-          0,
-          y_offset + world_background['y'],
-          canvas_width,
-          canvas_height + player['y']
-        );
+        if(world_background['y'] !== false){
+            canvas_buffer.fillRect(
+              0,
+              0,
+              canvas_width,
+              y_offset + world_background['y']
+            );
+            canvas_buffer.fillStyle = world_background['color-bottom'];
+            canvas_buffer.fillRect(
+              0,
+              y_offset + world_background['y'],
+              canvas_width,
+              canvas_height + player['y']
+            );
+
+        }else{
+            canvas_buffer.fillRect(
+              0,
+              0,
+              canvas_width,
+              canvas_height
+            );
+        }
     }
-    */
 
     // Draw static world objects.
     var loop_counter = world_static.length - 1;

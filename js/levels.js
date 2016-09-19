@@ -29,21 +29,21 @@ function level_logic(id){
                     'height': 75,
                     'type': 1,
                     'width': 50,
-                    'x': player['x'] + x,
+                    'x': player['x'] + canvas_x,
                     'y': -25,
                   },
                   {
                     'height': 50,
                     'type': 3,
                     'width': 175,
-                    'x': player['x'] + x + 50,
+                    'x': player['x'] + canvas_x + 50,
                     'y': 0,
                   },
                   {
                     'height': 25,
                     'type': 3,
                     'width': 25,
-                    'x': player['x'] + x + 50 + random_integer(150),
+                    'x': player['x'] + canvas_x + 50 + random_integer(150),
                     'y': 25,
                     'y-speed': 2,
                     'y-target-max': 25,
@@ -53,7 +53,7 @@ function level_logic(id){
                     'height': 75,
                     'type': 1,
                     'width': 50,
-                    'x': player['x'] + x + 225,
+                    'x': player['x'] + canvas_x + 225,
                     'y': -25,
                   }
                 );
@@ -65,7 +65,7 @@ function level_logic(id){
                     'height': 200,
                     'type': 3,
                     'width': 25,
-                    'x': player['x'] + x,
+                    'x': player['x'] + canvas_x,
                     'y': -200,
                   },
                   {
@@ -73,14 +73,14 @@ function level_logic(id){
                     'height': 25,
                     'type': 4,
                     'width': 25,
-                    'x': player['x'] + x + 75,
+                    'x': player['x'] + canvas_x + 75,
                     'y': 25,
                   },
                   {
                     'height': 175,
                     'type': 3,
                     'width': 25,
-                    'x': player['x'] + x + 100,
+                    'x': player['x'] + canvas_x + 100,
                     'y': -125,
                   }
                 );
@@ -92,21 +92,21 @@ function level_logic(id){
                     'height': 200,
                     'type': 1,
                     'width': 25,
-                    'x': player['x'] + x + 25,
+                    'x': player['x'] + canvas_x + 25,
                     'y': -200,
                   },
                   {
                     'height': 25,
                     'type': 1,
                     'width': 25,
-                    'x': player['x'] + x + 50,
+                    'x': player['x'] + canvas_x + 50,
                     'y': -25,
                   },
                   {
                     'height': 175,
                     'type': 1,
                     'width': 25,
-                    'x': player['x'] + x + 175,
+                    'x': player['x'] + canvas_x + 175,
                     'y': -125,
                   }
                 );
@@ -118,21 +118,21 @@ function level_logic(id){
                     'height': 50,
                     'type': 3,
                     'width': 25,
-                    'x': player['x'] + x,
+                    'x': player['x'] + canvas_x,
                     'y': 0,
                   },
                   {
                     'height': 75,
                     'type': 3,
                     'width': 25,
-                    'x': player['x'] + x + 100,
+                    'x': player['x'] + canvas_x + 100,
                     'y': -25,
                   },
                   {
                     'height': 50,
                     'type': 3,
                     'width': 25,
-                    'x': player['x'] + x + 200,
+                    'x': player['x'] + canvas_x + 200,
                     'y': 0,
                   }
                 );
@@ -165,9 +165,10 @@ function load_level(id){
 
     // Randomized level.
     if(id === -2){
-        document.getElementById('canvas').style.backgroundColor = '#3c3c3c';
-
-        world_background = {};
+        world_background = {
+          'color-top': '#3c3c3c',
+          'y': false,
+        };
 
         var tile_count = random_integer(9) + 1;
         if(tile_count % 2 === 0){
@@ -728,9 +729,10 @@ function load_level(id){
 
     // Randomized lava corridor.
     }else if(id === -1){
-        document.getElementById('canvas').style.backgroundColor = '#3c3c3c';
-
-        world_background = {};
+        world_background = {
+          'color-top': '#3c3c3c',
+          'y': false,
+        };
 
         world_dynamic = [
           {
@@ -789,7 +791,7 @@ function load_level(id){
                 'y': -150,
               },
               {
-                'height': 550,
+                'height': 475,
                 'type': 1,
                 'width': 245,
                 'x': -45,
@@ -838,7 +840,7 @@ function load_level(id){
                 'y': 325,
               },
               {
-                'height': 750,
+                'height': 475,
                 'type': 1,
                 'width': 25,
                 'x': 600,
@@ -936,15 +938,6 @@ function load_level(id){
               },
             ],
             'world-static': [
-              {
-                'blue': 60,
-                'green': 60,
-                'height': 25,
-                'red': 60,
-                'width': 400,
-                'x': 200,
-                'y': 575,
-              },
               {
                 'blue': random_integer(256),
                 'green': random_integer(256),
@@ -1386,7 +1379,7 @@ function load_level(id){
             },
             'world-dynamic': [
               {
-                'height': 264,
+                'height': 214,
                 'type': 1,
                 'width': 35,
                 'x': -715,
@@ -1400,7 +1393,7 @@ function load_level(id){
                 'y': -175,
               },
               {
-                'height': 176,
+                'height': 126,
                 'type': 1,
                 'width': 320,
                 'x': -680,
@@ -1421,7 +1414,7 @@ function load_level(id){
                 'y': -120,
               },
               {
-                'height': 300,
+                'height': 250,
                 'type': 1,
                 'width': 16,
                 'x': -360,
@@ -1449,7 +1442,7 @@ function load_level(id){
                 'y': 48,
               },
               {
-                'height': 420,
+                'height': 375,
                 'type': 1,
                 'width': 16,
                 'x': 105,
@@ -1496,24 +1489,6 @@ function load_level(id){
             ],
             'world-static': [
               {
-                'blue': 60,
-                'green': 60,
-                'height': 600,
-                'red': 60,
-                'width': 15,
-                'x': -730,
-                'y': -300,
-              },
-              {
-                'blue': 60,
-                'green': 60,
-                'height': 25,
-                'red': 60,
-                'width': 449,
-                'x': -344,
-                'y': 275,
-              },
-              {
                 'blue': 0,
                 'green': 0,
                 'height': 130,
@@ -1532,7 +1507,10 @@ function load_level(id){
             ],
           },
           {// Yellow Keys
-            'world-background': {},
+            'world-background': {
+              'color-top': '#3c3c3c',
+              'y': false,
+            },
             'world-dynamic': [
               {
                 'height': 25,
@@ -1542,7 +1520,7 @@ function load_level(id){
                 'y': -150,
               },
               {
-                'height': 335,
+                'height': 250,
                 'type': 1,
                 'width': 25,
                 'x': -45,
@@ -1556,7 +1534,7 @@ function load_level(id){
                 'y': 50,
               },
               {
-                'height': 85,
+                'height': 25,
                 'type': 1,
                 'width': 300,
                 'x': -20,
@@ -1605,7 +1583,7 @@ function load_level(id){
                 'y': 75,
               },
               {
-                'height': 335,
+                'height': 235,
                 'type': 1,
                 'width': 25,
                 'x': 1230,
@@ -1710,13 +1688,13 @@ function load_level(id){
                 'y': 50,
               },
               {
-                'blue': 60,
-                'green': 60,
-                'height': 25,
-                'red': 60,
-                'width': 950,
-                'x': 280,
-                'y': 185,
+                'blue': 0,
+                'green': 0,
+                'height': 260,
+                'red': 0,
+                'width': 1250,
+                'x': -20,
+                'y': -125,
               },
             ],
             'world-text': [
