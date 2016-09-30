@@ -471,7 +471,7 @@ function load_level(id){
                           : -2,
                         'x-target-max': tile_middle_x + 175,
                         'x-target-min': tile_middle_x,
-                        'y': -65,
+                        'y': -random_integer(150),
                       },
                       {
                         'height': 25,
@@ -493,7 +493,7 @@ function load_level(id){
                           : -2,
                         'x-target-max': tile_middle_x + 175,
                         'x-target-min': tile_middle_x,
-                        'y': -65,
+                        'y': -random_integer(150),
                       }
                     );
                 }
