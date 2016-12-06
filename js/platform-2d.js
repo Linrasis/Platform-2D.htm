@@ -486,22 +486,22 @@ window.onload = function(e){
       }
     );
 
-    images_new(
-      0,
-      '../common/images/goal.png'
-    );
-    images_new(
-      1,
-      '../common/images/red.png'
-    );
-    images_new(
-      2,
-      '../common/images/boost.png'
-    );
-    images_new(
-      3,
-      '../common/images/key.png'
-    );
+    images_new({
+      'id': 0,
+      'src': '../common/images/goal.png',
+    });
+    images_new({
+      'id': 1,
+      'src': '../common/images/red.png',
+    });
+    images_new({
+      'id': 2,
+      'src': '../common/images/boost.png',
+    });
+    images_new({
+      'id': 3,
+      'src': '../common/images/key.png',
+    });
 
     canvas_init();
 };
