@@ -469,9 +469,9 @@ window.onkeyup = function(e){
 };
 
 window.onload = function(e){
-    settings_init(
-      'Platform-2D.htm-',
-      {
+    settings_init({
+      'prefix': 'Platform-2D.htm-',
+      'settings': {
         'audio-volume': 1,
         'color': '#009900',
         'gravity': .5,
@@ -483,8 +483,8 @@ window.onload = function(e){
         'restart-key': 'H',
         'terminal-velocity': 9,
         'time-display': true,
-      }
-    );
+      },
+    });
 
     images_new({
       'id': 0,
