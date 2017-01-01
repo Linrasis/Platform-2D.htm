@@ -20,7 +20,9 @@ function level_logic(id){
             }while(loop_counter--);
 
             // Randomly pick next obstacle.
-            var obstacle = random_integer(4);
+            var obstacle = random_integer({
+              'max': 4,
+            });
 
             // Lava pit obstacle.
             if(obstacle === 0){
@@ -43,7 +45,9 @@ function level_logic(id){
                     'height': 25,
                     'type': 3,
                     'width': 25,
-                    'x': player['x'] + canvas_x + 50 + random_integer(150),
+                    'x': player['x'] + canvas_x + 50 + random_integer({
+                      'max': 150,
+                    }),
                     'y': 25,
                     'y-speed': 2,
                     'y-target-max': 25,
@@ -170,7 +174,9 @@ function load_level(id){
           'y': false,
         };
 
-        var tile_count = random_integer(9) + 1;
+        var tile_count = random_integer({
+          'max': 9,
+        }) + 1;
         if(tile_count % 2 === 0){
             tile_count += 1;
         }
@@ -228,13 +234,21 @@ function load_level(id){
           ],
         ][side];
 
-        var tree_y = random_integer(100);
+        var tree_y = random_integer({
+          'max': 100,
+        });
         world_static = [
           {
-            'blue': random_integer(256),
-            'green': random_integer(256),
+            'blue': random_integer({
+              'max': 256,
+            }),
+            'green': random_integer({
+              'max': 256,
+            }),
             'height': 75,
-            'red': random_integer(256),
+            'red': random_integer({
+              'max': 256,
+            }),
             'width': 75,
             'x': -100 + 125 * side,
             'y': -50 - tree_y,
@@ -259,7 +273,9 @@ function load_level(id){
         });
 
         do{
-            var tile_type = random_integer(9);
+            var tile_type = random_integer({
+              'max': 9,
+            });
             var tile_middle_x = (-total_tiles * 200) / 2 + tile_count * 200 + (tile_count >= total_tiles / 2 ? 0 : -200);
 
             if(tile_count === 0){
@@ -401,7 +417,9 @@ function load_level(id){
                         'height': 100,
                         'type': 3,
                         'width': 25,
-                        'x': tile_middle_x + random_integer(175),
+                        'x': tile_middle_x + random_integer({
+                          'max': 175,
+                        }),
                         'x-speed': Math.random() < .4
                           ? 1
                           : 0,
@@ -428,7 +446,9 @@ function load_level(id){
                         'type': 3,
                         'width': 25,
                         'x': tile_middle_x + 40,
-                        'y': 100 - random_integer(275),
+                        'y': 100 - random_integer({
+                          'max': 275,
+                        }),
                         'y-speed': 2,
                         'y-target-max': 100,
                         'y-target-min': -175,
@@ -442,7 +462,9 @@ function load_level(id){
                         'type': 3,
                         'width': 25,
                         'x': tile_middle_x + 135,
-                        'y': 100 - random_integer(275),
+                        'y': 100 - random_integer({
+                          'max': 275,
+                        }),
                         'y-speed': 2,
                         'y-target-max': 100,
                         'y-target-min': -175,
@@ -465,13 +487,17 @@ function load_level(id){
                         'height': 25,
                         'type': 4,
                         'width': 25,
-                        'x': tile_middle_x + random_integer(175),
+                        'x': tile_middle_x + random_integer({
+                          'max': 175,
+                        }),
                         'x-speed': random_boolean()
                           ? 2
                           : -2,
                         'x-target-max': tile_middle_x + 175,
                         'x-target-min': tile_middle_x,
-                        'y': -random_integer(150),
+                        'y': -random_integer({
+                          'max': 150,
+                        }),
                       },
                       {
                         'height': 25,
@@ -487,13 +513,17 @@ function load_level(id){
                         'height': 25,
                         'type': 3,
                         'width': 25,
-                        'x': tile_middle_x + random_integer(175),
+                        'x': tile_middle_x + random_integer({
+                          'max': 175,
+                        }),
                         'x-speed': random_boolean()
                           ? 2
                           : -2,
                         'x-target-max': tile_middle_x + 175,
                         'x-target-min': tile_middle_x,
-                        'y': -random_integer(150),
+                        'y': -random_integer({
+                          'max': 150,
+                        }),
                       }
                     );
                 }
@@ -515,7 +545,9 @@ function load_level(id){
                             'type': 3,
                             'width': 25,
                             'x': tile_middle_x + 50,
-                            'y': 100 - random_integer(275),
+                            'y': 100 - random_integer({
+                              'max': 275,
+                            }),
                             'y-speed': random_boolean()
                               ? 2
                               : -2,
@@ -527,7 +559,9 @@ function load_level(id){
                             'type': 3,
                             'width': 25,
                             'x': tile_middle_x + 125,
-                            'y': 100 - random_integer(275),
+                            'y': 100 - random_integer({
+                              'max': 275,
+                            }),
                             'y-speed': random_boolean()
                               ? 2
                               : -2,
@@ -541,7 +575,9 @@ function load_level(id){
                           'type': 3,
                           'width': 25,
                           'x': tile_middle_x + (Math.random() * 125) + 25,
-                          'y': 100 - random_integer(275),
+                          'y': 100 - random_integer({
+                            'max': 275,
+                          }),
                           'y-speed': 2,
                           'y-target-max': 100,
                           'y-target-min': -175,
@@ -573,12 +609,22 @@ function load_level(id){
                   'x': tile_middle_x,
                   'y': 50,
                 });
-                var tree_x = random_integer(175);
-                tree_y = random_integer(100);
+                var tree_x = random_integer({
+                  'max': 175,
+                });
+                tree_y = random_integer({
+                  'max': 100,
+                });
                 world_static.push({
-                  'blue': random_integer(256),
-                  'green': random_integer(256),
-                  'red': random_integer(256),
+                  'blue': random_integer({
+                    'max': 256,
+                  }),
+                  'green': random_integer({
+                    'max': 256,
+                  }),
+                  'red': random_integer({
+                    'max': 256,
+                  }),
                   'height': 75,
                   'width': 75,
                   'x': tile_middle_x + tree_x - 25,
@@ -622,7 +668,9 @@ function load_level(id){
                     'type': 3,
                     'width': 200,
                     'x': tile_middle_x,
-                    'y': -random_integer(150) - 25,
+                    'y': -random_integer({
+                      'max': 150,
+                    }) - 25,
                     'y-speed': random_boolean()
                       ? 1.5
                       : -1.5,
@@ -939,10 +987,16 @@ function load_level(id){
             ],
             'world-static': [
               {
-                'blue': random_integer(256),
-                'green': random_integer(256),
+                'blue': random_integer({
+                  'max': 256,
+                }),
+                'green': random_integer({
+                  'max': 256,
+                }),
                 'height': 75,
-                'red': random_integer(256),
+                'red': random_integer({
+                  'max': 256,
+                }),
                 'width': 75,
                 'x': 400,
                 'y': 75,
@@ -1115,10 +1169,16 @@ function load_level(id){
                 'y': -1125,
               },
               {
-                'blue': random_integer(256),
-                'green': random_integer(256),
+                'blue': random_integer({
+                  'max': 256,
+                }),
+                'green': random_integer({
+                  'max': 256,
+                }),
                 'height': 75,
-                'red': random_integer(256),
+                'red': random_integer({
+                  'max': 256,
+                }),
                 'width': 75,
                 'x': -37,
                 'y': -1200,
@@ -1321,10 +1381,16 @@ function load_level(id){
                 'y': 75,
               },
               {
-                'blue': random_integer(256),
-                'green': random_integer(256),
+                'blue': random_integer({
+                  'max': 256,
+                }),
+                'green': random_integer({
+                  'max': 256,
+                }),
                 'height': 75,
-                'red': random_integer(256),
+                'red': random_integer({
+                  'max': 256,
+                }),
                 'width': 75,
                 'x': 260,
                 'y': 100,
@@ -1643,10 +1709,16 @@ function load_level(id){
             ],
             'world-static': [
               {
-                'blue': random_integer(256),
-                'green': random_integer(256),
+                'blue': random_integer({
+                  'max': 256,
+                }),
+                'green': random_integer({
+                  'max': 256,
+                }),
                 'height': 75,
-                'red': random_integer(256),
+                'red': random_integer({
+                  'max': 256,
+                }),
                 'width': 75,
                 'x': 525,
                 'y': -100,
@@ -1670,10 +1742,16 @@ function load_level(id){
                 'y': 100,
               },
               {
-                'blue': random_integer(256),
-                'green': random_integer(256),
+                'blue': random_integer({
+                  'max': 256,
+                }),
+                'green': random_integer({
+                  'max': 256,
+                }),
                 'height': 50,
-                'red': random_integer(256),
+                'red': random_integer({
+                  'max': 256,
+                }),
                 'width': 75,
                 'x': 890,
                 'y': 0,
