@@ -358,13 +358,13 @@ function setmode_logic(newgame){
 
     // Main menu mode.
     if(canvas_mode === 0){
-        document.body.innerHTML = '<div><div><a onclick=canvas_setmode(3,true)>Generate Random Level</a><br>'
-          + '<a onclick=canvas_setmode(4,true)>Randomized Lava Corridor</a></div><hr>'
-          + '<div><a onclick=canvas_setmode(5,true)>A Pit of Your Design</a><br>'
-          + '<a onclick=canvas_setmode(6,true)>Booster Towers</a><br>'
-          + '<a onclick=canvas_setmode(7,true)>Tutorial Island</a><br>'
-          + '<a onclick=canvas_setmode(8,true)>Village of the Wolves</a><br>'
-          + '<a onclick=canvas_setmode(9,true)>Yellow Keys</a></div></div>'
+        document.body.innerHTML = '<div><div><a onclick=canvas_setmode({mode:3,newgame:true})>Generate Random Level</a><br>'
+          + '<a onclick=canvas_setmode({mode:4,newgame:true})>Randomized Lava Corridor</a></div><hr>'
+          + '<div><a onclick=canvas_setmode({mode:5,newgame:true})>A Pit of Your Design</a><br>'
+          + '<a onclick=canvas_setmode({mode:6,newgame:true})>Booster Towers</a><br>'
+          + '<a onclick=canvas_setmode({mode:7,newgame:true})>Tutorial Island</a><br>'
+          + '<a onclick=canvas_setmode({mode:8,newgame:true})>Village of the Wolves</a><br>'
+          + '<a onclick=canvas_setmode({mode:9,newgame:true})>Yellow Keys</a></div></div>'
           + '<div class=right><div><input id=jump-key maxlength=1>Jump<br>'
           + '<input disabled value=ESC>Menu<br>'
           + '<input id=movement-keys maxlength=2>Move ←→<br>'
@@ -443,10 +443,9 @@ window.onkeydown = function(e){
         key_jump = true;
 
     }else if(key === settings_settings['restart-key']){
-        canvas_setmode(
-          canvas_mode,
-          false
-        );
+        canvas_setmode({
+          'mode': canvas_mode,
+        });
 
     }else if(key === 'Q'){
         canvas_menu_quit();
