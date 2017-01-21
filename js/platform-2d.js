@@ -418,55 +418,6 @@ var x_offset = 0;
 var y_offset = 0;
 var won = false;
 
-window.onkeydown = function(e){
-    if(canvas_mode <= 0){
-        return;
-    }
-
-    var key = e.keyCode || e.which;
-
-    // ESC: menu.
-    if(key === 27){
-        canvas_menu_toggle();
-        return;
-    }
-
-    key = String.fromCharCode(key);
-
-    if(key === settings_settings['movement-keys'][0]){
-        key_left = true;
-
-    }else if(key === settings_settings['movement-keys'][1]){
-        key_right = true;
-
-    }else if(key === settings_settings['jump-key']){
-        key_jump = true;
-
-    }else if(key === settings_settings['restart-key']){
-        canvas_setmode({
-          'mode': canvas_mode,
-        });
-
-    }else if(key === 'Q'){
-        canvas_menu_quit();
-    }
-};
-
-window.onkeyup = function(e){
-    var key = String.fromCharCode(e.keyCode || e.which);
-
-    if(key === settings_settings['movement-keys'][0]){
-        key_left = false;
-
-    }else if(key === settings_settings['movement-keys'][1]){
-        key_right = false;
-
-    }else if(key === settings_settings['jump-key']){
-        key_jump = false;
-        jump_permission = true;
-    }
-};
-
 window.onload = function(e){
     settings_init({
       'prefix': 'Platform-2D.htm-',
@@ -503,4 +454,53 @@ window.onload = function(e){
     });
 
     canvas_init();
+
+    window.onkeydown = function(e){
+        if(canvas_mode <= 0){
+            return;
+        }
+
+        var key = e.keyCode || e.which;
+
+        // ESC: menu.
+        if(key === 27){
+            canvas_menu_toggle();
+            return;
+        }
+
+        key = String.fromCharCode(key);
+
+        if(key === settings_settings['movement-keys'][0]){
+            key_left = true;
+
+        }else if(key === settings_settings['movement-keys'][1]){
+            key_right = true;
+
+        }else if(key === settings_settings['jump-key']){
+            key_jump = true;
+
+        }else if(key === settings_settings['restart-key']){
+            canvas_setmode({
+              'mode': canvas_mode,
+            });
+
+        }else if(key === 'Q'){
+            canvas_menu_quit();
+        }
+    };
+
+    window.onkeyup = function(e){
+        var key = String.fromCharCode(e.keyCode || e.which);
+
+        if(key === settings_settings['movement-keys'][0]){
+            key_left = false;
+
+        }else if(key === settings_settings['movement-keys'][1]){
+            key_right = false;
+
+        }else if(key === settings_settings['jump-key']){
+            key_jump = false;
+            jump_permission = true;
+        }
+    };
 };
