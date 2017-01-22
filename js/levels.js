@@ -239,16 +239,10 @@ function load_level(id){
         });
         world_static = [
           {
-            'blue': random_integer({
-              'max': 256,
-            }),
-            'green': random_integer({
-              'max': 256,
-            }),
+            'blue': random_integer(),
+            'green': random_integer(),
             'height': 75,
-            'red': random_integer({
-              'max': 256,
-            }),
+            'red': random_integer(),
             'width': 75,
             'x': -100 + 125 * side,
             'y': -50 - tree_y,
@@ -616,15 +610,9 @@ function load_level(id){
                   'max': 100,
                 });
                 world_static.push({
-                  'blue': random_integer({
-                    'max': 256,
-                  }),
-                  'green': random_integer({
-                    'max': 256,
-                  }),
-                  'red': random_integer({
-                    'max': 256,
-                  }),
+                  'blue': random_integer(),
+                  'green': random_integer(),
+                  'red': random_integer(),
                   'height': 75,
                   'width': 75,
                   'x': tile_middle_x + tree_x - 25,
@@ -987,16 +975,10 @@ function load_level(id){
             ],
             'world-static': [
               {
-                'blue': random_integer({
-                  'max': 256,
-                }),
-                'green': random_integer({
-                  'max': 256,
-                }),
+                'blue': random_integer(),
+                'green': random_integer(),
                 'height': 75,
-                'red': random_integer({
-                  'max': 256,
-                }),
+                'red': random_integer(),
                 'width': 75,
                 'x': 400,
                 'y': 75,
@@ -1169,16 +1151,10 @@ function load_level(id){
                 'y': -1125,
               },
               {
-                'blue': random_integer({
-                  'max': 256,
-                }),
-                'green': random_integer({
-                  'max': 256,
-                }),
+                'blue': random_integer(),
+                'green': random_integer(),
                 'height': 75,
-                'red': random_integer({
-                  'max': 256,
-                }),
+                'red': random_integer(),
                 'width': 75,
                 'x': -37,
                 'y': -1200,
@@ -1381,16 +1357,10 @@ function load_level(id){
                 'y': 75,
               },
               {
-                'blue': random_integer({
-                  'max': 256,
-                }),
-                'green': random_integer({
-                  'max': 256,
-                }),
+                'blue': random_integer(),
+                'green': random_integer(),
                 'height': 75,
-                'red': random_integer({
-                  'max': 256,
-                }),
+                'red': random_integer(),
                 'width': 75,
                 'x': 260,
                 'y': 100,
@@ -1709,16 +1679,10 @@ function load_level(id){
             ],
             'world-static': [
               {
-                'blue': random_integer({
-                  'max': 256,
-                }),
-                'green': random_integer({
-                  'max': 256,
-                }),
+                'blue': random_integer(),
+                'green': random_integer(),
                 'height': 75,
-                'red': random_integer({
-                  'max': 256,
-                }),
+                'red': random_integer(),
                 'width': 75,
                 'x': 525,
                 'y': -100,
@@ -1742,16 +1706,10 @@ function load_level(id){
                 'y': 100,
               },
               {
-                'blue': random_integer({
-                  'max': 256,
-                }),
-                'green': random_integer({
-                  'max': 256,
-                }),
+                'blue': random_integer(),
+                'green': random_integer(),
                 'height': 50,
-                'red': random_integer({
-                  'max': 256,
-                }),
+                'red': random_integer(),
                 'width': 75,
                 'x': 890,
                 'y': 0,
