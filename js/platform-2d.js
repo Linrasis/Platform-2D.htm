@@ -124,7 +124,7 @@ function draw_logic(){
     }while(loop_counter--);
 
     // Draw player.
-    canvas_buffer.fillStyle = settings_settings['color'];
+    canvas_buffer.fillStyle = storage_data['color'];
     canvas_buffer.fillRect(
       canvas_x - 20,
       canvas_y - 20,
@@ -137,7 +137,7 @@ function draw_logic(){
     canvas_buffer.textAlign = 'left';
 
     // If tracking frames, draw number of frames.
-    if(settings_settings['time-display']){
+    if(storage_data['time-display']){
         canvas_buffer.fillText(
           frame_counter,
           5,
@@ -149,7 +149,7 @@ function draw_logic(){
     if(won
       || player['lives'] < 1){
         canvas_buffer.fillText(
-          settings_settings['restart-key'] + ' = Restart',
+          storage_data['restart-key'] + ' = Restart',
           5,
           100
         );
@@ -183,11 +183,11 @@ function logic(){
     var player_dy = 0;
 
     if(key_left){
-        player_dx -= settings_settings['speed'];
+        player_dx -= storage_data['speed'];
     }
 
     if(key_right){
-        player_dx += settings_settings['speed'];
+        player_dx += storage_data['speed'];
     }
 
     var can_jump = false;
@@ -326,7 +326,7 @@ function logic(){
     if(can_jump){
         if(jump_permission
           && key_jump){
-            player['y-velocity'] = settings_settings['jump-speed'];
+            player['y-velocity'] = storage_data['jump-speed'];
             jump_permission = false;
 
         }else{
@@ -335,8 +335,8 @@ function logic(){
 
     }else{
         player['y-velocity'] = Math.min(
-          player['y-velocity'] + settings_settings['gravity'],
-          settings_settings['terminal-velocity']
+          player['y-velocity'] + storage_data['gravity'],
+          storage_data['terminal-velocity']
         );
     }
 
@@ -377,13 +377,13 @@ function setmode_logic(newgame){
           + '<input id=speed>Speed<br>'
           + '<input id=terminal-velocity>Terminal Velocity<br>'
           + '<label><input id=time-display type=checkbox>Time</label><br>'
-          + '<a onclick=settings_reset()>Reset Settings</a></div></div>';
-        settings_update();
+          + '<a onclick=storage_reset()>Reset Settings</a></div></div>';
+        storage_update();
 
     // New game mode.
     }else{
         if(newgame){
-            settings_save();
+            storage_save();
         }
 
         frame_counter = 0;
@@ -419,9 +419,8 @@ var y_offset = 0;
 var won = false;
 
 window.onload = function(e){
-    settings_init({
-      'prefix': 'Platform-2D.htm-',
-      'settings': {
+    storage_init({
+      'data': {
         'audio-volume': 1,
         'color': '#009900',
         'gravity': .5,
@@ -434,6 +433,7 @@ window.onload = function(e){
         'terminal-velocity': 9,
         'time-display': true,
       },
+      'prefix': 'Platform-2D.htm-',
     });
 
     images_new({
@@ -470,16 +470,16 @@ window.onload = function(e){
 
         key = String.fromCharCode(key);
 
-        if(key === settings_settings['movement-keys'][0]){
+        if(key === storage_data['movement-keys'][0]){
             key_left = true;
 
-        }else if(key === settings_settings['movement-keys'][1]){
+        }else if(key === storage_data['movement-keys'][1]){
             key_right = true;
 
-        }else if(key === settings_settings['jump-key']){
+        }else if(key === storage_data['jump-key']){
             key_jump = true;
 
-        }else if(key === settings_settings['restart-key']){
+        }else if(key === storage_data['restart-key']){
             canvas_setmode({
               'mode': canvas_mode,
             });
@@ -492,13 +492,13 @@ window.onload = function(e){
     window.onkeyup = function(e){
         var key = String.fromCharCode(e.keyCode || e.which);
 
-        if(key === settings_settings['movement-keys'][0]){
+        if(key === storage_data['movement-keys'][0]){
             key_left = false;
 
-        }else if(key === settings_settings['movement-keys'][1]){
+        }else if(key === storage_data['movement-keys'][1]){
             key_right = false;
 
-        }else if(key === settings_settings['jump-key']){
+        }else if(key === storage_data['jump-key']){
             key_jump = false;
             jump_permission = true;
         }

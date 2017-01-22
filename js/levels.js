@@ -1386,17 +1386,17 @@ function load_level(id){
             ],
             'world-text': [
               {
-                'text': '←' + settings_settings['movement-keys'][0],
+                'text': '←' + storage_data['movement-keys'][0],
                 'x': -100,
                 'y': -25,
               },
               {
-                'text': settings_settings['movement-keys'][1] + '→',
+                'text': storage_data['movement-keys'][1] + '→',
                 'x': -300,
                 'y': 175,
               },
               {
-                'text': settings_settings['jump-key'] + '↑',
+                'text': storage_data['jump-key'] + '↑',
                 'x': 275,
                 'y': 150,
               },
