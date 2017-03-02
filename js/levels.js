@@ -234,9 +234,7 @@ function load_level(id){
           ],
         ][side];
 
-        var tree_y = random_integer({
-          'max': 100,
-        });
+        var tree_y = random_integer();
         world_static = [
           {
             'blue': random_integer(),
@@ -606,9 +604,7 @@ function load_level(id){
                 var tree_x = random_integer({
                   'max': 175,
                 });
-                tree_y = random_integer({
-                  'max': 100,
-                });
+                tree_y = random_integer();
                 world_static.push({
                   'blue': random_integer(),
                   'green': random_integer(),
