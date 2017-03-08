@@ -37,15 +37,6 @@ function draw_logic(){
     var loop_counter = world_static.length - 1;
     if(loop_counter >= 0){
         do{
-            // Only draw objects that aren't on the buffer
-            //   and are on the screen.
-            if(world_static[loop_counter]['x'] + world_static[loop_counter]['width'] + x_offset <= 0
-              || world_static[loop_counter]['x'] + x_offset >= canvas_width
-              || world_static[loop_counter]['y'] + world_static[loop_counter]['height'] + y_offset <= 0
-              || world_static[loop_counter]['y'] + y_offset >= canvas_height){
-                continue;
-            }
-
             canvas_buffer.fillStyle = 'rgb('
               + world_static[loop_counter]['red'] + ', '
               + world_static[loop_counter]['green'] + ', '
@@ -74,15 +65,6 @@ function draw_logic(){
 
     var loop_counter = world_dynamic.length - 1;
     do{
-        // Only draw objects that aren't on the buffer
-        //   and are on the screen.
-        if(world_dynamic[loop_counter]['x'] + world_dynamic[loop_counter]['width'] + x_offset <= 0
-          || world_dynamic[loop_counter]['x'] + x_offset >= canvas_width
-          || world_dynamic[loop_counter]['y'] + world_dynamic[loop_counter]['height'] + y_offset <= 0
-          || world_dynamic[loop_counter]['y'] + y_offset >= canvas_height){
-            continue;
-        }
-
         // If object has a texture, draw texture. else draw rect.
         if(world_dynamic[loop_counter]['type'] > 1
           && world_dynamic[loop_counter]['type'] < 6){
